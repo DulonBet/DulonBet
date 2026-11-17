@@ -1,0 +1,5 @@
+DulonBet V26 — traitement manuel des demandes
+
+Les formulaires de dépôt et de retrait enregistrent les demandes dans Supabase et affichent une référence. Aucune intégration FeexPay ou API 1XBET n’est appelée. Le versement Mobile Money et toute opération sur le compte 1XBET doivent être traités séparément et manuellement après vérification.
+
+Ne présentez pas une demande comme payée ou créditée tant que l’opération n’a pas été vérifiée. Cette archive ne modifie pas les services déjà déployés. Pour retirer les anciennes intégrations en production, supprimez également dans Supabase les fonctions Edge feexpay-create-payment, feexpay-credit-1xbet, feexpay-webhook et onexbet-payout, puis retirez les secrets FeexPay/CashdeskBot devenus inutiles. Faites une sauvegarde avant d’exécuter le script SQL V26.

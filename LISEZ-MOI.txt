@@ -1,0 +1,16 @@
+DulonBet V26 — sans intégration FeexPay ni API 1XBET
+
+CE QUI CHANGE
+- Suppression des fonctions Supabase FeexPay (création de paiement, confirmation/crédit et webhook).
+- Suppression de la fonction Supabase onexbet-payout qui appelait l’API 1XBET.
+- Suppression des appels automatiques à ces fonctions depuis le site.
+- Les formulaires Dépôt et Retrait restent présents et enregistrent une demande dans Supabase. Après enregistrement, le site affiche une référence et précise que le traitement doit être manuel.
+- Suppression du SQL de suivi FeexPay, du journal technique d’intégration et de l’expiration automatique liée à cette intégration.
+- Suppression définitive : aucune rubrique ni structure de base de données pour les caissiers et commissions. Le SQL supprime les colonnes, le déclencheur, la fonction et la table correspondants.
+
+IMPORTANT
+- Cette archive ne modifie pas le site en ligne, GitHub, ni votre projet Supabase.
+- Avant de déployer, sauvegardez la base Supabase. Si vous exécutez le SQL V25, il supprime les colonnes techniques d’intégration et la table de journal dulonbet_transaction_events; les demandes existantes dans dulonbet_transactions sont conservées.
+- Les formulaires enregistrent uniquement les demandes : aucun paiement Mobile Money n’est lancé et aucun crédit/retrait 1XBET n’est effectué automatiquement. Organisez et vérifiez le traitement manuel avant d’utiliser le site en production.
+- Le SQL suppose que la table public.dulonbet_transactions existe déjà et que le rôle/service de base de données dispose des droits nécessaires pour retirer les objets concernés.
+- Les secrets déjà enregistrés dans Supabase ne sont pas effacés par cette archive. Supprimez séparément les anciens secrets FeexPay/CashdeskBot dans Supabase si vous n’en avez plus besoin.

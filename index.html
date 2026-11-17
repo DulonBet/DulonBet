@@ -4234,14 +4234,113 @@ function showPanel(id){
  });
  window.scrollTo({top:0,behavior:'smooth'});
 }
+function newDulonBetKey(){
+ if(window.crypto&&typeof window.crypto.randomUUID==='function')return window.crypto.randomUUID();
+ return 'db-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);
+}
+async function callFeexPay(action,payload){
+ const client=window.dulonSupabaseClient;
+ if(!client)throw new Error('Le service de paiement est indisponible. Recharge la page.');
+ const url='https://lyqgvmljfzxwbeiwilvu.supabase.co/functions/v1/feexpay-deposit';
+ const anonKey='sb_publishable_ASOE4jC_BIKL-MArKMa1xA_--KJsYsQ';
+ const response=await fetch(url,{
+  method:'POST',
+  headers:{'Content-Type':'application/json','apikey':anonKey,'Authorization':'Bearer '+anonKey},
+  body:JSON.stringify({action,...payload})
+ });
+ let data={};
+ try{data=await response.json()}catch(_){}
+ if(!response.ok && response.status!==202)throw new Error(data.error||'Le service de paiement a refusé la demande.');
+ return data;
+}
+function showDepositVerification(box,reference,token,status,message){
+ box.replaceChildren();
+ const p=document.createElement('p');
+ p.textContent=(message||'Statut du paiement : '+status)+ ' Référence DulonBet : '+reference+'.';
+ box.appendChild(p);
+ if(status==='approved'){
+  const done=document.createElement('strong');done.textContent='Paiement confirmé par FeexPay.';box.appendChild(done);return;
+ }
+ if(status==='rejected'||status==='failed'){
+  const failed=document.createElement('strong');failed.textContent='FeexPay indique que le paiement a échoué. Aucun crédit effectué.';box.appendChild(failed);return;
+ }
+ const note=document.createElement('p');
+ note.textContent='Si la demande USSD apparaît sur ton téléphone, confirme-la auprès de ton opérateur. Ne relance pas ce même dépôt. Tu peux vérifier son statut ci-dessous.';
+ box.appendChild(note);
+ const verify=document.createElement('button');
+ verify.type='button';verify.className='btn-blue';verify.textContent='Vérifier le paiement auprès de FeexPay';
+ verify.addEventListener('click',async()=>{
+  verify.disabled=true;verify.textContent='Vérification…';
+  try{
+   const result=await callFeexPay('verify',{reference,token});
+   showDepositVerification(box,reference,token,result.status||'processing',result.message||'Statut non confirmé.');
+  }catch(err){
+   verify.disabled=false;verify.textContent='Réessayer la vérification';
+   const errp=document.createElement('p');errp.textContent=err.message||'Vérification indisponible. Réessaie plus tard.';box.appendChild(errp);
+  }
+ });
+ box.appendChild(verify);
+}
 async function submitTx(e,type){
- e.preventDefault();const f=e.target;const amount=Number(f.querySelector('input[type="number"]')?.value);const chosen=f.querySelector('input[type="radio"]:checked')?.value;const texts=[...f.querySelectorAll('input:not([type="radio"]):not([type="number"])')].map(x=>x.value.trim());const xbetId=texts[0]||'';const withdrawalCode=type==='Retrait'?(texts[1]||''):'';const phone=type==='Retrait'?(texts[2]||''):(texts[1]||'');const customerName=type==='Retrait'?(texts[3]||''):'';const country=f.querySelector('select[name="country"]')?.value||'Bénin';
- if(!Number.isFinite(amount)||amount<100||amount>2000000){alert('Montant hors limites.');return;}
+ e.preventDefault();
+ const f=e.target;
+ const amount=Number(f.querySelector('input[type="number"]')?.value);
+ const chosen=f.querySelector('input[type="radio"]:checked')?.value;
+ const texts=[...f.querySelectorAll('input:not([type="radio"]):not([type="number"])')].map(x=>x.value.trim());
+ const xbetId=texts[0]||'';
+ const withdrawalCode=type==='Retrait'?(texts[1]||''):'';
+ const phone=type==='Retrait'?(texts[2]||''):(texts[1]||'');
+ const customerName=type==='Retrait'?(texts[3]||''):'';
+ const country=f.querySelector('select[name="country"]')?.value||'Bénin';
+ const box=document.getElementById(type==='Dépôt'?'deposit-success':'withdraw-success');
+ const submit=f.querySelector('button[type="submit"],button:not([type])');
+ if(!Number.isSafeInteger(amount)||amount<(type==='Retrait'?350:100)||amount>2000000){
+  alert(type==='Retrait'?'Montant hors limites (minimum 350 FCFA).':'Montant hors limites.');return;
+ }
  if(!window.dulonSupabaseClient){alert('Le service de demande est indisponible. Réessaie plus tard.');return;}
- const ref='DB-'+(window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10));const box=document.getElementById(type==='Dépôt'?'deposit-success':'withdraw-success');box.style.display='block';box.textContent='Enregistrement de ta demande…';
+ if(type==='Dépôt'){
+  // La première intégration FeexPay active uniquement MTN MoMo au Bénin.
+  if(country!=='Bénin'||chosen!=='MTN MoMo'){
+   box.style.display='block';
+   box.textContent='Pour le moment, le paiement automatique est disponible uniquement au Bénin avec MTN MoMo. Choisis Bénin et MTN MoMo. Aucun dépôt n’a été lancé.';
+   return;
+  }
+  if(!/^0[0-9]{9}$/.test(phone)){
+   box.style.display='block';box.textContent='Saisis le numéro Mobile Money béninois à 10 chiffres.';return;
+  }
+  if(submit){submit.disabled=true;submit.textContent='Envoi à FeexPay…';}
+  box.style.display='block';box.textContent='Envoi sécurisé de la demande à FeexPay…';
+  try{
+   const result=await callFeexPay('initiate',{
+    amount_fcfa:amount,xbet_id:xbetId,phone,network:chosen,country,
+    idempotency_key:newDulonBetKey()
+   });
+   if(!result.reference||!result.token){
+    box.textContent=(result.message||'La réponse de paiement est incomplète.')+' Ne relance pas ce même dépôt; contacte le support avec les informations disponibles.';
+    return;
+   }
+   try{sessionStorage.setItem('dulonbet-pending-payment',JSON.stringify({reference:result.reference,token:result.token}));}catch(_){}
+   showDepositVerification(box,result.reference,result.token,result.status||'pending',result.message||'Demande transmise à FeexPay. Aucun crédit tant que le paiement n’est pas confirmé.');
+   f.reset();
+  }catch(err){
+   console.error('FeexPay initiate:',err);
+   box.textContent=(err.message||'Impossible de contacter FeexPay.')+' Si tu as déjà reçu une demande USSD, ne recommence pas le paiement avant vérification.';
+  }finally{
+   if(submit){submit.disabled=false;submit.textContent='Payer et recharger';}
+  }
+  return;
+ }
+ const ref='DB-'+(window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10));
+ box.style.display='block';box.textContent='Enregistrement de ta demande de retrait…';
  const row={reference:ref,operation_type:type,amount_fcfa:amount,network:chosen||'Non précisé',country,xbet_id:xbetId,phone,customer_name:customerName||null,withdrawal_code:withdrawalCode||null,status:'pending'};
- try{const {error}=await window.dulonSupabaseClient.from('dulonbet_transactions').insert(row);if(error)throw error;box.textContent='Demande enregistrée avec succès. Référence : '+ref+'. Aucun paiement ni traitement automatique n’est connecté. Contacte l’administrateur pour la suite. Conserve cette référence.';f.reset();}
- catch(err){console.error(err);box.textContent='Impossible d’enregistrer la demande. Vérifie ta connexion puis réessaie.';}
+ try{
+  const {error}=await window.dulonSupabaseClient.from('dulonbet_transactions').insert(row);
+  if(error)throw error;
+  box.textContent='Demande de retrait enregistrée. Référence : '+ref+'. Le retrait reste manuel et doit être traité par l’administrateur. Conserve cette référence.';
+  f.reset();
+ }catch(err){
+  console.error(err);box.textContent='Impossible d’enregistrer la demande de retrait. Vérifie ta connexion puis réessaie.';
+ }
 }
 function render(){}
 

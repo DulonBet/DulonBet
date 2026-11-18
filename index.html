@@ -3942,6 +3942,10 @@ body.dulon-drawer-open #dulon-mobile-drawer-backdrop{opacity:1;visibility:visibl
 #dulon-mobile-drawer .drawer-links{padding:20px;display:flex;flex-direction:column;gap:10px}
 #dulon-mobile-drawer .drawer-link{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#e8f1ff;color:#214d87;border-radius:15px;padding:17px 18px;font-size:18px;font-weight:800}
 #dulon-mobile-drawer .drawer-link .drawer-link-icon{font-size:23px;width:28px;text-align:center}
+#dulon-mobile-drawer .drawer-link{text-decoration:none;box-sizing:border-box}
+#dulon-mobile-drawer .drawer-link:active{transform:scale(.99)}
+#dulon-mobile-drawer .drawer-links{overflow-y:auto;min-height:0}
+@media(max-width:680px){#dulon-mobile-drawer .drawer-link{padding:13px 14px;font-size:15px;gap:10px}#dulon-mobile-drawer .drawer-link .drawer-link-icon{font-size:20px;width:24px;flex:0 0 24px}}
 #dulon-mobile-drawer .drawer-bottom{margin-top:auto;border-top:1px solid #e0e7f2;padding:20px}
 #dulon-mobile-drawer .drawer-install{display:flex;align-items:center;gap:13px;width:100%;background:#fff;color:#25354d;text-align:left;padding:18px 8px;font-size:18px;font-weight:750}
 #dulon-mobile-drawer .drawer-install-icon{font-size:24px;color:#64748b}
@@ -6047,6 +6051,10 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
  </div>
  <div class="drawer-links">
   <button class="drawer-link" id="dulon-drawer-operations" type="button"><span class="drawer-link-icon" aria-hidden="true">↕</span><span>Opérations</span></button>
+  <button class="drawer-link" id="dulon-drawer-track" type="button"><span class="drawer-link-icon" aria-hidden="true">⌕</span><span>Suivre ma demande</span></button>
+  <button class="drawer-link" id="dulon-drawer-how" type="button"><span class="drawer-link-icon" aria-hidden="true">☷</span><span>Comment ça marche ?</span></button>
+  <button class="drawer-link" id="dulon-drawer-faq" type="button"><span class="drawer-link-icon" aria-hidden="true">?</span><span>Aide et questions fréquentes</span></button>
+  <a class="drawer-link" id="dulon-drawer-support" href="https://wa.me/2290197131018" target="_blank" rel="noopener"><span class="drawer-link-icon" aria-hidden="true">☏</span><span>Contacter le support</span></a>
  </div>
  <div class="drawer-bottom">
   <button class="drawer-install" id="dulon-drawer-install" type="button"><span class="drawer-install-icon" aria-hidden="true">↓</span><span>Installer l’application</span></button>
@@ -6066,6 +6074,31 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
  backdrop.addEventListener('click',closeMenu);
  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
  document.getElementById('dulon-drawer-operations').addEventListener('click',function(){closeMenu();if(document.body.classList.contains('operation-view')){goHome();}else{showPanel('deposit');}});
+ document.getElementById('dulon-drawer-track').addEventListener('click',async function(){
+  closeMenu();
+  const ref=window.prompt('Entre la référence de ta demande (ex. DB-...).');
+  if(!ref||!ref.trim())return;
+  const phone=window.prompt('Entre le numéro de téléphone utilisé pour cette demande, avec l’indicatif si nécessaire.');
+  if(!phone||!phone.trim())return;
+  const client=window.dulonSupabaseClient;
+  if(!client){window.alert('Le service de suivi est indisponible. Recharge la page puis réessaie.');return;}
+  try{
+   const {data,error}=await client.from('dulonbet_transactions').select('reference,operation_type,status,amount_fcfa,created_at').eq('reference',ref.trim()).eq('phone',phone.trim()).maybeSingle();
+   if(error)throw error;
+   if(!data){window.alert('Aucune demande trouvée avec cette référence et ce numéro. Vérifie les informations ou contacte le support WhatsApp.');return;}
+   const statuses={pending:'En attente de traitement',processing:'En cours de traitement',approved:'Paiement confirmé — vérification du crédit 1XBET nécessaire',rejected:'Demande rejetée',failed:'Échec du traitement',completed:'Traitement terminé'};
+   window.alert('Référence : '+data.reference+'\nOpération : '+data.operation_type+'\nMontant : '+data.amount_fcfa+' FCFA\nStatut : '+(statuses[String(data.status||'').toLowerCase()]||data.status||'Statut indisponible')+'\n\nCe suivi ne constitue pas à lui seul une preuve de crédit sur 1XBET. En cas de doute, contacte le support.');
+  }catch(err){
+   console.error('Suivi demande indisponible',err);
+   window.alert('Le suivi automatique n’est pas accessible pour le moment. Contacte le support WhatsApp avec ta référence.');
+  }
+ });
+ document.getElementById('dulon-drawer-how').addEventListener('click',function(){
+  closeMenu();goHome();const section=document.getElementById('dulon-how');if(section)section.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+ document.getElementById('dulon-drawer-faq').addEventListener('click',function(){
+  closeMenu();goHome();const faq=document.querySelector('.faq');if(faq)faq.scrollIntoView({behavior:'smooth',block:'start'});else window.alert('Consulte la rubrique Comment ça marche ? ou contacte le support WhatsApp pour obtenir de l’aide.');
+ });
  document.getElementById('dulon-drawer-install').addEventListener('click',function(){closeMenu();const install=document.getElementById('dulon-install-button');if(install)install.click();});
 })();
 </script>

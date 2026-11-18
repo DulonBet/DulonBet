@@ -3917,6 +3917,8 @@ body.operation-view #withdraw .operations-promo strong{
 #dulon-payment-tracking-modal .payment-modal-close{position:absolute;right:20px;top:17px;background:transparent;color:#64748b;padding:0;width:30px;height:30px;font-size:31px;line-height:1}
 #dulon-payment-tracking-modal .payment-spinner{width:80px;height:80px;margin:8px auto 28px;border-radius:50%;background:#eaf1ff;display:grid;place-items:center}
 #dulon-payment-tracking-modal .payment-spinner:before{content:"";width:42px;height:42px;border:5px solid #c8d8f5;border-top-color:#2459b7;border-radius:50%;animation:dulonPaymentSpin .9s linear infinite}
+#dulon-payment-tracking-modal.is-approved .payment-spinner:before{content:"✓";display:grid;place-items:center;width:42px;height:42px;border:0;color:#16845d;font-size:44px;font-weight:900;animation:none}
+#dulon-payment-tracking-modal.is-failed .payment-spinner:before{content:"×";display:grid;place-items:center;width:42px;height:42px;border:0;color:#b42318;font-size:48px;font-weight:800;animation:none}
 #dulon-payment-tracking-modal [data-payment-title]{font-size:clamp(24px,5vw,36px);line-height:1.2;margin:0 0 28px;color:#14284b;font-weight:850}
 #dulon-payment-tracking-modal [data-payment-intro]{font-size:clamp(17px,3.4vw,23px);line-height:1.5;margin:0 0 25px;color:#35445a}
 #dulon-payment-tracking-modal [data-payment-detail]{font-size:clamp(15px,3vw,20px);line-height:1.55;margin:0 0 30px;color:#6b7280}
@@ -4311,15 +4313,19 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
  const intro=modal.querySelector('[data-payment-intro]');
  const detail=modal.querySelector('[data-payment-detail]');
  const normalized=String(status||'processing').toLowerCase();
+ modal.classList.remove('is-approved','is-failed','is-pending');
  if(normalized==='approved'){
+  modal.classList.add('is-approved');
   title.textContent='Paiement confirmé';
   intro.textContent='Le paiement Mobile Money est confirmé.';
   detail.textContent='La prise en compte du crédit 1XBET doit encore être vérifiée. Ne relance pas le dépôt.';
  }else if(normalized==='rejected'||normalized==='failed'){
+  modal.classList.add('is-failed');
   title.textContent='Paiement non confirmé';
   intro.textContent='Le paiement n’a pas été confirmé.';
   detail.textContent='Aucun crédit 1XBET n’est annoncé. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
  }else{
+  modal.classList.add('is-pending');
   title.textContent='Paiement en cours';
   intro.textContent='En attente de confirmation du paiement et du crédit.';
   detail.textContent=attempt>=20

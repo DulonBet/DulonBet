@@ -6051,6 +6051,7 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
  </div>
  <div class="drawer-links">
   <button class="drawer-link" id="dulon-drawer-operations" type="button"><span class="drawer-link-icon" aria-hidden="true">↕</span><span>Opérations</span></button>
+  <a class="drawer-link" id="dulon-drawer-registration" href="https://1xbet.bj/fr/registration" target="_blank" rel="noopener"><span class="drawer-link-icon" aria-hidden="true">↗</span><span>Inscription 1XBET</span></a>
   <button class="drawer-link" id="dulon-drawer-track" type="button"><span class="drawer-link-icon" aria-hidden="true">⌕</span><span>Suivre ma demande</span></button>
   <button class="drawer-link" id="dulon-drawer-how" type="button"><span class="drawer-link-icon" aria-hidden="true">☷</span><span>Comment ça marche ?</span></button>
   <button class="drawer-link" id="dulon-drawer-faq" type="button"><span class="drawer-link-icon" aria-hidden="true">?</span><span>Aide et questions fréquentes</span></button>
@@ -6074,6 +6075,18 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
  backdrop.addEventListener('click',closeMenu);
  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
  document.getElementById('dulon-drawer-operations').addEventListener('click',function(){closeMenu();if(document.body.classList.contains('operation-view')){goHome();}else{showPanel('deposit');}});
+ document.getElementById('dulon-drawer-registration').addEventListener('click',function(event){
+  event.preventDefault();
+  closeMenu();
+  const url='https://1xbet.bj/fr/registration';
+  const opened=window.open(url,'_blank','noopener');
+  const code='FPIMI';
+  const showReminder=function(){window.alert('Code promo DulonBet : '+code+'\\n\\nSi le formulaire d’inscription 1XBET affiche un champ « Code promo », saisis FPIMI avant de valider. Vérifie que le code est accepté et lis les conditions de l’offre.');};
+  if(navigator.clipboard&&window.isSecureContext){
+   navigator.clipboard.writeText(code).then(function(){showReminder();}).catch(function(){showReminder();});
+  }else{showReminder();}
+  if(!opened){window.location.href=url;}
+ });
  document.getElementById('dulon-drawer-track').addEventListener('click',async function(){
   closeMenu();
   const ref=window.prompt('Entre la référence de ta demande (ex. DB-...).');

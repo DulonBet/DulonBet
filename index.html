@@ -4244,34 +4244,46 @@ async function callFeexPay(action,payload){
  if(!response.ok && response.status!==202)throw new Error(data.error||'Le service de paiement a refusé la demande.');
  return data;
 }
-function showDepositVerification(box,reference,token,status,message){
+function showDepositVerification(box,reference,token,status,message,attempt=0){
+ if(attempt===0)box.dataset.paymentReference=reference;
+ else if(box.dataset.paymentReference!==reference)return;
  box.replaceChildren();
- const p=document.createElement('p');
- p.textContent=(message||'Statut du paiement : '+status)+ ' Référence DulonBet : '+reference+'.';
- box.appendChild(p);
- if(status==='approved'){
-  const done=document.createElement('strong');done.textContent='Paiement confirmé par FeexPay.';box.appendChild(done);return;
+ const normalized=String(status||'processing').toLowerCase();
+ if(normalized==='approved'){
+  const done=document.createElement('p');
+  done.textContent='Paiement confirmé. Votre dépôt est en cours de prise en compte.';
+  box.appendChild(done);
+  return;
  }
- if(status==='rejected'||status==='failed'){
-  const failed=document.createElement('strong');failed.textContent='FeexPay indique que le paiement a échoué. Aucun crédit effectué.';box.appendChild(failed);return;
+ if(normalized==='rejected'||normalized==='failed'){
+  const failed=document.createElement('p');
+  failed.textContent='Le paiement n’a pas été confirmé. Aucun dépôt n’a été crédité. Vous pouvez effectuer une nouvelle demande.';
+  box.appendChild(failed);
+  return;
  }
- const note=document.createElement('p');
- note.textContent='Si la demande USSD apparaît sur ton téléphone, confirme-la auprès de ton opérateur. Ne relance pas ce même dépôt. Tu peux vérifier son statut ci-dessous.';
- box.appendChild(note);
- const verify=document.createElement('button');
- verify.type='button';verify.className='btn-blue';verify.textContent='Vérifier le paiement auprès de FeexPay';
- verify.addEventListener('click',async()=>{
-  verify.disabled=true;verify.textContent='Vérification…';
-  try{
-   const result=await callFeexPay('verify',{reference,token});
-   showDepositVerification(box,reference,token,result.status||'processing',result.message||'Statut non confirmé.');
-  }catch(err){
-   verify.disabled=false;verify.textContent='Réessayer la vérification';
-   const errp=document.createElement('p');errp.textContent=err.message||'Vérification indisponible. Réessaie plus tard.';box.appendChild(errp);
-  }
- });
- box.appendChild(verify);
+ if(attempt===0){
+  const note=document.createElement('p');
+  note.textContent='Consultez votre téléphone pour autoriser le paiement Mobile Money.';
+  box.appendChild(note);
+ }
+ if(attempt<20){
+  const timer=window.setTimeout(async()=>{
+   try{
+    const result=await callFeexPay('verify',{reference,token});
+    showDepositVerification(box,reference,token,result.status||'processing',result.message||'',attempt+1);
+   }catch(err){
+    // Continue les vérifications automatiques même si un contrôle ponctuel échoue.
+    showDepositVerification(box,reference,token,'processing','',attempt+1);
+   }
+  },3000);
+  box.dataset.pollTimer=String(timer);
+  return;
+ }
+ const pending=document.createElement('p');
+ pending.textContent='Le statut du paiement n’est pas encore disponible. Si aucune demande Mobile Money n’est apparue sur votre téléphone, vous pouvez effectuer une nouvelle demande. Si votre compte a été débité, contactez le support avant de payer à nouveau.';
+ box.appendChild(pending);
 }
+
 async function submitTx(e,type){
  e.preventDefault();
  const f=e.target;
@@ -4299,22 +4311,22 @@ async function submitTx(e,type){
    box.style.display='block';box.textContent='Saisis un numéro Mobile Money béninois de 10 chiffres commençant par 01.';return;
   }
   if(submit){submit.disabled=true;submit.textContent='Envoi à FeexPay…';}
-  box.style.display='block';box.textContent='Envoi sécurisé de la demande à FeexPay…';
+  box.style.display='block';box.dataset.paymentReference='initiating-'+newDulonBetKey();box.textContent='Envoi sécurisé de la demande à FeexPay…';
   try{
    const result=await callFeexPay('initiate',{
     amount_fcfa:amount,xbet_id:xbetId,phone,network:chosen,country,
     idempotency_key:newDulonBetKey()
    });
    if(!result.reference||!result.token){
-    box.textContent=(result.message||'La réponse de paiement est incomplète.')+' Ne relance pas ce même dépôt; contacte le support avec les informations disponibles.';
+    box.textContent='Le statut de la demande de paiement n’est pas disponible pour le moment. Si votre compte a été débité, contactez le support avant toute nouvelle tentative.';
     return;
    }
    try{sessionStorage.setItem('dulonbet-pending-payment',JSON.stringify({reference:result.reference,token:result.token}));}catch(_){}
-   showDepositVerification(box,result.reference,result.token,result.status||'pending',result.message||'Demande transmise à FeexPay. Aucun crédit tant que le paiement n’est pas confirmé.');
+   showDepositVerification(box,result.reference,result.token,result.status||'pending','');
    f.reset();
   }catch(err){
    console.error('FeexPay initiate:',err);
-   box.textContent=(err.message||'Impossible de contacter FeexPay.')+' Si tu as déjà reçu une demande USSD, ne recommence pas le paiement avant vérification.';
+   box.textContent='La demande de paiement n’a pas pu être confirmée. Si aucune notification Mobile Money n’est apparue, vous pouvez réessayer. Si votre compte a été débité, contactez le support avant une nouvelle tentative.';
   }finally{
    if(submit){submit.disabled=false;submit.textContent='Payer et recharger';}
   }

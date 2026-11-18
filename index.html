@@ -3909,6 +3909,24 @@ body.operation-view #withdraw .operations-promo strong{
 <meta name="apple-mobile-web-app-title" content="DulonBet">
 <link rel="apple-touch-icon" href="/icons/dulonbet-192.png">
 
+
+<style id="dulon-payment-tracking-modal-style">
+#dulon-payment-tracking-modal{display:none;position:fixed;inset:0;z-index:99999;background:rgba(15,30,55,.62);align-items:center;justify-content:center;padding:18px}
+#dulon-payment-tracking-modal.is-open{display:flex}
+#dulon-payment-tracking-modal .payment-modal-card{position:relative;width:min(100%,620px);background:#fff;border-radius:28px;padding:42px 30px 28px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.22);color:#14284b}
+#dulon-payment-tracking-modal .payment-modal-close{position:absolute;right:20px;top:17px;background:transparent;color:#64748b;padding:0;width:30px;height:30px;font-size:31px;line-height:1}
+#dulon-payment-tracking-modal .payment-spinner{width:80px;height:80px;margin:8px auto 28px;border-radius:50%;background:#eaf1ff;display:grid;place-items:center}
+#dulon-payment-tracking-modal .payment-spinner:before{content:"";width:42px;height:42px;border:5px solid #c8d8f5;border-top-color:#2459b7;border-radius:50%;animation:dulonPaymentSpin .9s linear infinite}
+#dulon-payment-tracking-modal [data-payment-title]{font-size:clamp(24px,5vw,36px);line-height:1.2;margin:0 0 28px;color:#14284b;font-weight:850}
+#dulon-payment-tracking-modal [data-payment-intro]{font-size:clamp(17px,3.4vw,23px);line-height:1.5;margin:0 0 25px;color:#35445a}
+#dulon-payment-tracking-modal [data-payment-detail]{font-size:clamp(15px,3vw,20px);line-height:1.55;margin:0 0 30px;color:#6b7280}
+#dulon-payment-tracking-modal .payment-modal-dismiss{width:100%;min-height:64px;border-radius:14px;background:#2459b7;color:#fff;font-size:19px}
+#dulon-payment-tracking-modal .payment-modal-dismiss:focus-visible,#dulon-payment-tracking-modal .payment-modal-close:focus-visible{outline:3px solid #9dbcf5;outline-offset:3px}
+@keyframes dulonPaymentSpin{to{transform:rotate(360deg)}}
+@media(max-width:480px){#dulon-payment-tracking-modal{padding:16px}#dulon-payment-tracking-modal .payment-modal-card{padding:48px 20px 22px;border-radius:25px}#dulon-payment-tracking-modal .payment-spinner{width:76px;height:76px;margin-bottom:26px}#dulon-payment-tracking-modal .payment-modal-dismiss{min-height:60px}}
+@media(prefers-reduced-motion:reduce){#dulon-payment-tracking-modal .payment-spinner:before{animation:none}}
+</style>
+
 </head>
 <body>
 <header>
@@ -4244,7 +4262,7 @@ async function callFeexPay(action,payload){
  if(!response.ok && response.status!==202)throw new Error(data.error||'Le service de paiement a refusé la demande.');
  return data;
 }
-function showDepositVerification(box,reference,token,status,message,attempt=0){
+function originalShowDepositVerification(box,reference,token,status,message,attempt=0){
  if(attempt===0)box.dataset.paymentReference=reference;
  else if(box.dataset.paymentReference!==reference)return;
  box.replaceChildren();
@@ -4282,6 +4300,33 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
  const pending=document.createElement('p');
  pending.textContent='Le statut du paiement n’est pas encore disponible. Si aucune demande Mobile Money n’est apparue sur votre téléphone, vous pouvez effectuer une nouvelle demande. Si votre compte a été débité, contactez le support avant de payer à nouveau.';
  box.appendChild(pending);
+}
+
+
+function showDepositVerification(box,reference,token,status,message,attempt=0){
+ originalShowDepositVerification(box,reference,token,status,message,attempt);
+ const modal=document.getElementById('dulon-payment-tracking-modal');
+ if(!modal)return;
+ const title=modal.querySelector('[data-payment-title]');
+ const intro=modal.querySelector('[data-payment-intro]');
+ const detail=modal.querySelector('[data-payment-detail]');
+ const normalized=String(status||'processing').toLowerCase();
+ if(normalized==='approved'){
+  title.textContent='Paiement confirmé';
+  intro.textContent='Le paiement Mobile Money est confirmé.';
+  detail.textContent='La prise en compte du crédit 1XBET doit encore être vérifiée. Ne relance pas le dépôt.';
+ }else if(normalized==='rejected'||normalized==='failed'){
+  title.textContent='Paiement non confirmé';
+  intro.textContent='Le paiement n’a pas été confirmé.';
+  detail.textContent='Aucun crédit 1XBET n’est annoncé. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
+ }else{
+  title.textContent='Paiement en cours';
+  intro.textContent='En attente de confirmation du paiement et du crédit.';
+  detail.textContent=attempt>=20
+   ? 'Le statut du paiement n’est pas encore disponible. Garde ton téléphone à proximité. Si ton compte a été débité, contacte le support. Ne relance pas le dépôt.'
+   : 'Demande transmise. Le paiement doit encore être confirmé. Garde ton téléphone à proximité et suis les éventuelles instructions de paiement. Ne relance pas le dépôt.';
+ }
+ if(attempt===0)modal.classList.add('is-open');
 }
 
 async function submitTx(e,type){
@@ -5932,6 +5977,29 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
       });
     });
   }
+})();
+</script>
+
+
+<div id="dulon-payment-tracking-modal" role="dialog" aria-modal="true" aria-labelledby="dulon-payment-modal-title">
+ <div class="payment-modal-card">
+  <button class="payment-modal-close" type="button" aria-label="Fermer le suivi du paiement">×</button>
+  <div class="payment-spinner" aria-hidden="true"></div>
+  <h2 id="dulon-payment-modal-title" data-payment-title>Paiement en cours</h2>
+  <p data-payment-intro>En attente de confirmation du paiement et du crédit.</p>
+  <p data-payment-detail>Demande transmise. Le paiement doit encore être confirmé. Garde ton téléphone à proximité et suis les éventuelles instructions de paiement. Ne relance pas le dépôt.</p>
+  <button class="payment-modal-dismiss" type="button">Fermer le suivi</button>
+ </div>
+</div>
+<script id="dulon-payment-tracking-modal-script">
+(function(){
+ const modal=document.getElementById('dulon-payment-tracking-modal');
+ if(!modal)return;
+ function closeModal(){modal.classList.remove('is-open')}
+ modal.querySelector('.payment-modal-close').addEventListener('click',closeModal);
+ modal.querySelector('.payment-modal-dismiss').addEventListener('click',closeModal);
+ modal.addEventListener('click',function(event){if(event.target===modal)closeModal()});
+ document.addEventListener('keydown',function(event){if(event.key==='Escape')closeModal()});
 })();
 </script>
 

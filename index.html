@@ -4665,30 +4665,43 @@ body.operation-view #withdraw .withdraw-location-item span{
     const phone=document.getElementById(phoneId);
     if(!form || !phone) return;
     const country=form.querySelector('select[name="country"]');
+    const isDeposit=phoneId==='deposit-phone';
     function updateRule(){
       const isBenin=!country || country.value==='Bénin';
-      phone.value=phone.value.replace(/\D/g,'').slice(0,isBenin?10:15);
-      phone.maxLength=isBenin?10:15;
+      const maxDigits=isBenin?(isDeposit?13:10):15;
+      phone.value=phone.value.replace(/\D/g,'').slice(0,maxDigits);
+      phone.maxLength=maxDigits;
       phone.minLength=isBenin?10:7;
-      phone.pattern=isBenin?'[0-9]{10}':'[0-9]{7,15}';
+      phone.pattern=isBenin
+        ? (isDeposit?'(?:[0-9]{10}|229[0-9]{10})':'[0-9]{10}')
+        : '[0-9]{7,15}';
       phone.title=isBenin
-        ? 'Pour le Bénin, saisis exactement 10 chiffres.'
+        ? (isDeposit
+          ? 'Saisis 10 chiffres locaux (01…) ou 13 chiffres avec l’indicatif 229.'
+          : 'Pour le Bénin, saisis exactement 10 chiffres.')
         : 'Saisis un numéro composé de 7 à 15 chiffres.';
       phone.setCustomValidity('');
     }
     phone.addEventListener('input',function(){
       const isBenin=!country || country.value==='Bénin';
-      this.value=this.value.replace(/\D/g,'').slice(0,isBenin?10:15);
+      const maxDigits=isBenin?(isDeposit?13:10):15;
+      this.value=this.value.replace(/\D/g,'').slice(0,maxDigits);
       this.setCustomValidity('');
     });
     if(country) country.addEventListener('change',updateRule);
     form.addEventListener('submit',function(event){
       const isBenin=!country || country.value==='Bénin';
-      const valid=isBenin?/^\d{10}$/.test(phone.value):/^\d{7,15}$/.test(phone.value);
+      const valid=isBenin
+        ? (isDeposit
+          ? (/^01\d{8}$/.test(phone.value)||/^22901\d{8}$/.test(phone.value))
+          : /^01\d{8}$/.test(phone.value))
+        : /^\d{7,15}$/.test(phone.value);
       if(!valid){
         event.preventDefault();
         phone.setCustomValidity(isBenin
-          ? 'Le numéro béninois doit contenir exactement 10 chiffres.'
+          ? (isDeposit
+            ? 'Le dépôt accepte 10 chiffres locaux (01…) ou 13 chiffres avec l’indicatif 229.'
+            : 'Le numéro béninois doit contenir exactement 10 chiffres commençant par 01.')
           : 'Le numéro doit contenir entre 7 et 15 chiffres.');
         phone.reportValidity();
       }

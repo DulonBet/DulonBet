@@ -3929,9 +3929,38 @@ body.operation-view #withdraw .operations-promo strong{
 @media(prefers-reduced-motion:reduce){#dulon-payment-tracking-modal .payment-spinner:before{animation:none}}
 </style>
 
+<style id="dulon-mobile-drawer-style">
+.dulon-mobile-menu-open{display:none;background:#2459b7;color:#fff;width:44px;height:44px;flex:0 0 44px;padding:0;border-radius:13px;font-size:23px;line-height:1}
+#dulon-mobile-drawer-backdrop{position:fixed;inset:0;background:rgba(18,39,70,.42);z-index:10000;opacity:0;visibility:hidden;transition:opacity .2s ease}
+#dulon-mobile-drawer{position:fixed;z-index:10001;inset:0 auto 0 0;width:min(80vw,420px);background:#fff;box-shadow:14px 0 38px rgba(13,37,74,.16);transform:translateX(-105%);transition:transform .23s ease;display:flex;flex-direction:column;max-height:100dvh}
+body.dulon-drawer-open #dulon-mobile-drawer{transform:translateX(0)}
+body.dulon-drawer-open #dulon-mobile-drawer-backdrop{opacity:1;visibility:visible}
+#dulon-mobile-drawer .drawer-head{display:flex;align-items:center;gap:13px;padding:24px 20px;border-bottom:1px solid #e0e7f2;min-height:92px}
+#dulon-mobile-drawer .drawer-brand-mark{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:#2459b7;color:white;font-size:24px;flex:0 0 48px}
+#dulon-mobile-drawer .drawer-brand-name{font-size:25px;font-weight:900;line-height:1.1;color:#0c2857;flex:1}
+#dulon-mobile-drawer .drawer-close{width:44px;height:44px;padding:0;background:#f3f6fb;color:#64748b;font-size:28px;font-weight:400;border-radius:13px}
+#dulon-mobile-drawer .drawer-links{padding:20px;display:flex;flex-direction:column;gap:10px}
+#dulon-mobile-drawer .drawer-link{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#e8f1ff;color:#214d87;border-radius:15px;padding:17px 18px;font-size:18px;font-weight:800}
+#dulon-mobile-drawer .drawer-link .drawer-link-icon{font-size:23px;width:28px;text-align:center}
+#dulon-mobile-drawer .drawer-bottom{margin-top:auto;border-top:1px solid #e0e7f2;padding:20px}
+#dulon-mobile-drawer .drawer-install{display:flex;align-items:center;gap:13px;width:100%;background:#fff;color:#25354d;text-align:left;padding:18px 8px;font-size:18px;font-weight:750}
+#dulon-mobile-drawer .drawer-install-icon{font-size:24px;color:#64748b}
+@media(max-width:680px){
+ header{flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;padding:10px 14px!important;min-height:68px!important}
+ header .brand{flex:1 1 auto!important;min-width:0!important;font-size:20px!important}
+ header .brand .mark{width:36px;height:36px;flex:0 0 36px}
+ header .header-actions{width:auto!important;flex:0 0 auto;gap:6px}
+ header .header-actions .login-button{display:none}
+ header .header-actions button{flex:0 0 auto;min-width:40px;padding:9px}
+ .dulon-mobile-menu-open{display:block}
+}
+@media(min-width:681px){#dulon-mobile-drawer,#dulon-mobile-drawer-backdrop{display:none!important}}
+@media(prefers-reduced-motion:reduce){#dulon-mobile-drawer,#dulon-mobile-drawer-backdrop{transition:none}}
+</style>
 </head>
 <body>
 <header>
+<button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
 <div class="brand"><span class="mark">↕</span> <span class="brand-name"><span class="dulon">Dulon</span><span class="bet">Bet</span></span></div>
 <nav class="header-actions"><button class="btn-dark login-button" onclick="showPanel('login')">Se connecter</button><button aria-label="Activer le thème sombre" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Changer le thème" type="button">☾</button></nav>
 </header>
@@ -6009,6 +6038,37 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
 })();
 </script>
 
+<div id="dulon-mobile-drawer-backdrop" aria-hidden="true"></div>
+<aside id="dulon-mobile-drawer" aria-label="Menu principal" aria-hidden="true">
+ <div class="drawer-head">
+  <div class="drawer-brand-mark" aria-hidden="true">↕</div>
+  <div class="drawer-brand-name"><span style="color:#0c2857">Dulon</span><span style="color:#60a5fa">Bet</span></div>
+  <button class="drawer-close" id="dulon-mobile-menu-close" type="button" aria-label="Fermer le menu">×</button>
+ </div>
+ <div class="drawer-links">
+  <button class="drawer-link" id="dulon-drawer-operations" type="button"><span class="drawer-link-icon" aria-hidden="true">↕</span><span>Opérations</span></button>
+ </div>
+ <div class="drawer-bottom">
+  <button class="drawer-install" id="dulon-drawer-install" type="button"><span class="drawer-install-icon" aria-hidden="true">↓</span><span>Installer l’application</span></button>
+ </div>
+</aside>
+<script id="dulon-mobile-drawer-script">
+(function(){
+ const drawer=document.getElementById('dulon-mobile-drawer');
+ const backdrop=document.getElementById('dulon-mobile-drawer-backdrop');
+ const openBtn=document.getElementById('dulon-mobile-menu-open');
+ const closeBtn=document.getElementById('dulon-mobile-menu-close');
+ if(!drawer||!backdrop||!openBtn||!closeBtn)return;
+ function openMenu(){document.body.classList.add('dulon-drawer-open');drawer.setAttribute('aria-hidden','false');openBtn.setAttribute('aria-expanded','true');closeBtn.focus();}
+ function closeMenu(){document.body.classList.remove('dulon-drawer-open');drawer.setAttribute('aria-hidden','true');openBtn.setAttribute('aria-expanded','false');}
+ openBtn.addEventListener('click',openMenu);
+ closeBtn.addEventListener('click',closeMenu);
+ backdrop.addEventListener('click',closeMenu);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+ document.getElementById('dulon-drawer-operations').addEventListener('click',function(){closeMenu();if(document.body.classList.contains('operation-view')){goHome();}else{showPanel('deposit');}});
+ document.getElementById('dulon-drawer-install').addEventListener('click',function(){closeMenu();const install=document.getElementById('dulon-install-button');if(install)install.click();});
+})();
+</script>
 </body>
 <style id="dulonbet-support-promo-size-v12">
 /* Ajustement intermédiaire : légèrement au-dessus de V10, sans l'ampleur de V11 */

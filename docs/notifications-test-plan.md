@@ -1,44 +1,50 @@
 # DulonBet — Plan de tests hors production
 
-Ce plan s'applique à la fonction préparatoire `dulonbet-notify-admin`. Aucun test ne doit utiliser un vrai dépôt, un vrai retrait ou déclencher les fonctions financières existantes.
+Ce plan concerne le code de préparation `dulonbet-notify-admin`. Aucun test ne doit utiliser un vrai dépôt, un vrai retrait ni déclencher les fonctions financières. Le code et le SQL restent non déployés.
 
-## Préconditions avant test
-- [ ] Domaine Resend entièrement vérifié et expéditeur autorisé.
-- [ ] Clé Resend divulguée précédemment révoquée; nouvelle clé créée et stockée uniquement dans les secrets Supabase.
-- [ ] Secrets dédiés aux notifications configurés dans un environnement de test, jamais dans GitHub ni dans le navigateur.
-- [ ] Adresse destinataire de test confirmée.
+## Préconditions avant tout test
+- [ ] Révoquer la clé Resend qui a été partagée dans une conversation; créer une nouvelle clé et la conserver uniquement dans les secrets de l’environnement de test.
+- [ ] Domaine et expéditeur Resend entièrement vérifiés; destinataire de test confirmé.
+- [ ] Les secrets e-mail et `SUPABASE_SERVICE_ROLE_KEY` sont définis uniquement côté serveur, jamais dans GitHub ni dans le navigateur.
+- [ ] SQL du registre revu, généré selon la procédure CLI Supabase du dépôt, appliqué uniquement à une base de développement dédiée.
+- [ ] Les deux RPC `claim_dulonbet_notification_event` et `finish_dulonbet_notification_event` sont testées sur cette base.
 - [ ] La fonction est déployée uniquement dans un environnement de test explicitement choisi.
-- [ ] Aucun déclencheur financier existant n'appelle encore la fonction.
-- [ ] Registre persistant d'idempotence implémenté et revu avant de tester l'idempotence métier.
+- [ ] Aucun déclencheur financier existant n'appelle la fonction.
 
-## Tests négatifs (ne doivent envoyer aucun e-mail)
-1. Méthode GET au lieu de POST → 405.
-2. Secret interne absent ou incorrect → 401.
-3. Configuration incomplète → 503.
-4. JSON invalide → 400.
-5. Type d'événement non autorisé → 400.
-6. Identifiant d'événement invalide → 400.
-7. Montant négatif, non entier ou supérieur à 2 000 000 FCFA → 400.
-8. Référence mal formée → 400.
-9. Appel sans secret de base de données/registre configuré → échec fermé, aucun e-mail.
-10. Fournisseur e-mail en erreur ou indisponible → erreur contrôlée, aucune validation financière.
+## Tests négatifs — aucun e-mail ne doit partir
+1. GET au lieu de POST → 405.
+2. Secret interne absent/incorrect → 401.
+3. Configuration e-mail ou registre incomplète → 503.
+4. JSON invalide ou corps non objet → 400.
+5. Type d'événement ou identifiant non autorisé → 400.
+6. Montant non entier, inférieur à 100 FCFA ou supérieur à 2 000 000 FCFA → 400.
+7. Référence mal formée → 400.
+8. Registre/RPC inaccessible → 503, sans appeler Resend.
+9. Même identifiant avec un autre type d'événement → 409.
+10. Tentatives épuisées → 429, sans appeler Resend.
+11. Fournisseur e-mail en erreur/indisponible → erreur contrôlée et statut de registre marqué failed si possible.
 
-## Tests positifs avec événements fictifs uniquement
-- [ ] `deposit_requested` produit un message qui indique explicitement que le paiement n'est pas confirmé.
+## Tests d'idempotence — événements fictifs seulement
+- [ ] Premier événement valide : une seule réservation est créée, puis l'e-mail est envoyé.
+- [ ] Deux appels simultanés avec le même `event_id` : un seul obtient `claimed`; l'autre reçoit `busy`.
+- [ ] Même événement après `sent` : réponse doublon, aucun nouvel appel Resend.
+- [ ] Même identifiant avec un autre type : conflit, aucun e-mail.
+- [ ] Événement échoué : reprise atomique, nombre de tentatives incrémenté et plafonné à 5.
+- [ ] Événement bloqué en `processing` : reprise possible seulement après expiration du verrou de 2 minutes.
+- [ ] Réponse Resend acceptée mais échec de mise à jour du registre : réponse d'erreur contrôlée et même clé Resend utilisée lors de la reprise.
+- [ ] Réponse de finalisation du registre vérifiée; `false` ne doit pas être traité comme un succès.
+- [ ] Les logs ne contiennent ni clés, ni secrets, ni code de retrait, ni téléphone, ni corps complet de requête.
+
+## Vérification du contenu
+- [ ] `deposit_requested` dit explicitement que le paiement n'est pas confirmé.
 - [ ] `deposit_confirmed_feexpay` précise que le crédit 1XBET doit être vérifié séparément.
-- [ ] `deposit_credited_1xbet` est utilisé uniquement après une réponse positive réelle de l'API, jamais lors d'un simple statut « en attente ».
+- [ ] `deposit_credited_1xbet` ne peut être envoyé qu'après confirmation réelle de l'API.
 - [ ] `withdrawal_validated_1xbet` précise que le paiement Mobile Money n'est pas confirmé.
-- [ ] `withdrawal_paid_confirmed` n'est jamais déclenché sans preuve de paiement autorisée.
-- [ ] Deux appels simultanés avec le même `event_id` ne créent qu'un seul envoi.
-- [ ] Le même `event_id` après état `sent` ne crée aucun nouvel envoi.
-- [ ] Un événement `failed` peut être repris selon une transition atomique et une limite de tentatives.
-- [ ] Une interruption pendant l'envoi ne laisse pas un événement bloqué indéfiniment sans procédure de reprise.
-- [ ] Les journaux ne contiennent aucune clé, aucun secret, code de retrait, numéro de téléphone ou payload complet.
+- [ ] `withdrawal_paid_confirmed` est réservé à une preuve de paiement autorisée.
+- [ ] Les notifications ne modifient jamais les tables financières.
 
-## Limites à résoudre avant activation
-- La fonction actuelle est un brouillon et utilise seulement la clé d'idempotence Resend; **elle n'est pas encore protégée par un registre métier persistant**. Ne pas la relier aux événements de production avant ce travail.
-- La conception proposée est décrite dans [notifications-idempotency-ledger.md](notifications-idempotency-ledger.md); elle n'a pas été appliquée à Supabase.
-- Les notifications ne doivent jamais modifier `dulonbet_transactions`, créditer un compte ou valider un retrait.
-- Les erreurs d'envoi doivent pouvoir être réessayées sans rejouer l'opération financière.
-- Les tests WhatsApp restent distincts et désactivés jusqu'à validation d'une méthode officielle compatible avec les groupes.
-- Le code n'a pas encore été compilé ni exécuté; aucune réussite de test n'est revendiquée.
+## Limites restantes
+- La clé d'idempotence Resend réduit les doublons externes mais ne garantit pas à elle seule un envoi exactement une fois.
+- Le SQL de [notifications-ledger-sql-draft.md](notifications-ledger-sql-draft.md) est une proposition non exécutée, pas une migration.
+- Le code n'a pas encore été compilé ni exécuté dans Deno/Supabase; aucune réussite de test n'est revendiquée.
+- WhatsApp reste désactivé tant qu'un fournisseur officiel compatible avec l'envoi aux groupes n'est pas validé.

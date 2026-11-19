@@ -6303,43 +6303,45 @@ body.operation-view #withdraw .operator-pick input[type="radio"] {
   width:1px!important;height:1px!important;opacity:0!important;margin:0!important;padding:0!important;
 }
 
-/* Accueil mobile : étapes compactes sans chevauchement avec le titre SEO */
+/* Accueil mobile : étapes 1-4 à taille compacte et espacement maîtrisé */
 @media(max-width:600px) {
-  body:not(.operation-view) #dulon-how .how {
+  #dulon-how .how {
     display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
     gap:6px!important;
     margin-bottom:0!important;
   }
-  body:not(.operation-view) #dulon-how .how .step {
+  #dulon-how .how .step {
     display:grid!important;
-    grid-template-columns:34px minmax(0,1fr)!important;
+    grid-template-columns:30px minmax(0,1fr)!important;
     column-gap:8px!important;
     margin:0!important;
-    padding:10px 12px!important;
+    padding:8px 10px!important;
     min-height:0!important;
     box-sizing:border-box!important;
+    align-items:center!important;
   }
-  body:not(.operation-view) #dulon-how .how .step .num {
-    width:30px!important;height:30px!important;min-width:30px!important;
+  #dulon-how .how .step .num {
+    width:28px!important;height:28px!important;min-width:28px!important;
     font-size:14px!important;margin:0!important;
   }
-  body:not(.operation-view) #dulon-how .how .step b {
-    display:block!important;font-size:14px!important;line-height:1.25!important;margin:0 0 2px!important;
+  #dulon-how .how .step b {
+    display:block!important;font-size:14px!important;line-height:1.2!important;margin:0 0 2px!important;
   }
-  body:not(.operation-view) #dulon-how .how .step .small {
-    display:block!important;font-size:12px!important;line-height:1.3!important;
+  #dulon-how .how .step .small {
+    display:block!important;font-size:12px!important;line-height:1.25!important;
   }
-  body:not(.operation-view) #dulon-how {
+  #dulon-how {
     margin-bottom:0!important;
     padding-bottom:0!important;
   }
-  body:not(.operation-view) .seo-africa#recharge-1xbet-afrique {
+  .seo-africa#recharge-1xbet-afrique {
     margin-top:8px!important;
     padding-top:0!important;
     position:relative!important;
     clear:both!important;
   }
-  body:not(.operation-view) .seo-africa#recharge-1xbet-afrique > h2 {
+  .seo-africa#recharge-1xbet-afrique > h2 {
     margin-top:0!important;
   }
 }

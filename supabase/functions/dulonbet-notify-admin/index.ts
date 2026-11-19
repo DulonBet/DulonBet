@@ -61,8 +61,17 @@ Deno.serve(async (req: Request) => {
     return json({ error: "Content-Type application/json requis." }, 415);
   }
 
+  const contentLength = Number(req.headers.get("content-length") ?? "0");
+  if (Number.isFinite(contentLength) && contentLength > 16_384) {
+    return json({ error: "Corps de requête trop volumineux." }, 413);
+  }
+  let rawBody: string;
+  try { rawBody = await req.text(); } catch { return json({ error: "Corps de requête illisible." }, 400); }
+  if (new TextEncoder().encode(rawBody).byteLength > 16_384) {
+    return json({ error: "Corps de requête trop volumineux." }, 413);
+  }
   let parsed: unknown;
-  try { parsed = await req.json(); } catch { return json({ error: "Corps JSON invalide." }, 400); }
+  try { parsed = JSON.parse(rawBody); } catch { return json({ error: "Corps JSON invalide." }, 400); }
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
     return json({ error: "Le corps doit être un objet JSON." }, 400);
   }
@@ -76,9 +85,7 @@ Deno.serve(async (req: Request) => {
     ? ""
     : typeof body.reference === "string" ? body.reference.trim() : null;
   const rawAmount = body.amount_fcfa;
-  const amount = typeof rawAmount === "number"
-    ? rawAmount
-    : typeof rawAmount === "string" && /^\d+$/.test(rawAmount) ? Number(rawAmount) : NaN;
+  const amount = typeof rawAmount === "number" ? rawAmount : NaN;
 
   if (!/^[A-Za-z0-9._:-]{8,128}$/.test(eventId)) return json({ error: "Identifiant d'événement invalide." }, 400);
   if (!Object.prototype.hasOwnProperty.call(ALLOWED_EVENTS, eventTypeValue)) return json({ error: "Type d'événement non autorisé." }, 400);

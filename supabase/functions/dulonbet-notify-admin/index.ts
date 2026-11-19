@@ -57,7 +57,7 @@ Deno.serve(async (req: Request) => {
   if (!safeEqual(req.headers.get("x-dulonbet-notification-secret") ?? "", INTERNAL_SECRET)) {
     return json({ error: "Non autorisé." }, 401);
   }
-  if (!/^application\\/json(?:\\s*;|$)/i.test(req.headers.get("content-type") ?? "")) {
+  if (!/^application\/json(?:\s*;|$)/i.test(req.headers.get("content-type") ?? "")) {
     return json({ error: "Content-Type application/json requis." }, 415);
   }
 
@@ -78,7 +78,7 @@ Deno.serve(async (req: Request) => {
   const rawAmount = body.amount_fcfa;
   const amount = typeof rawAmount === "number"
     ? rawAmount
-    : typeof rawAmount === "string" && /^\\d+$/.test(rawAmount) ? Number(rawAmount) : NaN;
+    : typeof rawAmount === "string" && /^\d+$/.test(rawAmount) ? Number(rawAmount) : NaN;
 
   if (!/^[A-Za-z0-9._:-]{8,128}$/.test(eventId)) return json({ error: "Identifiant d'événement invalide." }, 400);
   if (!Object.prototype.hasOwnProperty.call(ALLOWED_EVENTS, eventTypeValue)) return json({ error: "Type d'événement non autorisé." }, 400);

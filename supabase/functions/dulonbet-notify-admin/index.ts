@@ -74,12 +74,21 @@ Deno.serve(async (req: Request) => {
     return json({ error: "Non autorisé." }, 401);
   }
 
-  let body: Record<string, unknown>;
+  const contentType = req.headers.get("content-type") ?? "";
+  if (!contentType.toLowerCase().includes("application/json")) {
+    return json({ error: "Content-Type application/json requis." }, 415);
+  }
+
+  let parsed: unknown;
   try {
-    body = await req.json();
+    parsed = await req.json();
   } catch {
     return json({ error: "Corps JSON invalide." }, 400);
   }
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return json({ error: "Le corps doit être un objet JSON." }, 400);
+  }
+  const body = parsed as Record<string, unknown>;
 
   const eventId = clean(body.event_id, 128);
   const eventType = clean(body.event_type, 64) as EventType;
@@ -112,20 +121,28 @@ Deno.serve(async (req: Request) => {
   ].filter(Boolean);
 
   // Resend idempotency key reduces duplicate sends on retries of the same event.
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "authorization": `Bearer ${RESEND_API_KEY}`,
-      "content-type": "application/json",
-      "idempotency-key": `dulonbet-notification/${eventId}`,
-    },
-    body: JSON.stringify({
-      from: FROM_EMAIL,
-      to: [ADMIN_EMAIL],
-      subject: event.subject,
-      text: lines.join("\n"),
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "authorization": `Bearer ${RESEND_API_KEY}`,
+        "content-type": "application/json",
+        "idempotency-key": `dulonbet-notification/${eventId}`,
+      },
+      body: JSON.stringify({
+        from: FROM_EMAIL,
+        to: [ADMIN_EMAIL],
+        subject: event.subject,
+        text: lines.join("\n"),
+      }),
+      signal: AbortSignal.timeout(10000),
+    });
+  } catch {
+    // Network/timeout errors are intentionally sanitized. No financial state is changed.
+    console.error("DULONBET_NOTIFICATION_NETWORK_ERROR", { eventType, eventId });
+    return json({ error: "Fournisseur de notification inaccessible.", retryable: true }, 502);
+  }
 
   if (!response.ok) {
     const providerStatus = response.status;

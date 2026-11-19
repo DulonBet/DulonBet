@@ -3962,48 +3962,28 @@ body.dulon-drawer-open #dulon-mobile-drawer-backdrop{opacity:1;visibility:visibl
 @media(prefers-reduced-motion:reduce){#dulon-mobile-drawer,#dulon-mobile-drawer-backdrop{transition:none}}
 </style>
 <style id="dulonbet-promo-card-compact">
-/* Garder le panneau du code promo proche de la hauteur du panneau principal sur mobile */
+/* Réduire uniquement la carte Code promo; ne pas toucher à la carte Service Mobile Money */
 @media(max-width:520px){
   .promo-slide.code-slide{
-    min-height:290px!important;
+    min-height:0!important;
     height:auto!important;
-    padding:22px!important;
-    gap:10px!important;
-    align-items:center!important;
+    padding:18px!important;
+    gap:6px!important;
+    align-items:flex-start!important;
     border-radius:20px!important;
   }
-  .code-slide .promo-label{font-size:11px!important;line-height:1.2!important;letter-spacing:1.5px!important}
-  .code-slide h2{font-size:21px!important;line-height:1.12!important;margin:7px 0 8px!important}
-  .code-slide .promo-exclusive{font-size:14px!important;line-height:1.35!important;margin:0 0 8px!important}
-  .code-slide .promo-code-title{font-size:12px!important;line-height:1.2!important;margin:5px 0!important}
-  .code-slide .promo-line{gap:8px!important}
-  .code-slide .promo-line span{font-size:20px!important;padding:6px 12px!important;letter-spacing:1.5px!important}
-  .code-slide .promo-line button{font-size:12px!important;padding:8px 10px!important}
-  .code-slide p:not(.promo-exclusive){font-size:12px!important;line-height:1.35!important;margin:7px 0 0!important}
+  .code-slide .promo-label{font-size:10px!important;line-height:1.1!important;letter-spacing:1.3px!important}
+  .code-slide h2{font-size:18px!important;line-height:1.08!important;margin:5px 0!important}
+  .code-slide .promo-exclusive{font-size:12px!important;line-height:1.22!important;margin:0 0 5px!important}
+  .code-slide .promo-code-title{font-size:10px!important;line-height:1.1!important;margin:3px 0!important}
+  .code-slide .promo-line{gap:6px!important}
+  .code-slide .promo-line span{font-size:16px!important;padding:4px 8px!important;letter-spacing:1.2px!important}
+  .code-slide .promo-line button{font-size:10px!important;padding:6px 8px!important}
+  .code-slide p:not(.promo-exclusive){font-size:10px!important;line-height:1.2!important;margin:5px 0 0!important}
 }
 </style>
 
-<style id="dulonbet-promo-equal-card-size">
-/* Sur téléphone, les deux panneaux du carrousel ont exactement la même hauteur */
-@media(max-width:520px){
-  .promo-slides{min-height:310px!important;height:310px!important}
-  .promo-slides>.promo-slide,
-  .promo-slides>.promo-slide.hero-slide,
-  .promo-slides>.promo-slide.code-slide{
-    box-sizing:border-box!important;width:100%!important;
-    height:310px!important;min-height:310px!important;max-height:310px!important;
-    overflow:hidden!important;padding:22px!important;border-radius:20px!important;
-  }
-  .promo-slide.code-slide>div:first-child{min-width:0!important;width:100%!important}
-  .code-slide h2{font-size:20px!important;line-height:1.08!important;margin:6px 0!important}
-  .code-slide .promo-exclusive{font-size:13px!important;line-height:1.25!important;margin:0 0 6px!important}
-  .code-slide .promo-code-title{font-size:11px!important;margin:4px 0!important}
-  .code-slide .promo-line{gap:7px!important}
-  .code-slide .promo-line span{font-size:18px!important;padding:5px 10px!important}
-  .code-slide .promo-line button{font-size:11px!important;padding:7px 9px!important}
-  .code-slide p:not(.promo-exclusive){font-size:11px!important;line-height:1.25!important;margin:6px 0 0!important}
-}
-</style>
+
 
 </head>
 <body>

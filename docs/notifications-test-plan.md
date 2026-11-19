@@ -51,10 +51,10 @@ Ce plan concerne le code de préparation `dulonbet-notify-admin`. Aucun test ne 
 
 
 ## Cas supplémentaires à exécuter après compilation
-- [ ] Corps de requête supérieur à 16 Kio, avec ou sans en-tête `Content-Length` fiable → 413; Resend ne doit pas être appelé.
+- [ ] Corps de requête supérieur à 16 Kio, avec ou sans en-tête `Content-Length` fiable → 413; Resend ne doit pas être appelé, même si l'annulation du flux de lecture échoue.
 - [ ] Montant envoyé comme chaîne JSON (`"200"`) → 400; seul un nombre JSON entier est accepté.
 - [ ] Référence de type nombre, objet ou tableau → 400.
 - [ ] Vérifier que les réponses d'erreur ne contiennent jamais les secrets, le corps complet ou des données personnelles.
 - [ ] Vérifier les codes HTTP et les champs de réponse pour chaque scénario, puis archiver les résultats de test.
 
-**État d'exécution :** ces tests sont préparés mais non exécutés. Deno n'est pas installé dans l'environnement de vérification disponible; la compilation de la fonction Edge n'est donc pas confirmée.
+**État d'exécution :** ces tests sont préparés mais non exécutés. Deno n'est pas installé dans l'environnement de vérification disponible; la compilation de la fonction Edge n'est donc pas confirmée. Le code a été ajusté pour préserver le statut HTTP 413 en cas d'échec d'annulation du flux et pour distinguer les échecs fournisseur permanents des échecs transitoires.

@@ -4089,6 +4089,11 @@ body:not(.operation-view) #home-view #payment-methods-title{color:#0871e8!import
     padding-top:8px!important;
   }
 </style>
+
+<style id="dulon-how-hidden-fix">
+/* Le sélecteur d'onglet doit masquer l'autre liste même avec les règles responsive */
+#home-view > .section#dulon-how .how[hidden] { display: none !important; }
+</style>
 </head>
 <body>
 

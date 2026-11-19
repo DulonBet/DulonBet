@@ -3986,29 +3986,52 @@ body.dulon-drawer-open #dulon-mobile-drawer-backdrop{opacity:1;visibility:visibl
 
 
 <style id="dulonbet-promo-mobile-matching-size">
-/* Les deux cartes du carrousel gardent la même petite dimension sur mobile */
+/* Cartes de même dimension avec une typographie mobile lisible et équilibrée */
 @media(max-width:520px){
   .promo-slides{min-height:200px!important;height:200px!important}
   .promo-slides>.promo-slide.hero-slide,
   .promo-slides>.promo-slide.code-slide{
-    box-sizing:border-box!important;
-    width:100%!important;
-    height:200px!important;
-    min-height:200px!important;
-    max-height:200px!important;
-    padding:18px!important;
-    gap:6px!important;
-    align-items:flex-start!important;
-    justify-content:flex-start!important;
-    border-radius:20px!important;
-    overflow:hidden!important;
+    box-sizing:border-box!important;width:100%!important;
+    height:200px!important;min-height:200px!important;max-height:200px!important;
+    padding:16px!important;gap:5px!important;
+    align-items:flex-start!important;justify-content:flex-start!important;
+    border-radius:20px!important;overflow:hidden!important;
   }
   .promo-slide.hero-slide .eyebrow,
-  .promo-slide.code-slide .promo-label{font-size:10px!important;line-height:1.1!important;letter-spacing:1.3px!important}
+  .promo-slide.code-slide .promo-label{
+    font-size:10px!important;line-height:1.15!important;
+    letter-spacing:1.2px!important;margin:0 0 5px!important;
+  }
   .promo-slide.hero-slide h1,
-  .promo-slide.code-slide h2{font-size:18px!important;line-height:1.08!important;margin:5px 0!important;max-width:none!important}
+  .promo-slide.code-slide h2{
+    font-size:18px!important;line-height:1.12!important;
+    font-weight:800!important;margin:4px 0 6px!important;
+    max-width:none!important;letter-spacing:0!important;
+  }
   .promo-slide.hero-slide p,
-  .promo-slide.code-slide p{font-size:10px!important;line-height:1.2!important;margin:5px 0 0!important}
+  .promo-slide.code-slide p{
+    font-size:12px!important;line-height:1.25!important;
+    margin:5px 0 0!important;
+  }
+  .promo-slide.code-slide .promo-exclusive{
+    font-size:12px!important;line-height:1.2!important;margin:4px 0 5px!important;
+  }
+  .promo-slide.code-slide .promo-code-title{
+    font-size:10px!important;line-height:1.15!important;
+    font-weight:700!important;margin:4px 0!important;
+  }
+  .promo-slide.code-slide .promo-line{display:flex!important;align-items:center!important;gap:7px!important;flex-wrap:nowrap!important}
+  .promo-slide.code-slide .promo-line span{
+    font-size:16px!important;line-height:1.15!important;
+    padding:5px 9px!important;letter-spacing:1.2px!important;
+  }
+  .promo-slide.code-slide .promo-line button{
+    font-size:11px!important;line-height:1.15!important;
+    padding:7px 9px!important;white-space:nowrap!important;
+  }
+  .promo-slide.code-slide p:not(.promo-exclusive){
+    font-size:10.5px!important;line-height:1.2!important;margin:5px 0 0!important;
+  }
   .promo-slide.hero-slide .hero-icon,
   .promo-slide.code-slide .promo-ticket{display:none!important}
 }

@@ -3,18 +3,15 @@
 **DOCUMENT DE CONCEPTION UNIQUEMENT — NE PAS EXÉCUTER.** Ce SQL n’a pas été exécuté ni testé. Il n’est pas une migration générée par la CLI Supabase et ne doit pas être copié dans le SQL Editor de production.
 
 ## Objectif et garde-fous
-- Table privée, sans accès direct depuis le navigateur.
-- Réservation atomique grâce à la clé primaire `event_id`.
-- Un événement `sent` bloque tout nouvel envoi.
-- Verrou de 2 minutes contre les envois concurrents et pour permettre une reprise après interruption.
-- Maximum de 5 tentatives par événement.
-- Les RPC utilisent les droits de l’appelant (pas `SECURITY DEFINER`) et sont exécutables uniquement par `service_role`.
-- Aucune lecture ou modification des tables financières.
+- Table privée, réservation atomique par clé primaire `event_id`, blocage après succès.
+- Verrou de 2 minutes pour reprise après interruption et maximum de 5 tentatives.
+- RPC en droits de l’appelant (pas `SECURITY DEFINER`), exécutable uniquement par `service_role`.
+- Aucun accès ni changement aux tables financières.
 
 ## SQL proposé à revoir
 
 ```sql
--- BROUILLON NON EXÉCUTÉ. Vérifier schémas et privilèges avant usage.
+-- BROUILLON NON EXÉCUTÉ. Confirmer les schémas et droits avant usage.
 create schema if not exists private;
 
 create table if not exists private.dulonbet_notification_ledger (
@@ -34,7 +31,6 @@ create table if not exists private.dulonbet_notification_ledger (
 );
 
 alter table private.dulonbet_notification_ledger enable row level security;
-revoke all on schema private from public, anon, authenticated;
 grant usage on schema private to service_role;
 revoke all on private.dulonbet_notification_ledger from public, anon, authenticated;
 grant select, insert, update on private.dulonbet_notification_ledger to service_role;
@@ -71,7 +67,6 @@ begin
   returning 'claimed' into v_claim;
 
   if found then return v_claim; end if;
-
   select event_type, status, attempts into v_type, v_status, v_attempts
   from private.dulonbet_notification_ledger where event_id = p_event_id;
 
@@ -93,7 +88,6 @@ as $$
 declare v_count integer;
 begin
   if p_status not in ('sent', 'failed') then return false; end if;
-
   update private.dulonbet_notification_ledger
   set status = p_status,
       provider_message_id = case when p_status = 'sent' then left(p_provider_message_id, 200) else null end,
@@ -101,7 +95,6 @@ begin
       sent_at = case when p_status = 'sent' then now() else null end,
       updated_at = now()
   where event_id = p_event_id and status = 'processing';
-
   get diagnostics v_count = row_count;
   return v_count = 1;
 end;
@@ -114,13 +107,12 @@ grant execute on function public.finish_dulonbet_notification_event(text, text, 
 ```
 
 ## Vérifications obligatoires avant migration
-1. Confirmer si `private` existe déjà et contrôler les privilèges par défaut du projet.
-2. Vérifier les droits effectifs de `service_role` et la configuration PostgREST/RPC.
-3. Tester le format de réponse des deux RPC.
-4. Tester les appels simultanés, doublon après succès, reprise après expiration, épuisement des 5 tentatives et réutilisation d’un identifiant pour un autre type.
-5. Vérifier le cas où Resend accepte un e-mail mais où la réponse réseau est perdue. La clé d’idempotence stable Resend réduit les doublons externes, sans promettre un « exactement une fois » absolu.
-6. Générer une vraie migration via la procédure CLI Supabase du dépôt, puis revue de sécurité et tests en développement.
-7. Ne pas appliquer ce SQL en production sans accord explicite.
+1. Vérifier si le schéma `private` existe déjà. Ne pas révoquer globalement les droits de ce schéma sans audit, car d’autres fonctions pourraient l’utiliser.
+2. Vérifier les droits effectifs de `service_role`, les privilèges de la table et l’exposition des RPC par PostgREST.
+3. Tester les appels simultanés, le doublon après succès, la reprise après expiration, l’épuisement des 5 tentatives et le même identifiant avec un autre type.
+4. Vérifier le cas où Resend accepte un e-mail mais où la réponse réseau est perdue. La clé d’idempotence stable de Resend réduit les doublons externes, sans garantir un envoi exactement une fois.
+5. Générer une vraie migration via la procédure CLI Supabase du dépôt, faire la revue de sécurité et tester en développement.
+6. Ne pas appliquer ce SQL en production sans accord explicite.
 
 ## État
 - Aucun SQL exécuté; aucune table créée.

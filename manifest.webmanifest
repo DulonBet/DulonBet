@@ -11,6 +11,12 @@
   "theme_color": "#0c2857",
   "icons": [
     {
+      "src": "/icons/dulonbet-app.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
       "src": "/icons/dulonbet-192.png",
       "sizes": "192x192",
       "type": "image/png",

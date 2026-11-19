@@ -65,13 +65,33 @@ Deno.serve(async (req: Request) => {
   if (Number.isFinite(contentLength) && contentLength > 16_384) {
     return json({ error: "Corps de requête trop volumineux." }, 413);
   }
-  let rawBody: string;
-  try { rawBody = await req.text(); } catch { return json({ error: "Corps de requête illisible." }, 400); }
-  if (new TextEncoder().encode(rawBody).byteLength > 16_384) {
-    return json({ error: "Corps de requête trop volumineux." }, 413);
+  if (!req.body) return json({ error: "Corps de requête absent." }, 400);
+  const reader = req.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let totalBytes = 0;
+  try {
+    while (true) {
+      const part = await reader.read();
+      if (part.done) break;
+      totalBytes += part.value.byteLength;
+      if (totalBytes > 16_384) {
+        await reader.cancel();
+        return json({ error: "Corps de requête trop volumineux." }, 413);
+      }
+      chunks.push(part.value);
+    }
+  } catch {
+    return json({ error: "Corps de requête illisible." }, 400);
+  }
+  const bytes = new Uint8Array(totalBytes);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
   }
   let parsed: unknown;
-  try { parsed = JSON.parse(rawBody); } catch { return json({ error: "Corps JSON invalide." }, 400); }
+  try { parsed = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes)); }
+  catch { return json({ error: "Corps JSON invalide ou encodage incorrect." }, 400); }
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
     return json({ error: "Le corps doit être un objet JSON." }, 400);
   }

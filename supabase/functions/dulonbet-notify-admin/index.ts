@@ -1,6 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
-/** PREPARATION BRANCH ONLY — not deployed. Email alerts only; no financial mutations. */
+/** DulonBet admin notification endpoint. Email alerts only; never mutates financial state. */
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
 const INTERNAL_SECRET = Deno.env.get("DULONBET_NOTIFICATION_INTERNAL_SECRET") ?? "";
 const ADMIN_EMAIL = Deno.env.get("DULONBET_ADMIN_EMAIL") ?? "";

@@ -2432,136 +2432,48 @@ body.operation-view #withdraw .withdraw-location-item span{
 
 </style>
 <style id="dulonbet-home-payment-cards-reference">
-/* Accueil : cartes GSM alignées et remplies comme sur la capture de référence */
+/* Accueil : moyens de paiement plus petits, au format paysage comme la référence */
 #home-view .section .brand-networks.logo-only-networks{
   display:grid!important;
   grid-template-columns:repeat(3,minmax(0,1fr))!important;
   align-items:stretch!important;
   justify-content:stretch!important;
-  gap:clamp(8px,2vw,18px)!important;
+  gap:clamp(8px,2vw,14px)!important;
   width:100%!important;
   flex-wrap:nowrap!important;
 }
 #home-view .section .brand-networks.logo-only-networks .logo-only-card{
-  display:block!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
   width:100%!important;
   min-width:0!important;
   max-width:none!important;
   height:auto!important;
-  aspect-ratio:1/1!important;
-  padding:0!important;
+  aspect-ratio:1.6/1!important;
+  padding:3px!important;
   overflow:hidden!important;
-  border:4px solid #dce7f7!important;
-  border-radius:clamp(18px,3vw,30px)!important;
+  border:3px solid #dce7f7!important;
+  border-radius:clamp(12px,2.5vw,20px)!important;
   box-sizing:border-box!important;
   box-shadow:none!important;
+  background:#fff!important;
 }
 #home-view .section .brand-networks.logo-only-networks .logo-only-card .brand-logo-only{
   display:block!important;
   width:100%!important;
   height:100%!important;
-  max-width:none!important;
-  object-fit:cover!important;
-  border-radius:inherit!important;
+  max-width:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:10px!important;
 }
 @media(max-width:360px){
   #home-view .section .brand-networks.logo-only-networks{gap:6px!important}
-  #home-view .section .brand-networks.logo-only-networks .logo-only-card{border-width:3px!important;border-radius:16px!important}
+  #home-view .section .brand-networks.logo-only-networks .logo-only-card{
+    border-width:2px!important;border-radius:12px!important;padding:2px!important
+  }
 }
-
-
-/* Ajustement compact des formulaires Dépôt et Retrait.
-   Les en-têtes de page et la navigation ne sont volontairement pas modifiés. */
-body.operation-view #deposit.panel,
-body.operation-view #withdraw.panel{
-  padding:16px!important;
-  border-radius:15px!important;
-  margin:14px 0!important;
-}
-body.operation-view #deposit .formgrid,
-body.operation-view #withdraw .formgrid{
-  gap:12px!important;
-}
-body.operation-view #deposit .notice,
-body.operation-view #withdraw .notice,
-body.operation-view #deposit .withdraw-warning{
-  padding:10px 12px!important;
-  margin:10px 0!important;
-  font-size:13px!important;
-  line-height:1.4!important;
-}
-body.operation-view #deposit .field label,
-body.operation-view #withdraw .field label{
-  font-size:13px!important;
-  line-height:1.35!important;
-}
-body.operation-view #deposit .field input,
-body.operation-view #deposit .field select,
-body.operation-view #withdraw .field input,
-body.operation-view #withdraw .field select{
-  min-height:48px!important;
-  padding:10px 12px!important;
-  border-radius:10px!important;
-  font-size:14px!important;
-}
-body.operation-view #deposit .field input::placeholder,
-body.operation-view #withdraw .field input::placeholder{
-  font-size:13px!important;
-}
-body.operation-view #deposit .field .small,
-body.operation-view #withdraw .field .small,
-body.operation-view #deposit .procedure,
-body.operation-view #withdraw .procedure,
-body.operation-view #deposit .procedure li,
-body.operation-view #withdraw .procedure li{
-  font-size:12px!important;
-  line-height:1.4!important;
-}
-body.operation-view #deposit .operator-pick,
-body.operation-view #withdraw .operator-pick{
-  height:84px!important;
-  padding:6px 4px!important;
-  gap:4px!important;
-  font-size:10px!important;
-  border-radius:11px!important;
-}
-body.operation-view #deposit .operator-pick .brand-symbol,
-body.operation-view #withdraw .operator-pick .brand-symbol{
-  height:43px!important;
-  flex-basis:43px!important;
-  max-width:62px!important;
-  font-size:16px!important;
-}
-body.operation-view #deposit .field button,
-body.operation-view #withdraw .field button{
-  min-height:50px!important;
-  padding:11px 14px!important;
-  font-size:15px!important;
-  border-radius:11px!important;
-}
-body.operation-view #deposit .support-card,
-body.operation-view #withdraw .support-card,
-body.operation-view #deposit .withdraw-location-card,
-body.operation-view #withdraw .withdraw-location-card{
-  padding:12px!important;
-  border-radius:12px!important;
-}
-body.operation-view #deposit .support-card p,
-body.operation-view #withdraw .support-card p,
-body.operation-view #deposit .withdraw-location-card p,
-body.operation-view #withdraw .withdraw-location-card p,
-body.operation-view #deposit .withdraw-location-item span,
-body.operation-view #withdraw .withdraw-location-item span{
-  font-size:13px!important;
-  line-height:1.4!important;
-}
-@media(max-width:520px){
-  body.operation-view #deposit.panel,
-  body.operation-view #withdraw.panel{padding:13px!important}
-  body.operation-view #deposit .formgrid,
-  body.operation-view #withdraw .formgrid{gap:10px!important}
-}
-
 </style>
 <style id="dulonbet-admin-login-styles">
 .login-panel{max-width:620px;margin:24px auto!important}

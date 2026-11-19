@@ -48,3 +48,13 @@ Ce plan concerne le code de préparation `dulonbet-notify-admin`. Aucun test ne 
 - Le SQL de [notifications-ledger-sql-draft.md](notifications-ledger-sql-draft.md) est une proposition non exécutée, pas une migration.
 - Le code n'a pas encore été compilé ni exécuté dans Deno/Supabase; aucune réussite de test n'est revendiquée.
 - WhatsApp reste désactivé tant qu'un fournisseur officiel compatible avec l'envoi aux groupes n'est pas validé.
+
+
+## Cas supplémentaires à exécuter après compilation
+- [ ] Corps de requête supérieur à 16 Kio, avec ou sans en-tête `Content-Length` fiable → 413; Resend ne doit pas être appelé.
+- [ ] Montant envoyé comme chaîne JSON (`"200"`) → 400; seul un nombre JSON entier est accepté.
+- [ ] Référence de type nombre, objet ou tableau → 400.
+- [ ] Vérifier que les réponses d'erreur ne contiennent jamais les secrets, le corps complet ou des données personnelles.
+- [ ] Vérifier les codes HTTP et les champs de réponse pour chaque scénario, puis archiver les résultats de test.
+
+**État d'exécution :** ces tests sont préparés mais non exécutés. Deno n'est pas installé dans l'environnement de vérification disponible; la compilation de la fonction Edge n'est donc pas confirmée.

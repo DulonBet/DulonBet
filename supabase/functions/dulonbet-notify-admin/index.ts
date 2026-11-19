@@ -1,14 +1,16 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 /**
- * DRAFT ONLY — not deployed.
- * Internal email notification sender. It does not read or modify payment records.
- * Configure secrets only after review and DNS verification.
+ * PREPARATION BRANCH ONLY — not deployed.
+ * Sends operational email notifications only; never reads or mutates financial records.
+ * Requires a private persistent idempotency ledger before any activation.
  */
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
 const INTERNAL_SECRET = Deno.env.get("DULONBET_NOTIFICATION_INTERNAL_SECRET") ?? "";
 const ADMIN_EMAIL = Deno.env.get("DULONBET_ADMIN_EMAIL") ?? "";
 const FROM_EMAIL = Deno.env.get("RESEND_FROM_EMAIL") ?? "";
+const SUPABASE_URL = (Deno.env.get("SUPABASE_URL") ?? "").replace(/\/$/, "");
+const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 
 const ALLOWED_EVENTS = {
   deposit_requested: {
@@ -61,11 +63,27 @@ function clean(value: unknown, max = 120) {
   return String(value ?? "").trim().replace(/[\r\n\t]/g, " ").slice(0, max);
 }
 
+async function ledgerRpc(name: string, payload: Record<string, unknown>) {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
+    method: "POST",
+    headers: {
+      apikey: SERVICE_ROLE_KEY,
+      authorization: `Bearer ${SERVICE_ROLE_KEY}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(8000),
+  });
+  if (!response.ok) throw new Error(`LEDGER_RPC_${name}_${response.status}`);
+  return await response.json();
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method !== "POST") return json({ error: "Méthode non autorisée." }, 405);
 
-  // Fail closed: do not send if any required secret/configuration is missing.
-  if (!INTERNAL_SECRET || !RESEND_API_KEY || !ADMIN_EMAIL || !FROM_EMAIL) {
+  // Fail closed if email or persistent ledger configuration is incomplete.
+  if (!INTERNAL_SECRET || !RESEND_API_KEY || !ADMIN_EMAIL || !FROM_EMAIL ||
+      !SUPABASE_URL || !SERVICE_ROLE_KEY) {
     return json({ error: "Service de notification non configuré." }, 503);
   }
 
@@ -104,8 +122,37 @@ Deno.serve(async (req: Request) => {
   if (reference && !/^[A-Za-z0-9._:-]{1,100}$/.test(reference)) {
     return json({ error: "Référence invalide." }, 400);
   }
-  if (body.amount_fcfa !== undefined && (!Number.isSafeInteger(amount) || amount < 0 || amount > 2000000)) {
+  if (body.amount_fcfa !== undefined &&
+      (!Number.isSafeInteger(amount) || amount < 100 || amount > 2000000)) {
     return json({ error: "Montant invalide." }, 400);
+  }
+
+  // Atomically claim the event before calling Resend. If the ledger is unavailable,
+  // no email is sent. The SQL functions must be installed and reviewed before deploy.
+  let claim: unknown;
+  try {
+    claim = await ledgerRpc("claim_dulonbet_notification_event", {
+      p_event_id: eventId,
+      p_event_type: eventType,
+    });
+  } catch {
+    console.error("DULONBET_NOTIFICATION_LEDGER_CLAIM_ERROR", { eventType, eventId });
+    return json({ error: "Registre de notification indisponible.", retryable: true }, 503);
+  }
+
+  const claimStatus = typeof claim === "string" ? claim : "";
+  if (claimStatus === "sent") {
+    return json({ accepted: true, duplicate: true, event_id: eventId }, 200);
+  }
+  if (claimStatus === "busy") {
+    return json({ error: "Événement déjà en cours de traitement.", retryable: true }, 409);
+  }
+  if (claimStatus === "conflict") {
+    return json({ error: "Identifiant déjà utilisé pour un autre type d'événement." }, 409);
+  }
+  if (claimStatus !== "claimed") {
+    console.error("DULONBET_NOTIFICATION_LEDGER_UNEXPECTED_STATUS", { eventType, eventId });
+    return json({ error: "État du registre invalide.", retryable: false }, 503);
   }
 
   const event = ALLOWED_EVENTS[eventType];
@@ -120,13 +167,12 @@ Deno.serve(async (req: Request) => {
     `Événement : ${eventId}`,
   ].filter(Boolean);
 
-  // Resend idempotency key reduces duplicate sends on retries of the same event.
-  let response: Response;
+  let providerResponse: Response;
   try {
-    response = await fetch("https://api.resend.com/emails", {
+    providerResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "authorization": `Bearer ${RESEND_API_KEY}`,
+        authorization: `Bearer ${RESEND_API_KEY}`,
         "content-type": "application/json",
         "idempotency-key": `dulonbet-notification/${eventId}`,
       },
@@ -139,19 +185,55 @@ Deno.serve(async (req: Request) => {
       signal: AbortSignal.timeout(10000),
     });
   } catch {
-    // Network/timeout errors are intentionally sanitized. No financial state is changed.
+    await markFailed(eventId, eventType, "provider_network_error");
     console.error("DULONBET_NOTIFICATION_NETWORK_ERROR", { eventType, eventId });
     return json({ error: "Fournisseur de notification inaccessible.", retryable: true }, 502);
   }
 
-  if (!response.ok) {
-    const providerStatus = response.status;
-    // Do not return provider response bodies or secrets to callers.
-    console.error("DULONBET_NOTIFICATION_PROVIDER_ERROR", { status: providerStatus, eventType, eventId });
-    return json({ error: "Envoi de notification échoué.", retryable: providerStatus >= 500 || providerStatus === 429 }, 502);
+  if (!providerResponse.ok) {
+    const retryable = providerResponse.status >= 500 || providerResponse.status === 429;
+    await markFailed(eventId, eventType, `provider_http_${providerResponse.status}`);
+    console.error("DULONBET_NOTIFICATION_PROVIDER_ERROR", {
+      status: providerResponse.status, eventType, eventId,
+    });
+    return json({ error: "Envoi de notification échoué.", retryable }, 502);
   }
 
-  let result: { id?: string } = {};
-  try { result = await response.json(); } catch { /* response id is optional */ }
-  return json({ accepted: true, event_id: eventId, provider_message_id: result.id ?? null }, 202);
+  let providerMessageId: string | null = null;
+  try {
+    const result = await providerResponse.json();
+    if (result && typeof result.id === "string") providerMessageId = result.id.slice(0, 200);
+  } catch {
+    // The provider accepted the request; the message ID is optional.
+  }
+
+  try {
+    await ledgerRpc("finish_dulonbet_notification_event", {
+      p_event_id: eventId,
+      p_status: "sent",
+      p_provider_message_id: providerMessageId,
+      p_error_code: null,
+    });
+  } catch {
+    // Do not claim success to caller when persistent state could not be updated.
+    // A retry uses the same Resend idempotency key.
+    console.error("DULONBET_NOTIFICATION_LEDGER_FINISH_ERROR", { eventType, eventId });
+    return json({ error: "Notification acceptée mais statut non confirmé dans le registre.", retryable: true }, 503);
+  }
+
+  return json({ accepted: true, event_id: eventId, provider_message_id: providerMessageId }, 202);
 });
+
+async function markFailed(eventId: string, eventType: string, errorCode: string) {
+  try {
+    await ledgerRpc("finish_dulonbet_notification_event", {
+      p_event_id: eventId,
+      p_status: "failed",
+      p_provider_message_id: null,
+      p_error_code: errorCode,
+    });
+  } catch {
+    // A stuck processing event can be reclaimed after the SQL-defined lease expires.
+    console.error("DULONBET_NOTIFICATION_LEDGER_FAILURE_UPDATE_ERROR", { eventType, eventId });
+  }
+}

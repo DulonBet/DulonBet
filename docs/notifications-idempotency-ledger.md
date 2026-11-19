@@ -1,33 +1,32 @@
-# DulonBet — registre d'idempotence des notifications (proposition uniquement)
+# DulonBet — registre d'idempotence des notifications
 
-**Statut : conception non appliquée.** Ce document ne crée aucune table et ne change pas Supabase. La fonction d'envoi ne doit pas être reliée aux flux financiers avant implémentation et tests de ce registre.
+**État actuel : préparation uniquement.** Le code de la branche `preview/notifications-prep-2026-11-19` appelle maintenant deux RPC atomiques, mais le SQL associé n'a pas été appliqué ni testé. La fonction échoue volontairement sans le registre : aucun e-mail ne doit être envoyé tant que la base de développement n'est pas préparée.
 
-## Pourquoi
-La clé d'idempotence du fournisseur e-mail n'est pas un registre métier permanent. Pour éviter qu'un nouvel appel ou une relance après délai renvoie un même événement, DulonBet doit enregistrer chaque identifiant d'événement dans sa propre base.
+## Données du registre
+- `event_id` : clé primaire, stable pour une notification métier.
+- `event_type` : liste autorisée identique à celle du code.
+- `status` : `processing`, `sent`, `failed`.
+- `attempts` : compteur limité à 5.
+- `provider_message_id`, `last_error_code`, `created_at`, `updated_at`, `sent_at`.
 
-## Schéma proposé
-Créer une table privée, non accessible depuis le navigateur, avec au minimum :
-- `event_id` : texte, clé primaire ou contrainte UNIQUE ;
-- `event_type` : texte validé par liste autorisée ;
-- `status` : `processing`, `sent`, `failed` ;
-- `attempts` : entier non négatif ;
-- `provider_message_id` : texte nullable ;
-- `last_error_code` : code technique expurgé, sans secret ni contenu sensible ;
-- `created_at`, `updated_at`, `sent_at` : horodatages UTC.
+## Transitions attendues
+1. `claim_dulonbet_notification_event` réserve atomiquement l'événement. Elle retourne `claimed`, `sent`, `busy`, `conflict` ou `exhausted`.
+2. Le fournisseur Resend n'est appelé que pour une réservation `claimed`.
+3. `finish_dulonbet_notification_event` marque `sent` ou `failed` et confirme que la ligne a bien été mise à jour.
+4. Un événement `sent` ne doit jamais déclencher un second envoi.
+5. Un événement `processing` ne peut être repris qu'après expiration du verrou de 2 minutes; les tentatives sont limitées à 5.
+6. La clé d'idempotence Resend reste stable, dérivée de `event_id`, pour réduire le risque de doublon après un délai réseau.
+7. La table privée n'accorde aucun accès direct à `anon` ou `authenticated`; les RPC sont limitées à `service_role` et ne doivent pas utiliser `SECURITY DEFINER`.
+8. Le registre ne prouve jamais un paiement et ne modifie aucune table financière.
 
-## Règles obligatoires
-1. L'enregistrement de l'événement doit être atomique grâce à la contrainte UNIQUE sur `event_id`.
-2. Un événement marqué `sent` ne doit jamais être envoyé de nouveau.
-3. Un événement `processing` récent ne doit pas être pris par un second appel concurrent.
-4. Un événement `failed` ou bloqué après un délai doit être repris uniquement par une transition atomique avec verrouillage/condition, et le nombre de tentatives doit être limité.
-5. Si le fournisseur accepte la clé d'idempotence, continuer à utiliser une clé stable dérivée de `event_id`.
-6. Les erreurs persistées doivent être minimales : aucun secret, code de retrait, numéro de téléphone ou payload complet.
-7. La table doit avoir RLS activée et aucun droit `anon`/ `authenticated`. Seul le backend autorisé peut y accéder.
-8. Le registre d'envoi ne doit jamais être utilisé comme preuve de paiement ni modifier les tables financières.
+## Fichiers de référence
+- [Brouillon SQL des RPC et de la table](notifications-ledger-sql-draft.md) — conception non exécutée, pas une migration Supabase.
+- [Plan de tests hors production](notifications-test-plan.md) — tests à réaliser avant toute activation.
+- [Fonction préparatoire](../supabase/functions/dulonbet-notify-admin/index.ts) — non déployée.
 
-## Avant de produire une migration
-- Confirmer le schéma privé disponible et les conventions de migration du dépôt.
-- Écrire une migration dans la branche de préparation seulement.
-- Revoir les privilèges/RLS et faire une vérification de sécurité.
-- Tester les appels simultanés, la relance après erreur, la reprise après interruption et le même événement après succès.
-- Ne pas appliquer la migration au projet Supabase de production sans accord explicite.
+## Étapes requises avant activation
+- Vérifier les conventions et l'état du schéma privé, sans modifier les privilèges globaux existants sans audit.
+- Générer une migration avec la procédure CLI Supabase du dépôt et la tester sur une base de développement dédiée.
+- Tester la concurrence, les doublons, les erreurs réseau, la reprise et les 5 tentatives maximales.
+- Compiler et exécuter la fonction dans l'environnement de test.
+- Ne relier aucun déclencheur financier et ne déployer en production qu'après revue et accord explicite.

@@ -34,10 +34,6 @@ function safeEqual(a: string, b: string) {
   return diff === 0;
 }
 
-function clean(value: unknown, max = 120) {
-  return String(value ?? "").trim().replace(/[\r\n\t]/g, " ").slice(0, max);
-}
-
 async function ledgerRpc(name: string, payload: Record<string, unknown>) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
     method: "POST",
@@ -61,7 +57,7 @@ Deno.serve(async (req: Request) => {
   if (!safeEqual(req.headers.get("x-dulonbet-notification-secret") ?? "", INTERNAL_SECRET)) {
     return json({ error: "Non autorisé." }, 401);
   }
-  if (!(req.headers.get("content-type") ?? "").toLowerCase().includes("application/json")) {
+  if (!/^application\\/json(?:\\s*;|$)/i.test(req.headers.get("content-type") ?? "")) {
     return json({ error: "Content-Type application/json requis." }, 415);
   }
 
@@ -72,15 +68,24 @@ Deno.serve(async (req: Request) => {
   }
 
   const body = parsed as Record<string, unknown>;
-  const eventId = clean(body.event_id, 128);
-  const eventType = clean(body.event_type, 64) as EventType;
-  const reference = clean(body.reference, 100);
-  const amount = Number(body.amount_fcfa);
+  // Reject wrong types and overlong values instead of silently coercing/truncating them.
+  const eventId = typeof body.event_id === "string" ? body.event_id.trim() : "";
+  const eventTypeValue = typeof body.event_type === "string" ? body.event_type.trim() : "";
+  const eventType = eventTypeValue as EventType;
+  const reference = body.reference === undefined
+    ? ""
+    : typeof body.reference === "string" ? body.reference.trim() : null;
+  const rawAmount = body.amount_fcfa;
+  const amount = typeof rawAmount === "number"
+    ? rawAmount
+    : typeof rawAmount === "string" && /^\\d+$/.test(rawAmount) ? Number(rawAmount) : NaN;
 
   if (!/^[A-Za-z0-9._:-]{8,128}$/.test(eventId)) return json({ error: "Identifiant d'événement invalide." }, 400);
-  if (!Object.prototype.hasOwnProperty.call(ALLOWED_EVENTS, eventType)) return json({ error: "Type d'événement non autorisé." }, 400);
-  if (reference && !/^[A-Za-z0-9._:-]{1,100}$/.test(reference)) return json({ error: "Référence invalide." }, 400);
-  if (body.amount_fcfa !== undefined && (!Number.isSafeInteger(amount) || amount < 100 || amount > 2000000)) {
+  if (!Object.prototype.hasOwnProperty.call(ALLOWED_EVENTS, eventTypeValue)) return json({ error: "Type d'événement non autorisé." }, 400);
+  if (reference === null || (reference !== "" && !/^[A-Za-z0-9._:-]{1,100}$/.test(reference))) {
+    return json({ error: "Référence invalide." }, 400);
+  }
+  if (rawAmount !== undefined && (!Number.isSafeInteger(amount) || amount < 100 || amount > 2000000)) {
     return json({ error: "Montant invalide." }, 400);
   }
 

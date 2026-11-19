@@ -75,7 +75,7 @@ Deno.serve(async (req: Request) => {
       if (part.done) break;
       totalBytes += part.value.byteLength;
       if (totalBytes > 16_384) {
-        await reader.cancel();
+        try { await reader.cancel(); } catch { /* Preserve the intended 413 response. */ }
         return json({ error: "Corps de requête trop volumineux." }, 413);
       }
       chunks.push(part.value);
@@ -129,6 +129,7 @@ Deno.serve(async (req: Request) => {
   if (claimStatus === "sent") return json({ accepted: true, duplicate: true, event_id: eventId }, 200);
   if (claimStatus === "busy") return json({ error: "Événement déjà en cours de traitement.", retryable: true }, 409);
   if (claimStatus === "exhausted") return json({ error: "Limite de tentatives atteinte; vérification manuelle requise." }, 429);
+  if (claimStatus === "permanent_failure") return json({ error: "Échec définitif précédent; corriger la configuration puis utiliser un nouvel identifiant d'événement." }, 422);
   if (claimStatus === "conflict") return json({ error: "Identifiant déjà utilisé pour un autre type d'événement." }, 409);
   if (claimStatus !== "claimed") {
     console.error("DULONBET_NOTIFICATION_LEDGER_UNEXPECTED_STATUS", { eventType, eventId });

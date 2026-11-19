@@ -1,10 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
-/**
- * PREPARATION BRANCH ONLY — not deployed.
- * Sends operational email notifications only; never reads or mutates financial records.
- * Requires a private persistent idempotency ledger before any activation.
- */
+/** PREPARATION BRANCH ONLY — not deployed. Email alerts only; no financial mutations. */
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
 const INTERNAL_SECRET = Deno.env.get("DULONBET_NOTIFICATION_INTERNAL_SECRET") ?? "";
 const ADMIN_EMAIL = Deno.env.get("DULONBET_ADMIN_EMAIL") ?? "";
@@ -13,34 +9,13 @@ const SUPABASE_URL = (Deno.env.get("SUPABASE_URL") ?? "").replace(/\/$/, "");
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 
 const ALLOWED_EVENTS = {
-  deposit_requested: {
-    subject: "DulonBet — nouveau dépôt à suivre",
-    status: "Demande enregistrée, paiement non confirmé.",
-  },
-  deposit_confirmed_feexpay: {
-    subject: "DulonBet — paiement FeexPay confirmé",
-    status: "Paiement confirmé par le serveur FeexPay. Le crédit 1XBET doit être vérifié séparément.",
-  },
-  deposit_credited_1xbet: {
-    subject: "DulonBet — crédit 1XBET confirmé",
-    status: "Le crédit 1XBET a reçu une confirmation positive.",
-  },
-  withdrawal_requested: {
-    subject: "DulonBet — retrait à vérifier",
-    status: "Demande reçue, aucun paiement Mobile Money n'est confirmé.",
-  },
-  withdrawal_validated_1xbet: {
-    subject: "DulonBet — retrait validé côté 1XBET",
-    status: "Validation côté 1XBET uniquement. Paiement Mobile Money non confirmé.",
-  },
-  withdrawal_paid_confirmed: {
-    subject: "DulonBet — paiement de retrait confirmé",
-    status: "Le paiement Mobile Money a été confirmé par le processus autorisé.",
-  },
-  payment_attention_required: {
-    subject: "DulonBet — vérification nécessaire",
-    status: "État incertain ou erreur : vérification manuelle nécessaire.",
-  },
+  deposit_requested: { subject: "DulonBet — nouveau dépôt à suivre", status: "Demande enregistrée, paiement non confirmé." },
+  deposit_confirmed_feexpay: { subject: "DulonBet — paiement FeexPay confirmé", status: "Paiement confirmé par le serveur FeexPay. Le crédit 1XBET doit être vérifié séparément." },
+  deposit_credited_1xbet: { subject: "DulonBet — crédit 1XBET confirmé", status: "Le crédit 1XBET a reçu une confirmation positive." },
+  withdrawal_requested: { subject: "DulonBet — retrait à vérifier", status: "Demande reçue, aucun paiement Mobile Money n'est confirmé." },
+  withdrawal_validated_1xbet: { subject: "DulonBet — retrait validé côté 1XBET", status: "Validation côté 1XBET uniquement. Paiement Mobile Money non confirmé." },
+  withdrawal_paid_confirmed: { subject: "DulonBet — paiement de retrait confirmé", status: "Le paiement Mobile Money a été confirmé par le processus autorisé." },
+  payment_attention_required: { subject: "DulonBet — vérification nécessaire", status: "État incertain ou erreur : vérification manuelle nécessaire." },
 } as const;
 
 type EventType = keyof typeof ALLOWED_EVENTS;
@@ -80,76 +55,49 @@ async function ledgerRpc(name: string, payload: Record<string, unknown>) {
 
 Deno.serve(async (req: Request) => {
   if (req.method !== "POST") return json({ error: "Méthode non autorisée." }, 405);
-
-  // Fail closed if email or persistent ledger configuration is incomplete.
-  if (!INTERNAL_SECRET || !RESEND_API_KEY || !ADMIN_EMAIL || !FROM_EMAIL ||
-      !SUPABASE_URL || !SERVICE_ROLE_KEY) {
+  if (!INTERNAL_SECRET || !RESEND_API_KEY || !ADMIN_EMAIL || !FROM_EMAIL || !SUPABASE_URL || !SERVICE_ROLE_KEY) {
     return json({ error: "Service de notification non configuré." }, 503);
   }
-
-  const suppliedSecret = req.headers.get("x-dulonbet-notification-secret") ?? "";
-  if (!safeEqual(suppliedSecret, INTERNAL_SECRET)) {
+  if (!safeEqual(req.headers.get("x-dulonbet-notification-secret") ?? "", INTERNAL_SECRET)) {
     return json({ error: "Non autorisé." }, 401);
   }
-
-  const contentType = req.headers.get("content-type") ?? "";
-  if (!contentType.toLowerCase().includes("application/json")) {
+  if (!(req.headers.get("content-type") ?? "").toLowerCase().includes("application/json")) {
     return json({ error: "Content-Type application/json requis." }, 415);
   }
 
   let parsed: unknown;
-  try {
-    parsed = await req.json();
-  } catch {
-    return json({ error: "Corps JSON invalide." }, 400);
-  }
+  try { parsed = await req.json(); } catch { return json({ error: "Corps JSON invalide." }, 400); }
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
     return json({ error: "Le corps doit être un objet JSON." }, 400);
   }
-  const body = parsed as Record<string, unknown>;
 
+  const body = parsed as Record<string, unknown>;
   const eventId = clean(body.event_id, 128);
   const eventType = clean(body.event_type, 64) as EventType;
   const reference = clean(body.reference, 100);
   const amount = Number(body.amount_fcfa);
 
-  if (!/^[A-Za-z0-9._:-]{8,128}$/.test(eventId)) {
-    return json({ error: "Identifiant d'événement invalide." }, 400);
-  }
-  if (!Object.prototype.hasOwnProperty.call(ALLOWED_EVENTS, eventType)) {
-    return json({ error: "Type d'événement non autorisé." }, 400);
-  }
-  if (reference && !/^[A-Za-z0-9._:-]{1,100}$/.test(reference)) {
-    return json({ error: "Référence invalide." }, 400);
-  }
-  if (body.amount_fcfa !== undefined &&
-      (!Number.isSafeInteger(amount) || amount < 100 || amount > 2000000)) {
+  if (!/^[A-Za-z0-9._:-]{8,128}$/.test(eventId)) return json({ error: "Identifiant d'événement invalide." }, 400);
+  if (!Object.prototype.hasOwnProperty.call(ALLOWED_EVENTS, eventType)) return json({ error: "Type d'événement non autorisé." }, 400);
+  if (reference && !/^[A-Za-z0-9._:-]{1,100}$/.test(reference)) return json({ error: "Référence invalide." }, 400);
+  if (body.amount_fcfa !== undefined && (!Number.isSafeInteger(amount) || amount < 100 || amount > 2000000)) {
     return json({ error: "Montant invalide." }, 400);
   }
 
-  // Atomically claim the event before calling Resend. If the ledger is unavailable,
-  // no email is sent. The SQL functions must be installed and reviewed before deploy.
+  // Reserve event atomically before sending. Any ledger error fails closed.
   let claim: unknown;
   try {
-    claim = await ledgerRpc("claim_dulonbet_notification_event", {
-      p_event_id: eventId,
-      p_event_type: eventType,
-    });
+    claim = await ledgerRpc("claim_dulonbet_notification_event", { p_event_id: eventId, p_event_type: eventType });
   } catch {
     console.error("DULONBET_NOTIFICATION_LEDGER_CLAIM_ERROR", { eventType, eventId });
     return json({ error: "Registre de notification indisponible.", retryable: true }, 503);
   }
 
   const claimStatus = typeof claim === "string" ? claim : "";
-  if (claimStatus === "sent") {
-    return json({ accepted: true, duplicate: true, event_id: eventId }, 200);
-  }
-  if (claimStatus === "busy") {
-    return json({ error: "Événement déjà en cours de traitement.", retryable: true }, 409);
-  }
-  if (claimStatus === "conflict") {
-    return json({ error: "Identifiant déjà utilisé pour un autre type d'événement." }, 409);
-  }
+  if (claimStatus === "sent") return json({ accepted: true, duplicate: true, event_id: eventId }, 200);
+  if (claimStatus === "busy") return json({ error: "Événement déjà en cours de traitement.", retryable: true }, 409);
+  if (claimStatus === "exhausted") return json({ error: "Limite de tentatives atteinte; vérification manuelle requise." }, 429);
+  if (claimStatus === "conflict") return json({ error: "Identifiant déjà utilisé pour un autre type d'événement." }, 409);
   if (claimStatus !== "claimed") {
     console.error("DULONBET_NOTIFICATION_LEDGER_UNEXPECTED_STATUS", { eventType, eventId });
     return json({ error: "État du registre invalide.", retryable: false }, 503);
@@ -157,14 +105,10 @@ Deno.serve(async (req: Request) => {
 
   const event = ALLOWED_EVENTS[eventType];
   const lines = [
-    "Notification automatique DulonBet",
-    "",
-    event.status,
+    "Notification automatique DulonBet", "", event.status,
     reference ? `Référence : ${reference}` : "",
     body.amount_fcfa !== undefined ? `Montant : ${amount.toLocaleString("fr-FR")} FCFA` : "",
-    "",
-    "Cet e-mail est une alerte opérationnelle, pas une preuve de paiement.",
-    `Événement : ${eventId}`,
+    "", "Cet e-mail est une alerte opérationnelle, pas une preuve de paiement.", `Événement : ${eventId}`,
   ].filter(Boolean);
 
   let providerResponse: Response;
@@ -176,12 +120,7 @@ Deno.serve(async (req: Request) => {
         "content-type": "application/json",
         "idempotency-key": `dulonbet-notification/${eventId}`,
       },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [ADMIN_EMAIL],
-        subject: event.subject,
-        text: lines.join("\n"),
-      }),
+      body: JSON.stringify({ from: FROM_EMAIL, to: [ADMIN_EMAIL], subject: event.subject, text: lines.join("\n") }),
       signal: AbortSignal.timeout(10000),
     });
   } catch {
@@ -193,9 +132,7 @@ Deno.serve(async (req: Request) => {
   if (!providerResponse.ok) {
     const retryable = providerResponse.status >= 500 || providerResponse.status === 429;
     await markFailed(eventId, eventType, `provider_http_${providerResponse.status}`);
-    console.error("DULONBET_NOTIFICATION_PROVIDER_ERROR", {
-      status: providerResponse.status, eventType, eventId,
-    });
+    console.error("DULONBET_NOTIFICATION_PROVIDER_ERROR", { status: providerResponse.status, eventType, eventId });
     return json({ error: "Envoi de notification échoué.", retryable }, 502);
   }
 
@@ -203,20 +140,14 @@ Deno.serve(async (req: Request) => {
   try {
     const result = await providerResponse.json();
     if (result && typeof result.id === "string") providerMessageId = result.id.slice(0, 200);
-  } catch {
-    // The provider accepted the request; the message ID is optional.
-  }
+  } catch { /* Provider accepted request; message ID is optional. */ }
 
   try {
-    await ledgerRpc("finish_dulonbet_notification_event", {
-      p_event_id: eventId,
-      p_status: "sent",
-      p_provider_message_id: providerMessageId,
-      p_error_code: null,
+    const finished = await ledgerRpc("finish_dulonbet_notification_event", {
+      p_event_id: eventId, p_status: "sent", p_provider_message_id: providerMessageId, p_error_code: null,
     });
+    if (finished !== true) throw new Error("LEDGER_FINISH_NOT_CONFIRMED");
   } catch {
-    // Do not claim success to caller when persistent state could not be updated.
-    // A retry uses the same Resend idempotency key.
     console.error("DULONBET_NOTIFICATION_LEDGER_FINISH_ERROR", { eventType, eventId });
     return json({ error: "Notification acceptée mais statut non confirmé dans le registre.", retryable: true }, 503);
   }
@@ -226,12 +157,10 @@ Deno.serve(async (req: Request) => {
 
 async function markFailed(eventId: string, eventType: string, errorCode: string) {
   try {
-    await ledgerRpc("finish_dulonbet_notification_event", {
-      p_event_id: eventId,
-      p_status: "failed",
-      p_provider_message_id: null,
-      p_error_code: errorCode,
+    const updated = await ledgerRpc("finish_dulonbet_notification_event", {
+      p_event_id: eventId, p_status: "failed", p_provider_message_id: null, p_error_code: errorCode,
     });
+    if (updated !== true) console.error("DULONBET_NOTIFICATION_LEDGER_FAILURE_NOT_CONFIRMED", { eventType, eventId });
   } catch {
     // A stuck processing event can be reclaimed after the SQL-defined lease expires.
     console.error("DULONBET_NOTIFICATION_LEDGER_FAILURE_UPDATE_ERROR", { eventType, eventId });

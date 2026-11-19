@@ -2432,47 +2432,41 @@ body.operation-view #withdraw .withdraw-location-item span{
 
 </style>
 <style id="dulonbet-home-payment-cards-reference">
-/* Accueil : moyens de paiement plus petits, au format paysage comme la référence */
+/* Accueil : cartes GSM alignées et remplies comme sur la capture de référence */
 #home-view .section .brand-networks.logo-only-networks{
   display:grid!important;
   grid-template-columns:repeat(3,minmax(0,1fr))!important;
   align-items:stretch!important;
   justify-content:stretch!important;
-  gap:clamp(8px,2vw,14px)!important;
+  gap:clamp(8px,2vw,18px)!important;
   width:100%!important;
   flex-wrap:nowrap!important;
 }
 #home-view .section .brand-networks.logo-only-networks .logo-only-card{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
+  display:block!important;
   width:100%!important;
   min-width:0!important;
   max-width:none!important;
   height:auto!important;
-  aspect-ratio:1.6/1!important;
-  padding:3px!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
   overflow:hidden!important;
-  border:3px solid #dce7f7!important;
-  border-radius:clamp(12px,2.5vw,20px)!important;
+  border:4px solid #dce7f7!important;
+  border-radius:clamp(18px,3vw,30px)!important;
   box-sizing:border-box!important;
   box-shadow:none!important;
-  background:#fff!important;
 }
 #home-view .section .brand-networks.logo-only-networks .logo-only-card .brand-logo-only{
   display:block!important;
   width:100%!important;
   height:100%!important;
-  max-width:100%!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  border-radius:10px!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  border-radius:inherit!important;
 }
 @media(max-width:360px){
   #home-view .section .brand-networks.logo-only-networks{gap:6px!important}
-  #home-view .section .brand-networks.logo-only-networks .logo-only-card{
-    border-width:2px!important;border-radius:12px!important;padding:2px!important
-  }
+  #home-view .section .brand-networks.logo-only-networks .logo-only-card{border-width:3px!important;border-radius:16px!important}
 }
 </style>
 <style id="dulonbet-admin-login-styles">

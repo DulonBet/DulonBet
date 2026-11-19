@@ -4394,14 +4394,17 @@ async function submitTx(e,type){
   if(!/^01[0-9]{8}$/.test(phone)){
    box.style.display='block';box.textContent='Saisis un numéro Mobile Money béninois de 10 chiffres commençant par 01.';return;
   }
-  if(submit){submit.disabled=true;submit.textContent='Envoi à FeexPay…';}
-  box.style.display='block';box.dataset.paymentReference='initiating-'+newDulonBetKey();box.textContent='Envoi sécurisé de la demande à FeexPay…';
+  if(submit){submit.disabled=true;submit.textContent='Envoi…';}
+  // Pas de message supplémentaire sous le bouton pendant l’envoi :
+  // le suivi du paiement s’affiche dans la fenêtre dédiée après la réponse FeexPay.
+  box.style.display='none';box.dataset.paymentReference='initiating-'+newDulonBetKey();box.textContent='';
   try{
    const result=await callFeexPay('initiate',{
     amount_fcfa:amount,xbet_id:xbetId,phone,network:chosen,country,
     idempotency_key:newDulonBetKey()
    });
    if(!result.reference||!result.token){
+    box.style.display='block';
     box.textContent='Le statut de la demande de paiement n’est pas disponible pour le moment. Si votre compte a été débité, contactez le support avant toute nouvelle tentative.';
     return;
    }
@@ -4410,6 +4413,7 @@ async function submitTx(e,type){
    f.reset();
   }catch(err){
    console.error('FeexPay initiate:',err);
+   box.style.display='block';
    box.textContent='La demande de paiement n’a pas pu être confirmée. Si aucune notification Mobile Money n’est apparue, vous pouvez réessayer. Si votre compte a été débité, contactez le support avant une nouvelle tentative.';
   }finally{
    if(submit){submit.disabled=false;submit.textContent='Payer et recharger';}

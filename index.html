@@ -3961,6 +3961,28 @@ body.dulon-drawer-open #dulon-mobile-drawer-backdrop{opacity:1;visibility:visibl
 @media(min-width:681px){#dulon-mobile-drawer,#dulon-mobile-drawer-backdrop{display:none!important}}
 @media(prefers-reduced-motion:reduce){#dulon-mobile-drawer,#dulon-mobile-drawer-backdrop{transition:none}}
 </style>
+<style id="dulonbet-promo-card-compact">
+/* Garder le panneau du code promo proche de la hauteur du panneau principal sur mobile */
+@media(max-width:520px){
+  .promo-slide.code-slide{
+    min-height:290px!important;
+    height:auto!important;
+    padding:22px!important;
+    gap:10px!important;
+    align-items:center!important;
+    border-radius:20px!important;
+  }
+  .code-slide .promo-label{font-size:11px!important;line-height:1.2!important;letter-spacing:1.5px!important}
+  .code-slide h2{font-size:21px!important;line-height:1.12!important;margin:7px 0 8px!important}
+  .code-slide .promo-exclusive{font-size:14px!important;line-height:1.35!important;margin:0 0 8px!important}
+  .code-slide .promo-code-title{font-size:12px!important;line-height:1.2!important;margin:5px 0!important}
+  .code-slide .promo-line{gap:8px!important}
+  .code-slide .promo-line span{font-size:20px!important;padding:6px 12px!important;letter-spacing:1.5px!important}
+  .code-slide .promo-line button{font-size:12px!important;padding:8px 10px!important}
+  .code-slide p:not(.promo-exclusive){font-size:12px!important;line-height:1.35!important;margin:7px 0 0!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -4016,7 +4038,7 @@ body.operation-view #dulon-install-banner{display:none}
 <p class="promo-exclusive">Profite de ton avantage exclusif avec DulonBet !</p>
 <div class="promo-code-title">TON CODE PROMO :</div>
 <div class="promo-line"><span id="promo-code">FPIMI</span><button onclick="copyPromoCode()" type="button">Copier le code</button></div>
-<p>Utilise le code <b>FPIMI</b> lors de ton inscription ou de ton premier dépôt pour bénéficier de ton bonus et profiter de nombreux autres avantages.</p>
+<p>Utilise FPIMI lors de ton inscription ou de ton premier dépôt.</p>
 </div><div aria-hidden="true" class="promo-ticket">🎁</div>
 </article>
 </div>

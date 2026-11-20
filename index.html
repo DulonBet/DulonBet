@@ -4115,24 +4115,34 @@ body:not(.operation-view) #home-view #payment-methods-title{color:#0871e8!import
 <nav class="header-actions"><button class="btn-dark login-button" onclick="showPanel('login')">Se connecter</button><button aria-label="Activer le thème sombre" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Changer le thème" type="button">☾</button></nav>
 </header>
 
-<section id="dulon-install-banner" aria-label="Installer DulonBet">
+<section id="dulon-install-banner" aria-label="Installer et partager DulonBet">
   <button id="dulon-install-button" type="button">
     <span class="dulon-install-icon" aria-hidden="true">↓</span>
     <span>Installer maintenant</span>
   </button>
+  <button id="dulon-share-button" type="button" aria-label="Partager DulonBet" title="Partager DulonBet">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
+      <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"></path>
+    </svg>
+  </button>
 </section>
 <style id="dulon-pwa-install-style">
-#dulon-install-banner{max-width:1080px;margin:12px auto 0;padding:0 18px}
-#dulon-install-button{width:100%;min-height:54px;display:flex;align-items:center;justify-content:center;gap:10px;
+#dulon-install-banner{max-width:1080px;margin:12px auto 0;padding:0 18px;display:flex;align-items:stretch;gap:10px}
+#dulon-install-button{flex:1;min-width:0;min-height:54px;display:flex;align-items:center;justify-content:center;gap:10px;
   border:0;border-radius:17px;background:#2459b7;color:#fff;font-size:clamp(17px,3.2vw,22px);
   line-height:1.2;font-weight:800;box-shadow:0 5px 13px rgba(12,40,87,.14);padding:10px 16px}
-#dulon-install-button:active{transform:translateY(1px)}
+#dulon-install-button:active,#dulon-share-button:active{transform:translateY(1px)}
 #dulon-install-button .dulon-install-icon{font-size:25px;line-height:1;font-weight:500}
+#dulon-share-button{flex:0 0 54px;width:54px;min-height:54px;display:flex;align-items:center;justify-content:center;
+  border:1px solid #dce6f5;border-radius:17px;background:#fff;color:#2459b7;
+  box-shadow:0 5px 13px rgba(12,40,87,.10);padding:0}
 #dulon-install-banner[hidden]{display:none!important}
 body.operation-view #dulon-install-banner{display:none}
-@media(max-width:520px){#dulon-install-banner{margin-top:9px;padding:0 14px}
-#dulon-install-button{min-height:48px;border-radius:13px;font-size:16px;padding:9px 12px;gap:9px}
-#dulon-install-button .dulon-install-icon{font-size:22px}}
+@media(max-width:520px){#dulon-install-banner{margin-top:9px;padding:0 14px;gap:8px}
+#dulon-install-button{min-height:48px;border-radius:13px;font-size:16px;padding:9px 8px;gap:7px}
+#dulon-install-button .dulon-install-icon{font-size:22px}
+#dulon-share-button{flex-basis:48px;width:48px;min-height:48px;border-radius:13px}}
 </style>
 
 <main>
@@ -6129,6 +6139,25 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
 (function(){
   let installPromptEvent = null;
   const button = document.getElementById('dulon-install-button');
+  const shareButton = document.getElementById('dulon-share-button');
+  if (shareButton) {
+    shareButton.addEventListener('click', async function(){
+      const shareData = {
+        title: 'DulonBet – Recharge et retrait 1XBET',
+        text: 'Découvre DulonBet pour les demandes de dépôt et de retrait 1XBET.',
+        url: 'https://www.dulonbet.com/'
+      };
+      if (navigator.share) {
+        try { await navigator.share(shareData); }
+        catch (error) { if (error && error.name !== 'AbortError') window.alert('Le partage n’a pas pu être ouvert. Tu peux copier le lien : https://www.dulonbet.com/'); }
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        try { await navigator.clipboard.writeText(shareData.url); window.alert('Lien DulonBet copié : https://www.dulonbet.com/'); }
+        catch (error) { window.prompt('Copie le lien DulonBet :', shareData.url); }
+      } else {
+        window.prompt('Copie le lien DulonBet :', shareData.url);
+      }
+    });
+  }
   if (!button) return;
 
   window.addEventListener('beforeinstallprompt', function(event){

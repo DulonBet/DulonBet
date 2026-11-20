@@ -7,8 +7,8 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#d9eaff",
-  "theme_color": "#0c2857",
+  "background_color": "#2a4563",
+  "theme_color": "#2a4563",
   "icons": [
     {
       "src": "/icons/dulonbet-app.svg",

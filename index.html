@@ -3845,6 +3845,7 @@ body.dulon-drawer-open #dulon-mobile-drawer{transform:translateX(0)}
 body.dulon-drawer-open #dulon-mobile-drawer-backdrop{opacity:1;visibility:visible}
 #dulon-mobile-drawer .drawer-head{display:flex;align-items:center;gap:13px;padding:24px 20px;border-bottom:1px solid #e0e7f2;min-height:92px}
 #dulon-mobile-drawer .drawer-brand-mark{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:#2459b7;color:white;font-size:24px;flex:0 0 48px}
+ #dulon-mobile-drawer .drawer-brand-mark img{display:block;width:100%;height:100%;object-fit:cover;border-radius:15px}
 #dulon-mobile-drawer .drawer-brand-name{font-size:25px;font-weight:900;line-height:1.1;color:#0c2857;flex:1}
 #dulon-mobile-drawer .drawer-close{width:44px;height:44px;padding:0;background:#f3f6fb;color:#64748b;font-size:28px;font-weight:400;border-radius:13px}
 #dulon-mobile-drawer .drawer-links{padding:20px;display:flex;flex-direction:column;gap:10px}
@@ -6185,7 +6186,7 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
 <div id="dulon-mobile-drawer-backdrop" aria-hidden="true"></div>
 <aside id="dulon-mobile-drawer" aria-label="Menu principal" aria-hidden="true">
  <div class="drawer-head">
-  <div class="drawer-brand-mark" aria-hidden="true">↕</div>
+  <div class="drawer-brand-mark" aria-hidden="true"><img src="/icons/dulonbet-app.svg" alt=""></div>
   <div class="drawer-brand-name"><span style="color:#0c2857">Dulon</span><span style="color:#60a5fa">Bet</span></div>
   <button class="drawer-close" id="dulon-mobile-menu-close" type="button" aria-label="Fermer le menu">×</button>
  </div>

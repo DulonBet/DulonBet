@@ -6472,3 +6472,35 @@ body.operation-view #withdraw .operator-pick input[type="radio"] {
 }
 @media(min-width:681px){#dulon-mobile-menu-open{display:none!important}}
 </style>
+
+
+<style id="dulon-home-mobile-narrower">
+/* Accueil téléphone : réduire légèrement la largeur des blocs, sans toucher aux opérations */
+@media (max-width: 680px) {
+  body:not(.operation-view) main {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  body:not(.operation-view) .hero {
+    padding: 15px !important;
+    border-radius: 16px !important;
+  }
+  body:not(.operation-view) .action {
+    padding: 12px !important;
+    border-radius: 14px !important;
+  }
+  body:not(.operation-view) .action button,
+  body:not(.operation-view) .action .btn {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  #dulon-install-banner {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  body:not(.operation-view) .section {
+    margin-left: 2px !important;
+    margin-right: 2px !important;
+  }
+}
+</style>

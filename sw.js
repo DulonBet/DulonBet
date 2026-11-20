@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dulonbet-pwa-v3';
+const CACHE_NAME = 'dulonbet-pwa-v4';
 const CORE_FILES = ['/', '/manifest.webmanifest', '/icons/dulonbet-app.svg', '/icons/dulonbet-192.png', '/icons/dulonbet-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(CORE_FILES)).then(() => self.skipWaiting()));

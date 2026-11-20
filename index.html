@@ -4570,7 +4570,7 @@ async function submitTx(e,type){
   }catch(err){
    console.error('FeexPay initiate:',err);
    box.style.display='block';
-   box.textContent='La demande de paiement n’a pas pu être confirmée. Si aucune notification Mobile Money n’est apparue, vous pouvez réessayer. Si votre compte a été débité, contactez le support avant une nouvelle tentative.';
+   box.textContent=(err&&err.message)?('Échec de la demande : '+err.message):'La demande de paiement n’a pas pu être confirmée. Si ton compte a été débité, contacte le support avant toute nouvelle tentative.';
   }finally{
    if(submit){submit.disabled=false;submit.textContent='Payer et recharger';}
   }

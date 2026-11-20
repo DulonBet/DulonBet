@@ -4111,6 +4111,7 @@ body:not(.operation-view) #home-view #payment-methods-title{color:#0871e8!import
 <body>
 
 <header>
+<button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
 <div class="brand"><span class="mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet"></span> <span class="brand-name"><span class="dulon">Dulon</span><span class="bet">Bet</span></span></div>
 <nav class="header-actions"><button class="btn-dark login-button" onclick="showPanel('login')">Se connecter</button><button aria-label="Activer le thème sombre" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Changer le thème" type="button">☾</button></nav>
 </header>
@@ -6240,7 +6241,7 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
   <button class="drawer-install" id="dulon-drawer-install" type="button"><span class="drawer-install-icon" aria-hidden="true">↓</span><span>Installer l’application</span></button>
  </div>
 </aside>
-<button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
+
 <script id="dulon-mobile-drawer-script">
 (function(){
  const drawer=document.getElementById('dulon-mobile-drawer');
@@ -6409,4 +6410,29 @@ body.operation-view #withdraw .operator-pick input[type="radio"] {
     margin-top: 0 !important;
   }
 }
+</style>
+
+<style id="dulon-mobile-menu-next-to-logo">
+@media(max-width:680px){
+ body:not(.operation-view)>header{
+  display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+  align-items:center!important;justify-content:flex-start!important;gap:7px!important;
+  padding-left:10px!important;padding-right:10px!important;
+ }
+ body:not(.operation-view)>header>#dulon-mobile-menu-open{
+  display:flex!important;order:0!important;flex:0 0 44px!important;
+  width:44px!important;height:44px!important;min-width:44px!important;
+  align-items:center!important;justify-content:center!important;
+  padding:0!important;border-radius:13px!important;font-size:23px!important;
+ }
+ body:not(.operation-view)>header>.brand{
+  order:1!important;flex:1 1 auto!important;min-width:0!important;gap:5px!important;
+ }
+ body:not(.operation-view)>header>.header-actions{
+  order:2!important;flex:0 0 auto!important;margin-left:auto!important;gap:4px!important;
+ }
+ body:not(.operation-view)>header>.brand .mark{width:34px!important;height:34px!important;flex:0 0 34px!important}
+ body:not(.operation-view)>header>.brand .brand-name{font-size:clamp(16px,4.6vw,22px)!important}
+}
+@media(min-width:681px){#dulon-mobile-menu-open{display:none!important}}
 </style>

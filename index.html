@@ -3839,6 +3839,7 @@ body.operation-view #withdraw .operations-promo strong{
 #dulon-payment-tracking-modal [data-payment-title]{font-size:clamp(24px,5vw,36px);line-height:1.2;margin:0 0 28px;color:#14284b;font-weight:850}
 #dulon-payment-tracking-modal [data-payment-intro]{font-size:clamp(17px,3.4vw,23px);line-height:1.5;margin:0 0 25px;color:#35445a}
 #dulon-payment-tracking-modal [data-payment-detail]{font-size:clamp(15px,3vw,20px);line-height:1.55;margin:0 0 30px;color:#6b7280}
+#dulon-payment-tracking-modal [data-payment-detail]{display:none}
 #dulon-payment-tracking-modal .payment-modal-dismiss{width:100%;min-height:64px;border-radius:14px;background:#2459b7;color:#fff;font-size:19px}
 #dulon-payment-tracking-modal .payment-modal-dismiss:focus-visible,#dulon-payment-tracking-modal .payment-modal-close:focus-visible{outline:3px solid #9dbcf5;outline-offset:3px}
 @keyframes dulonPaymentSpin{to{transform:rotate(360deg)}}
@@ -6206,7 +6207,7 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
   <h2 id="dulon-payment-modal-title" data-payment-title>Paiement en cours</h2>
   <p data-payment-intro>En attente de confirmation du paiement et du crédit.</p>
   <p data-payment-detail>Demande transmise. Le paiement doit encore être confirmé. Garde ton téléphone à proximité et suis les éventuelles instructions de paiement. Ne relance pas le dépôt.</p>
-  <button class="payment-modal-dismiss" type="button">Fermer le suivi</button>
+  <button class="payment-modal-dismiss" type="button">Suivi</button>
  </div>
 </div>
 <script id="dulon-payment-tracking-modal-script">

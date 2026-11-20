@@ -3847,17 +3847,6 @@ body.operation-view #withdraw .operations-promo strong{
 </style>
 
 <style id="dulon-mobile-drawer-style">
-#dulon-bottom-nav{display:none}
-@media(max-width:680px){
- #dulon-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9998;display:flex;align-items:stretch;justify-content:space-around;gap:4px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #dce6f5;box-shadow:0 -5px 18px rgba(12,40,87,.10);backdrop-filter:blur(12px)}
- body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
- header .dulon-mobile-menu-open{display:none!important}
- #dulon-bottom-nav .dulon-bottom-item{flex:1 1 0;min-width:0;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px 2px;border:0;border-radius:11px;background:transparent;color:#526581;font-size:22px;line-height:1}
- #dulon-bottom-nav .dulon-bottom-item small{font-size:10px;line-height:1.2;font-weight:700}
- #dulon-bottom-nav .dulon-bottom-item:active{background:#eaf1ff}
- #dulon-bottom-nav #dulon-mobile-menu-open{width:auto;height:auto;flex:1 1 0;border-radius:11px;color:#2459b7;background:#eaf1ff;font-size:22px}
- #dulon-bottom-nav #dulon-mobile-menu-open small{font-size:10px}
-}
 
 .dulon-mobile-menu-open{display:none;background:#2459b7;color:#fff;width:44px;height:44px;flex:0 0 44px;padding:0;border-radius:13px;font-size:23px;line-height:1}
 #dulon-mobile-drawer-backdrop{position:fixed;inset:0;background:rgba(18,39,70,.42);z-index:10000;opacity:0;visibility:hidden;transition:opacity .2s ease}
@@ -6251,12 +6240,7 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
   <button class="drawer-install" id="dulon-drawer-install" type="button"><span class="drawer-install-icon" aria-hidden="true">↓</span><span>Installer l’application</span></button>
  </div>
 </aside>
-<nav id="dulon-bottom-nav" aria-label="Navigation mobile">
- <button class="dulon-bottom-item" id="dulon-bottom-home" type="button" aria-label="Accueil"><span aria-hidden="true">⌂</span><small>Accueil</small></button>
- <button class="dulon-bottom-item" id="dulon-bottom-operations" type="button" aria-label="Opérations"><span aria-hidden="true">↕</span><small>Opérations</small></button>
- <button class="dulon-bottom-item" id="dulon-bottom-track" type="button" aria-label="Suivre ma demande"><span aria-hidden="true">⌕</span><small>Suivi</small></button>
- <button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open dulon-bottom-item" type="button" aria-label="Ouvrir le menu" aria-expanded="false"><span aria-hidden="true">☰</span><small>Menu</small></button>
-</nav>
+<button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
 <script id="dulon-mobile-drawer-script">
 (function(){
  const drawer=document.getElementById('dulon-mobile-drawer');
@@ -6267,12 +6251,6 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
  function openMenu(){document.body.classList.add('dulon-drawer-open');drawer.setAttribute('aria-hidden','false');openBtn.setAttribute('aria-expanded','true');closeBtn.focus();}
  function closeMenu(){document.body.classList.remove('dulon-drawer-open');drawer.setAttribute('aria-hidden','true');openBtn.setAttribute('aria-expanded','false');}
  openBtn.addEventListener('click',openMenu);
- const homeBtn=document.getElementById('dulon-bottom-home');
- const operationsBtn=document.getElementById('dulon-bottom-operations');
- const trackBtn=document.getElementById('dulon-bottom-track');
- if(homeBtn)homeBtn.addEventListener('click',function(){if(typeof goHome==='function')goHome();else window.scrollTo({top:0,behavior:'smooth'});});
- if(operationsBtn)operationsBtn.addEventListener('click',function(){const b=document.getElementById('dulon-drawer-operations');if(b)b.click();});
- if(trackBtn)trackBtn.addEventListener('click',function(){const b=document.getElementById('dulon-drawer-track');if(b)b.click();});
  closeBtn.addEventListener('click',closeMenu);
  backdrop.addEventListener('click',closeMenu);
  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});

@@ -6625,3 +6625,21 @@ body:not(.operation-view) #home-view .actions.dulon-operations-cards .action.dul
   body:not(.operation-view) #home-view .actions.dulon-operations-cards .action.dulon-operation-card{border-radius:15px!important}
 }
 </style>
+
+
+<style id="dulonbet-home-cards-refresh-visibility">
+/* Après actualisation, le splash transparent ne doit jamais intercepter les interactions. */
+#dulon-splash-screen{pointer-events:none!important}
+/* Garder les cartes Dépôt/Retrait dans le flux normal et au-dessus des décorations voisines. */
+body:not(.operation-view) #home-view > .actions.dulon-operations-cards{
+  position:relative!important;
+  z-index:1!important;
+  clear:both!important;
+  transform:none!important;
+  visibility:visible!important;
+}
+body:not(.operation-view) #home-view > .promo-carousel{
+  position:relative!important;
+  z-index:0!important;
+}
+</style>

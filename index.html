@@ -4284,70 +4284,14 @@ body:not(.operation-view) #home-view > .actions.dulon-operations-cards > .dulon-
 }
 </style>
 
-<style id="dulon-header-graphic-v2">
-header.dulon-header-v2{
-  position:sticky;top:0;z-index:50;isolation:isolate;
-  display:flex;align-items:center;justify-content:space-between;gap:clamp(8px,1.4vw,18px);
-  min-height:116px;height:auto;padding:16px max(18px,calc((100% - 1180px)/2)) 23px;
-  background:
-    radial-gradient(ellipse at 52% 42%,rgba(255,255,255,.98) 0%,rgba(242,249,255,.96) 46%,rgba(221,239,255,.97) 100%),
-    linear-gradient(120deg,#e7f5ff,#fff 45%,#d9f0ff);
-  border-bottom:0;box-shadow:0 8px 22px rgba(4,37,92,.13);
-}
-header.dulon-header-v2:before{
-  content:"";position:absolute;z-index:-1;inset:auto 0 0;height:18px;
-  background:linear-gradient(175deg,transparent 0 22%,#09c7ff 23% 45%,#0755d9 46% 69%,#08265d 70% 100%);
-  clip-path:polygon(0 30%,23% 75%,48% 100%,73% 58%,100% 12%,100% 100%,0 100%);
-}
-header.dulon-header-v2:after{
-  content:"";position:absolute;z-index:-1;right:20%;top:0;width:32%;height:100%;
-  background:radial-gradient(ellipse at center,rgba(56,177,255,.14),transparent 68%);pointer-events:none;
-}
-header.dulon-header-v2 .dulon-mobile-menu-open{
-  flex:0 0 64px;width:64px;height:64px;display:flex;align-items:center;justify-content:center;
-  border:1px solid rgba(44,210,255,.8);border-radius:19px;background:linear-gradient(145deg,#0757bd,#082b77);
-  color:#fff;font-size:34px;line-height:1;box-shadow:0 4px 0 rgba(5,48,132,.13),0 0 12px rgba(0,174,255,.18);
-}
-header.dulon-header-v2 .dulon-header-brand{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:12px;white-space:normal}
-header.dulon-header-v2 .mark{flex:0 0 68px;width:68px;height:68px;display:block;border-radius:17px;overflow:hidden;box-shadow:0 4px 12px rgba(6,39,102,.17)}
-header.dulon-header-v2 .mark img{display:block;width:100%;height:100%;object-fit:cover}
-header.dulon-header-v2 .dulon-header-brand-copy{display:flex;flex-direction:column;min-width:0;gap:4px}
-header.dulon-header-v2 .brand-name{font-size:clamp(23px,3vw,38px);font-weight:950;letter-spacing:-1.3px;line-height:1.02;white-space:nowrap}
-header.dulon-header-v2 .dulon-header-tagline{font-size:clamp(10px,1.2vw,14px);font-weight:800;font-style:italic;color:#0c2857;white-space:nowrap}
-header.dulon-header-v2 .header-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
-header.dulon-header-v2 .login-button{min-height:58px;padding:0 22px;border:1px solid #31cfff;border-radius:20px;background:linear-gradient(135deg,#0757bd,#082b8b);color:#fff;font-size:clamp(14px,1.6vw,19px);font-weight:850;box-shadow:0 0 0 3px rgba(35,193,255,.12),0 5px 13px rgba(7,43,119,.17);white-space:nowrap}
-header.dulon-header-v2 .dulon-login-arrow{font-size:1.35em;margin-left:5px}
-header.dulon-header-v2 .theme-toggle{flex:0 0 58px;width:58px;height:58px;border:1px solid #b8d9f3;border-radius:50%;background:rgba(255,255,255,.82);color:#0c2857;font-size:31px;box-shadow:inset 0 0 0 2px rgba(64,177,255,.1)}
-@media(max-width:600px){
-  header.dulon-header-v2{min-height:94px;padding:10px 10px 19px;gap:7px}
-  header.dulon-header-v2 .dulon-mobile-menu-open{flex-basis:48px;width:48px;height:54px;border-radius:15px;font-size:27px}
-  header.dulon-header-v2 .dulon-header-brand{gap:7px}
-  header.dulon-header-v2 .mark{flex-basis:48px;width:48px;height:48px;border-radius:12px}
-  header.dulon-header-v2 .brand-name{font-size:clamp(19px,5.3vw,27px);letter-spacing:-.8px}
-  header.dulon-header-v2 .dulon-header-tagline{font-size:clamp(8px,2.3vw,11px);letter-spacing:-.2px}
-  header.dulon-header-v2 .header-actions{gap:6px}
-  header.dulon-header-v2 .login-button{min-height:46px;padding:0 10px;border-radius:14px;font-size:clamp(11px,3.2vw,15px)}
-  header.dulon-header-v2 .dulon-login-arrow{margin-left:1px}
-  header.dulon-header-v2 .theme-toggle{flex-basis:42px;width:42px;height:42px;border-radius:14px;font-size:24px}
-}
-@media(max-width:370px){
-  header.dulon-header-v2{gap:5px;padding-left:7px;padding-right:7px}
-  header.dulon-header-v2 .dulon-mobile-menu-open{flex-basis:42px;width:42px;height:48px}
-  header.dulon-header-v2 .mark{flex-basis:41px;width:41px;height:41px}
-  header.dulon-header-v2 .brand-name{font-size:18px}
-  header.dulon-header-v2 .dulon-header-tagline{font-size:8px}
-  header.dulon-header-v2 .login-button{padding:0 7px;font-size:11px}
-  header.dulon-header-v2 .theme-toggle{flex-basis:36px;width:36px;height:38px}
-}
-</style>
 
 </head>
 <body>
 <div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>
-<header class="dulon-header-v2">
+<header>
 <button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
-<div class="brand dulon-header-brand"><span class="mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet"></span><span class="dulon-header-brand-copy"><span class="brand-name"><span class="dulon">Dulon</span><span class="bet">Bet</span></span><span class="dulon-header-tagline">Pariez • Gagnez • Retirez</span></span></div>
-<nav class="header-actions"><button class="btn-dark login-button" onclick="showPanel('login')">Se connecter <span class="dulon-login-arrow" aria-hidden="true">›</span></button><button aria-label="Activer le thème sombre" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Changer le thème" type="button">☾</button></nav>
+<div class="brand"><span class="mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet"></span> <span class="brand-name"><span class="dulon">Dulon</span><span class="bet">Bet</span></span></div>
+<nav class="header-actions"><button class="btn-dark login-button" onclick="showPanel('login')">Se connecter</button><button aria-label="Activer le thème sombre" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Changer le thème" type="button">☾</button></nav>
 </header>
 
 <section id="dulon-install-banner" aria-label="Installer et partager DulonBet">

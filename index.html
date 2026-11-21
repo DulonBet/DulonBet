@@ -4351,6 +4351,45 @@ header.dulon-header-hd .theme-toggle{flex:0 0 50px;width:50px;height:50px;paddin
 </style>
 
 
+
+</head>
+<body>
+<div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>
+<header class="dulon-header-hd">
+<button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
+<div class="brand dulon-hd-brand"><span class="mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet"></span><span class="dulon-hd-brand-copy"><span class="brand-name"><span class="dulon">Dulon</span><span class="bet">Bet</span></span><span class="dulon-hd-tagline">Pariez • Gagnez • Retirez</span></span></div>
+<nav class="header-actions"><button class="btn-dark login-button" onclick="showPanel('login')"><svg class="dulon-login-user-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4" fill="currentColor"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z" fill="currentColor"/></svg><span>Se connecter</span></button><button aria-label="Activer le thème sombre" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Changer le thème" type="button">☾</button></nav>
+</header>
+
+<section id="dulon-install-banner" aria-label="Installer et partager DulonBet">
+  <button id="dulon-install-button" type="button">
+    <span class="dulon-install-laptop" aria-hidden="true"><svg viewBox="0 0 100 74" width="100" height="74" fill="none"><rect x="14" y="5" width="72" height="49" rx="5" fill="#061b57" stroke="#66e8ff" stroke-width="3"/><rect x="20" y="11" width="60" height="36" rx="2" fill="#0866ed"/><path d="M50 16v19m-9-9 9 10 9-10M37 37v4h26v-4" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 58h86l-9 9H16z" fill="#bdefff" stroke="#fff" stroke-width="2"/><path d="M38 60h24" stroke="#168cff" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <span class="dulon-install-copy"><strong>Installer <em>maintenant</em></strong><small>Accédez plus rapidement à DulonBet&nbsp;!</small></span>
+  </button>
+  <button id="dulon-share-button" type="button" aria-label="Partager DulonBet" title="Partager DulonBet">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
+      <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"></path>
+    </svg>
+  </button>
+</section>
+<style id="dulon-pwa-install-style">
+#dulon-install-banner{max-width:1080px;margin:12px auto 0;padding:0 18px;display:flex;align-items:stretch;gap:10px}
+#dulon-install-button{flex:1;min-width:0;min-height:54px;display:flex;align-items:center;justify-content:center;gap:10px;
+  border:0;border-radius:17px;background:#2459b7;color:#fff;font-size:clamp(17px,3.2vw,22px);
+  line-height:1.2;font-weight:800;box-shadow:0 5px 13px rgba(12,40,87,.14);padding:10px 16px}
+#dulon-install-button:active,#dulon-share-button:active{transform:translateY(1px)}
+#dulon-install-button .dulon-install-icon{font-size:25px;line-height:1;font-weight:500}
+#dulon-share-button{flex:0 0 54px;width:54px;min-height:54px;display:flex;align-items:center;justify-content:center;
+  border:1px solid #dce6f5;border-radius:17px;background:#fff;color:#2459b7;
+  box-shadow:0 5px 13px rgba(12,40,87,.10);padding:0}
+#dulon-install-banner[hidden]{display:none!important}
+body.operation-view #dulon-install-banner{display:none}
+@media(max-width:520px){#dulon-install-banner{margin-top:9px;padding:0 14px;gap:8px}
+#dulon-install-button{min-height:48px;border-radius:13px;font-size:16px;padding:9px 8px;gap:7px}
+#dulon-install-button .dulon-install-icon{font-size:22px}
+#dulon-share-button{flex-basis:48px;width:48px;min-height:48px;border-radius:13px}}
+</style>
 <style id="dulon-reference-design-final-override">
 /* Réglages finaux : cette feuille vient après les styles PWA qui écrasaient la maquette */
 header.dulon-header-hd{min-height:0!important;height:auto!important;padding:10px 14px 18px!important;gap:clamp(8px,1.3vw,18px)!important;background:linear-gradient(115deg,#f5fbff 0%,#fff 48%,#e7f5ff 100%)!important;border-bottom:0!important;box-shadow:0 7px 22px rgba(9,65,143,.15)!important}
@@ -4420,44 +4459,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 }
 </style>
 
-</head>
-<body>
-<div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>
-<header class="dulon-header-hd">
-<button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
-<div class="brand dulon-hd-brand"><span class="mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet"></span><span class="dulon-hd-brand-copy"><span class="brand-name"><span class="dulon">Dulon</span><span class="bet">Bet</span></span><span class="dulon-hd-tagline">Pariez • Gagnez • Retirez</span></span></div>
-<nav class="header-actions"><button class="btn-dark login-button" onclick="showPanel('login')"><svg class="dulon-login-user-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4" fill="currentColor"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z" fill="currentColor"/></svg><span>Se connecter</span></button><button aria-label="Activer le thème sombre" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Changer le thème" type="button">☾</button></nav>
-</header>
 
-<section id="dulon-install-banner" aria-label="Installer et partager DulonBet">
-  <button id="dulon-install-button" type="button">
-    <span class="dulon-install-laptop" aria-hidden="true"><svg viewBox="0 0 100 74" width="100" height="74" fill="none"><rect x="14" y="5" width="72" height="49" rx="5" fill="#061b57" stroke="#66e8ff" stroke-width="3"/><rect x="20" y="11" width="60" height="36" rx="2" fill="#0866ed"/><path d="M50 16v19m-9-9 9 10 9-10M37 37v4h26v-4" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 58h86l-9 9H16z" fill="#bdefff" stroke="#fff" stroke-width="2"/><path d="M38 60h24" stroke="#168cff" stroke-width="2" stroke-linecap="round"/></svg></span>
-    <span class="dulon-install-copy"><strong>Installer <em>maintenant</em></strong><small>Accédez plus rapidement à DulonBet&nbsp;!</small></span>
-  </button>
-  <button id="dulon-share-button" type="button" aria-label="Partager DulonBet" title="Partager DulonBet">
-    <svg aria-hidden="true" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
-      <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"></path>
-    </svg>
-  </button>
-</section>
-<style id="dulon-pwa-install-style">
-#dulon-install-banner{max-width:1080px;margin:12px auto 0;padding:0 18px;display:flex;align-items:stretch;gap:10px}
-#dulon-install-button{flex:1;min-width:0;min-height:54px;display:flex;align-items:center;justify-content:center;gap:10px;
-  border:0;border-radius:17px;background:#2459b7;color:#fff;font-size:clamp(17px,3.2vw,22px);
-  line-height:1.2;font-weight:800;box-shadow:0 5px 13px rgba(12,40,87,.14);padding:10px 16px}
-#dulon-install-button:active,#dulon-share-button:active{transform:translateY(1px)}
-#dulon-install-button .dulon-install-icon{font-size:25px;line-height:1;font-weight:500}
-#dulon-share-button{flex:0 0 54px;width:54px;min-height:54px;display:flex;align-items:center;justify-content:center;
-  border:1px solid #dce6f5;border-radius:17px;background:#fff;color:#2459b7;
-  box-shadow:0 5px 13px rgba(12,40,87,.10);padding:0}
-#dulon-install-banner[hidden]{display:none!important}
-body.operation-view #dulon-install-banner{display:none}
-@media(max-width:520px){#dulon-install-banner{margin-top:9px;padding:0 14px;gap:8px}
-#dulon-install-button{min-height:48px;border-radius:13px;font-size:16px;padding:9px 8px;gap:7px}
-#dulon-install-button .dulon-install-icon{font-size:22px}
-#dulon-share-button{flex-basis:48px;width:48px;min-height:48px;border-radius:13px}}
-</style>
 
 <main>
 <div aria-label="DulonBet" class="operations-brand">

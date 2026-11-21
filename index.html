@@ -7491,3 +7491,32 @@ main{max-width:920px!important}
  #deposit .operations-banner h2,#withdraw .operations-banner h2{margin-top:6px!important}
 }
 </style>
+
+<style id="dulonbet-operations-text-only">
+/* Supprimer le carré/fond et l'illustration : garder seulement Accueil et Opérations */
+#deposit .operations-banner,
+#withdraw .operations-banner{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  min-height:0!important;
+  height:auto!important;
+  padding-bottom:0!important;
+}
+#deposit .operations-banner::before,
+#deposit .operations-banner::after,
+#withdraw .operations-banner::before,
+#withdraw .operations-banner::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  box-shadow:none!important;
+}
+#deposit .operations-banner-art,
+#withdraw .operations-banner-art{
+  display:none!important;
+}
+</style>

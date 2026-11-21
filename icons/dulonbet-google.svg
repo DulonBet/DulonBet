@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<title>DulonBet — logo officiel</title>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0717a8"/><stop offset=".55" stop-color="#0756e8"/><stop offset="1" stop-color="#020b58"/></linearGradient>
+ <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#35f4ff"/><stop offset="1" stop-color="#008bff"/></linearGradient>
+ <linearGradient id="white" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#b9d9ff"/></linearGradient>
+</defs>
+<rect width="512" height="512" rx="100" fill="url(#bg)"/>
+<path d="M0 210 Q256 300 512 210 M0 250 Q256 340 512 250" fill="none" stroke="#27caff" stroke-width="9" opacity=".7"/>
+<circle cx="256" cy="142" r="91" fill="url(#white)" stroke="#d8f4ff" stroke-width="8"/>
+<circle cx="256" cy="142" r="78" fill="#fff" stroke="#09257e" stroke-width="7"/>
+<g fill="#071b70" stroke="#1236a7" stroke-width="5" stroke-linejoin="round">
+<path d="M256 113l29 21-11 33h-36l-11-33z"/>
+<path d="M256 65l30 15-1 29-29 4-28-10-2-24z"/>
+<path d="M285 134l31-11 20 24-14 29-32-9-15-33z"/>
+<path d="M227 134l-31-11-20 24 14 29 32-9 15-33z"/>
+</g>
+<g stroke="#061052" stroke-width="12" stroke-linejoin="round">
+<path d="M80 226h100c57 0 80 32 70 82l-15 73c-8 37-32 53-74 53H49z" fill="url(#white)"/>
+<path d="M119 268h51c22 0 31 12 27 32l-13 56c-3 14-12 20-27 20h-59z" fill="#071b70" stroke-width="6"/>
+<path d="M258 226h91c51 0 74 26 65 66-5 22-16 36-35 44 22 9 30 26 24 49-8 34-33 49-73 49H218z" fill="url(#cyan)"/>
+<path d="M296 269h42c17 0 24 8 21 22-3 13-12 19-27 19h-48z" fill="#061b70" stroke-width="6"/>
+<path d="M279 333h49c16 0 23 8 20 21-3 14-12 19-28 19h-50z" fill="#061b70" stroke-width="6"/>
+</g>
+<path d="M35 446c116-49 262-69 442-166-36 56-135 108-253 140-65 18-128 26-189 26z" fill="#03135c"/>
+<path d="M32 444c123-49 269-70 445-164-42 55-142 106-258 136-65 17-127 25-187 28z" fill="url(#cyan)" stroke="#06165f" stroke-width="5"/>
+</svg>

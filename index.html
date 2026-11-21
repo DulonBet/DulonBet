@@ -6643,3 +6643,27 @@ body:not(.operation-view) #home-view > .promo-carousel{
   z-index:0!important;
 }
 </style>
+
+
+<style id="dulonbet-operation-cards-persistent-visibility">
+/* Empêcher les cartes et leur contenu de disparaître après les animations/initialisations de la page. */
+body:not(.operation-view) #home-view > .actions.dulon-operations-cards,
+body:not(.operation-view) #home-view > .actions.dulon-operations-cards > .dulon-operation-card,
+body:not(.operation-view) #home-view > .actions.dulon-operations-cards > .dulon-operation-card *{
+  opacity:1!important;
+  visibility:visible!important;
+  animation:none!important;
+}
+body:not(.operation-view) #home-view > .actions.dulon-operations-cards{
+  display:grid!important;
+  height:auto!important;
+  max-height:none!important;
+  clip:auto!important;
+  clip-path:none!important;
+  overflow:visible!important;
+}
+body:not(.operation-view) #home-view > .actions.dulon-operations-cards > .dulon-operation-card{
+  display:flex!important;
+  transform:none!important;
+}
+</style>

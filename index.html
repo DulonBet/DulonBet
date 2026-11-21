@@ -7142,101 +7142,8 @@ body.operation-view #withdraw .operator-pick input[type="radio"] {
 </style>
 
 
-<style id="dulonbet-blue-premium-mobile-theme">
-/* Identité visuelle unifiée DulonBet — dépôt, retrait et connexion */
-:root{
- --db-navy:#071b70;--db-deep:#062b9b;--db-blue:#0758e8;--db-cyan:#13c8ff;
- --db-pale:#eaf5ff;--db-line:#b9d9ff;--db-ink:#082d82;
-}
-html,body{background:#edf6ff!important;color:var(--db-ink)}
-body{background-image:radial-gradient(ellipse at 8% 0%,rgba(33,173,255,.15),transparent 34%),linear-gradient(180deg,#f7fbff 0%,#e9f4ff 70%,#dceeff 100%)!important}
-header{background:linear-gradient(110deg,#071b70 0%,#0645bd 60%,#087cff 100%)!important;border:0!important;box-shadow:0 5px 18px rgba(4,49,151,.2)!important}
-header .brand,header .brand-name,header .brand-name .dulon{color:#fff!important}
-header .brand-name .bet,header .brand span{color:#4edbff!important}
-header .mark{background:linear-gradient(145deg,#17d5ff,#0875ff 52%,#061d91)!important;box-shadow:0 0 0 2px rgba(74,219,255,.75),0 5px 13px rgba(0,0,0,.22)!important}
-header .login-button,header .theme-toggle{border:1px solid rgba(255,255,255,.55)!important;background:rgba(255,255,255,.14)!important;color:#fff!important}
-main{max-width:920px!important}
-.panel#deposit,.panel#withdraw{
- background:linear-gradient(150deg,rgba(255,255,255,.99),rgba(237,247,255,.99))!important;
- border:2px solid #b7d9ff!important;border-radius:26px!important;
- box-shadow:0 12px 32px rgba(7,65,171,.13),inset 0 1px 0 #fff!important;
- padding:clamp(14px,3vw,26px)!important;overflow:hidden;
-}
-#deposit .operations-page-head,#withdraw .operations-page-head,#login .operations-page-head{
- display:flex!important;align-items:center!important;gap:12px!important;flex-wrap:wrap!important;margin:0 0 14px!important;
-}
-#deposit .operations-page-head h2,#withdraw .operations-page-head h2,#login .operations-page-head h2{
- color:#092d83!important;font-size:clamp(21px,4vw,29px)!important;font-weight:900!important;margin:0!important;
-}
-#deposit .operations-back,#withdraw .operations-back,#login .operations-back{
- background:linear-gradient(135deg,#fff,#e5f3ff)!important;color:#0647b7!important;
- border:1px solid #b9d9ff!important;border-radius:999px!important;box-shadow:0 4px 10px rgba(0,71,185,.12)!important;
-}
-#deposit .support-card,#withdraw .support-card{
- display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;flex-wrap:wrap!important;
- background:linear-gradient(110deg,#f9fcff,#e2f1ff)!important;border:1px solid #b8d8ff!important;
- border-radius:20px!important;padding:15px!important;box-shadow:0 4px 13px rgba(15,87,185,.09)!important;
-}
-#deposit .support-card b,#withdraw .support-card b{font-size:clamp(18px,3.5vw,25px)!important;color:#082d82!important}
-#deposit .support-card p,#withdraw .support-card p{margin:2px 0 0!important;color:#214b92!important}
-#deposit .support-link,#withdraw .support-link{
- display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;
- padding:12px 15px!important;border-radius:999px!important;background:linear-gradient(120deg,#00c96b,#008e53)!important;
- color:#fff!important;font-weight:850!important;text-decoration:none!important;box-shadow:0 5px 13px rgba(0,155,83,.22)!important;
-}
-#deposit .operations-promo,#withdraw .operations-promo{
- display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;
- margin:14px 0!important;padding:13px 17px!important;border-radius:18px!important;
- background:linear-gradient(110deg,#0757e5,#06175f 65%,#063ebc)!important;color:#fff!important;
- box-shadow:0 6px 14px rgba(0,49,160,.2)!important;border:1px solid #2caeff!important;
-}
-#deposit .operations-promo span,#withdraw .operations-promo span{font-size:clamp(13px,3vw,19px)!important;font-weight:900!important;color:#fff!important}
-#deposit .operations-promo strong,#withdraw .operations-promo strong{
- padding:5px 16px!important;border:2px solid #27d5ff!important;border-radius:14px!important;
- background:linear-gradient(135deg,#138dff,#0643d7)!important;color:#fff!important;font-size:clamp(20px,4vw,31px)!important;
-}
-#deposit .operation-switch,#withdraw .operation-switch{
- display:grid!important;grid-template-columns:1fr 1fr!important;gap:5px!important;padding:4px!important;
- border-radius:999px!important;background:#dcecff!important;border:1px solid #b7d5ff!important;margin:14px 0!important;
-}
-#deposit .operation-switch-btn,#withdraw .operation-switch-btn{
- border-radius:999px!important;padding:12px 8px!important;background:transparent!important;color:#0a3d9d!important;
- font-size:clamp(15px,3.5vw,21px)!important;font-weight:900!important;box-shadow:none!important;
-}
-#deposit .operation-switch-btn.active,#withdraw .operation-switch-btn.active{
- background:linear-gradient(120deg,#087bff,#0640c6 72%,#061e86)!important;color:#fff!important;
- box-shadow:0 4px 12px rgba(0,70,200,.28),inset 0 1px 0 rgba(255,255,255,.4)!important;
-}
-#deposit>.notice,#withdraw>.notice{
- background:linear-gradient(105deg,#e7f4ff,#d7ebff)!important;border:1.5px solid #8fc4ff!important;
- color:#0a347f!important;border-radius:17px!important;padding:14px 16px!important;font-size:15px!important;
-}
-#deposit .field label,#withdraw .field label{color:#0a347f!important;font-weight:850!important;font-size:15px!important}
-#deposit .field input,#deposit .field select,#withdraw .field input,#withdraw .field select{
- background:linear-gradient(180deg,#fff,#fafdff)!important;border:2px solid #c4e0ff!important;
- border-radius:16px!important;min-height:56px!important;color:#0a2d78!important;
- box-shadow:inset 0 1px 2px rgba(0,47,130,.03),0 3px 9px rgba(18,91,187,.05)!important;
-}
-#deposit .field input:focus,#deposit .field select:focus,#withdraw .field input:focus,#withdraw .field select:focus{
- border-color:#168cff!important;box-shadow:0 0 0 3px rgba(22,140,255,.15)!important;
-}
-#deposit .small,#withdraw .small{color:#315b9a!important}
-#deposit .operator-pick,#withdraw .operator-pick{
- border:2px solid #c3dfff!important;border-radius:17px!important;background:#fff!important;
- box-shadow:0 4px 11px rgba(0,67,173,.09)!important;transition:transform .15s ease,border-color .15s ease;
-}
-#deposit .operator-pick:has(input:checked),#withdraw .operator-pick:has(input:checked){
- border-color:#0784ff!important;box-shadow:0 0 0 3px rgba(0,132,255,.14),0 5px 12px rgba(0,67,173,.12)!important;
-}
-#deposit .field button[type=submit],#withdraw .field button[type=submit],#deposit button.btn-blue,#withdraw button.btn-blue{
- width:100%!important;min-height:62px!important;border-radius:999px!important;
- background:linear-gradient(110deg,#078dff,#0649e2 55%,#061b91)!important;color:#fff!important;
- border:2px solid #38cfff!important;font-size:clamp(16px,3.8vw,22px)!important;font-weight:900!important;
- box-shadow:0 7px 16px rgba(0,66,190,.24),inset 0 1px 0 rgba(255,255,255,.4)!important;
-}
-#withdraw .withdraw-warning,#withdraw .procedure,#withdraw .withdraw-location-card{
- border-radius:16px!important;
-}
+<style id="dulonbet-blue-premium-login-only">
+/* Conserver uniquement le style de Connexion; annuler les styles ajoutés à Dépôt et Retrait. */
 #login.login-panel{
  background:linear-gradient(145deg,#06185f 0%,#073bb2 48%,#087cff 100%)!important;
  border:2px solid #42caff!important;border-radius:26px!important;padding:clamp(16px,4vw,30px)!important;
@@ -7247,7 +7154,8 @@ main{max-width:920px!important}
  background:radial-gradient(circle at 90% 12%,rgba(36,211,255,.26),transparent 28%),linear-gradient(150deg,transparent 68%,rgba(31,189,255,.16));
 }
 #login .operations-page-head,#login .login-card,#login .operation-footer{position:relative;z-index:1}
-#login .operations-page-head h2{color:#fff!important}
+#login .operations-page-head{display:flex!important;align-items:center!important;gap:12px!important;flex-wrap:wrap!important;margin:0 0 14px!important}
+#login .operations-page-head h2{color:#fff!important;font-size:clamp(21px,4vw,29px)!important;font-weight:900!important;margin:0!important}
 #login .operations-back{background:rgba(255,255,255,.13)!important;color:#fff!important;border-color:rgba(255,255,255,.45)!important}
 #login .login-card{
  max-width:480px!important;margin:20px auto!important;padding:clamp(20px,4vw,30px)!important;
@@ -7274,11 +7182,5 @@ main{max-width:920px!important}
 }
 #login .login-feedback{color:#0a347f!important}
 #login .operation-footer{color:#e2f5ff!important}
-@media(max-width:520px){
- #deposit .support-card,#withdraw .support-card{align-items:stretch!important}
- #deposit .support-link,#withdraw .support-link{width:100%!important}
- #deposit .operations-promo,#withdraw .operations-promo{padding:11px 12px!important}
- #deposit .operator-pick,#withdraw .operator-pick{min-height:92px!important}
- #login.login-panel{margin:14px 0!important}
-}
+@media(max-width:520px){#login.login-panel{margin:14px 0!important}}
 </style>

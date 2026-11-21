@@ -5137,7 +5137,7 @@ body.operation-view #withdraw .withdraw-location-item span{
 document.addEventListener('DOMContentLoaded',function(){
   const home=document.getElementById('home-view');
   if(!home || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const targets=home.querySelectorAll(':scope > section:not(.promo-carousel), .actions .action');
+  const targets=home.querySelectorAll(':scope > section:not(.promo-carousel):not(.actions), .actions .action:not(.dulon-operation-card)');
   targets.forEach(function(el){el.classList.add('scroll-reveal');});
   const observer=new IntersectionObserver(function(entries){
     entries.forEach(function(entry){

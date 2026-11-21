@@ -4503,25 +4503,28 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
  const title=modal.querySelector('[data-payment-title]');
  const intro=modal.querySelector('[data-payment-intro]');
  const detail=modal.querySelector('[data-payment-detail]');
- const normalized=String(status||'processing').toLowerCase();
+ const normalized=String(status||'processing').trim().toLowerCase().replace(/[\\s-]+/g,'_');
  modal.classList.remove('is-approved','is-failed','is-pending');
- if(normalized==='approved'){
+ if(['approved','successful','success','paid','completed'].includes(normalized)){
   modal.classList.add('is-approved');
   title.textContent='Paiement confirmé';
   intro.textContent='Le paiement Mobile Money est confirmé.';
   detail.textContent='La prise en compte du crédit 1XBET doit encore être vérifiée. Ne relance pas le dépôt.';
- }else if(normalized==='rejected'||normalized==='failed'){
+ }else if(['rejected','failed','failure','cancelled','canceled','expired','declined','refused','unsuccessful','not_paid','payment_failed'].includes(normalized)){
   modal.classList.add('is-failed');
   title.textContent='Paiement non confirmé';
-  intro.textContent='Le paiement n’a pas été confirmé.';
+  intro.textContent='Le paiement n’a pas été confirmé par FeexPay.';
   detail.textContent='Aucun crédit 1XBET n’est annoncé. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
+ }else if(attempt>=20){
+  modal.classList.add('is-failed');
+  title.textContent='Paiement non confirmé';
+  intro.textContent='Nous n’avons pas reçu de confirmation de FeexPay dans le délai d’attente.';
+  detail.textContent='Cela ne prouve pas que le paiement a échoué. Aucun crédit 1XBET n’est annoncé sans confirmation. Si ton compte Mobile Money a été débité, contacte le support avant de payer à nouveau.';
  }else{
   modal.classList.add('is-pending');
   title.textContent='Paiement en cours';
   intro.textContent='En attente de confirmation du paiement et du crédit.';
-  detail.textContent=attempt>=20
-   ? 'Le statut du paiement n’est pas encore disponible. Garde ton téléphone à proximité. Si ton compte a été débité, contacte le support. Ne relance pas le dépôt.'
-   : 'Demande transmise. Le paiement doit encore être confirmé. Garde ton téléphone à proximité et suis les éventuelles instructions de paiement. Ne relance pas le dépôt.';
+  detail.textContent='Demande transmise. Le paiement doit encore être confirmé. Garde ton téléphone à proximité et suis les éventuelles instructions de paiement. Ne relance pas le dépôt.';
  }
  if(attempt===0)modal.classList.add('is-open');
 }

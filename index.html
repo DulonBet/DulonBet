@@ -4553,25 +4553,29 @@ async function submitTx(e,type){
    box.style.display='block';box.textContent='Saisis un numéro Mobile Money béninois de 10 chiffres commençant par 01.';return;
   }
   if(submit){submit.disabled=true;submit.textContent='Envoi…';}
-  // Afficher immédiatement le suivi, sans attendre la réponse parfois lente de FeexPay.
-  // À ce stade, la demande est en cours d’envoi : aucun paiement n’est encore confirmé.
+  // La demande FeexPay démarre immédiatement, mais la fenêtre de suivi apparaît après 3 secondes.
+  // Le délai concerne uniquement l'affichage et ne confirme pas le paiement.
   box.style.display='none';box.dataset.paymentReference='initiating-'+newDulonBetKey();box.textContent='';
   const trackingModal=document.getElementById('dulon-payment-tracking-modal');
-  if(trackingModal){
-   trackingModal.classList.remove('is-approved','is-failed');
-   trackingModal.classList.add('is-pending','is-open');
-   const trackingTitle=trackingModal.querySelector('[data-payment-title]');
-   const trackingIntro=trackingModal.querySelector('[data-payment-intro]');
-   const trackingDetail=trackingModal.querySelector('[data-payment-detail]');
-   if(trackingTitle)trackingTitle.textContent='Paiement en cours';
-   if(trackingIntro)trackingIntro.textContent='En attente de confirmation du paiement et du crédit.';
-   if(trackingDetail)trackingDetail.textContent='Envoi de la demande au service de paiement. La confirmation dépend de FeexPay et de votre réseau Mobile Money. Ne relance pas le dépôt.';
-  }
+  const trackingReady=new Promise(resolve=>setTimeout(()=>{
+   if(trackingModal){
+    trackingModal.classList.remove('is-approved','is-failed');
+    trackingModal.classList.add('is-pending','is-open');
+    const trackingTitle=trackingModal.querySelector('[data-payment-title]');
+    const trackingIntro=trackingModal.querySelector('[data-payment-intro]');
+    const trackingDetail=trackingModal.querySelector('[data-payment-detail]');
+    if(trackingTitle)trackingTitle.textContent='Paiement en cours';
+    if(trackingIntro)trackingIntro.textContent='En attente de confirmation du paiement et du crédit.';
+    if(trackingDetail)trackingDetail.textContent='Envoi de la demande au service de paiement. La confirmation dépend de FeexPay et de votre réseau Mobile Money. Ne relance pas le dépôt.';
+   }
+   resolve();
+  },3000));
   try{
    const result=await callFeexPay('initiate',{
     amount_fcfa:amount,xbet_id:xbetId,phone,network:chosen,country,
     idempotency_key:newDulonBetKey()
    });
+   await trackingReady;
    if(!result.reference||!result.token){
     if(trackingModal){
      const trackingDetail=trackingModal.querySelector('[data-payment-detail]');
@@ -4584,6 +4588,7 @@ async function submitTx(e,type){
    f.reset();
   }catch(err){
    console.error('FeexPay initiate:',err);
+   await trackingReady;
    if(trackingModal){
     const trackingDetail=trackingModal.querySelector('[data-payment-detail]');
     if(trackingDetail)trackingDetail.textContent='La réponse du service de paiement n’est pas disponible pour le moment. Le paiement n’est pas confirmé dans DulonBet. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative. Ne relance pas le dépôt.';

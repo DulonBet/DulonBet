@@ -4457,6 +4457,39 @@ body.operation-view #dulon-install-banner{display:none!important}
  #dulon-share-button{flex-basis:47px!important;width:47px!important;min-height:82px!important;border-radius:16px!important}
  #dulon-share-button svg{width:31px!important;height:31px!important}
 }
+
+/* Bannière d'installation compacte sur mobile et ordinateur */
+#dulon-install-banner{max-width:920px!important;margin:10px auto 0!important;padding:0 12px!important;gap:7px!important}
+#dulon-install-button{min-height:88px!important;gap:14px!important;padding:10px 16px!important;border-width:2px!important;border-radius:22px!important;box-shadow:0 0 0 2px #13c9ff24,0 6px 14px #0756bd20!important}
+#dulon-install-button .dulon-install-laptop{flex:0 0 76px!important;width:76px!important;filter:drop-shadow(0 0 6px #00caff60)!important}
+#dulon-install-button .dulon-install-laptop svg{width:76px!important;height:57px!important}
+#dulon-install-button .dulon-install-copy{gap:5px!important}
+#dulon-install-button .dulon-install-copy strong{font-size:clamp(19px,2.5vw,30px)!important;letter-spacing:-.5px!important}
+#dulon-install-button .dulon-install-copy small{font-size:clamp(11px,1.45vw,16px)!important}
+#dulon-share-button{flex:0 0 58px!important;width:58px!important;min-height:88px!important;border-radius:22px!important}
+#dulon-share-button svg{width:32px!important;height:32px!important}
+@media(max-width:680px){
+ #dulon-install-banner{margin:9px auto 0!important;padding:0 9px!important;gap:6px!important}
+ #dulon-install-button{min-height:68px!important;padding:7px 8px!important;gap:8px!important;border-radius:17px!important}
+ #dulon-install-button .dulon-install-laptop{flex:0 0 48px!important;width:48px!important}
+ #dulon-install-button .dulon-install-laptop svg{width:48px!important;height:36px!important}
+ #dulon-install-button .dulon-install-copy{gap:4px!important}
+ #dulon-install-button .dulon-install-copy strong{font-size:clamp(16px,4.2vw,22px)!important;letter-spacing:-.3px!important}
+ #dulon-install-button .dulon-install-copy small{font-size:clamp(9px,2.6vw,12px)!important}
+ #dulon-share-button{flex-basis:44px!important;width:44px!important;min-height:68px!important;border-radius:16px!important}
+ #dulon-share-button svg{width:26px!important;height:26px!important}
+}
+@media(max-width:390px){
+ #dulon-install-banner{padding:0 7px!important;gap:5px!important}
+ #dulon-install-button{min-height:60px!important;padding:6px 6px!important;gap:5px!important;border-radius:14px!important}
+ #dulon-install-button .dulon-install-laptop{flex-basis:38px!important;width:38px!important}
+ #dulon-install-button .dulon-install-laptop svg{width:38px!important;height:29px!important}
+ #dulon-install-button .dulon-install-copy strong{font-size:15px!important}
+ #dulon-install-button .dulon-install-copy small{font-size:8px!important}
+ #dulon-share-button{flex-basis:38px!important;width:38px!important;min-height:60px!important;border-radius:13px!important}
+ #dulon-share-button svg{width:22px!important;height:22px!important}
+}
+
 </style>
 
 

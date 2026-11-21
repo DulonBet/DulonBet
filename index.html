@@ -4110,24 +4110,28 @@ body:not(.operation-view) #home-view #payment-methods-title{color:#0871e8!import
 </style>
 
 <style id="dulon-splash-screen-style">
-#dulon-splash-screen{position:fixed;inset:0;z-index:2147483647;display:block;background:#061b68 url('/icons/dulonbet-splash.jpg') center center/cover no-repeat;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}
+#dulon-splash-screen{position:fixed;inset:0;z-index:2147483647;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#075bff 0%,#0734c8 30%,#061c78 64%,#020b3b 100%);opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}
 #dulon-splash-screen.dulon-splash-hide{opacity:0;visibility:hidden;pointer-events:none}
-#dulon-splash-screen .dulon-splash-dots{position:absolute;left:22%;top:75.1%;width:60%;display:flex;align-items:center;justify-content:space-between}
-#dulon-splash-screen .dulon-splash-dot{display:block;width:clamp(8px,4vw,16px);height:clamp(8px,4vw,16px);border-radius:50%;background:#268cff;opacity:.72;transform:scale(.82);animation:dulonSplashPulse 1.05s ease-in-out infinite}
+#dulon-splash-screen .splash-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,rgba(0,190,255,.58),transparent 38%),linear-gradient(145deg,transparent 0 13%,rgba(0,118,255,.7) 13.2%,transparent 14.2% 61%,rgba(0,145,255,.45) 61.2%,transparent 62.3%)}
+#dulon-splash-screen .splash-stands{position:absolute;left:-18%;right:-18%;top:31%;height:39%;border-top:3px solid rgba(0,197,255,.85);border-bottom:3px solid rgba(0,139,255,.75);border-radius:50%;background:repeating-linear-gradient(180deg,rgba(0,157,255,.16) 0 2px,transparent 2px 20px);box-shadow:0 -18px 35px rgba(0,133,255,.3),0 18px 40px rgba(0,95,255,.3)}
+#dulon-splash-screen .splash-light{position:absolute;top:23%;width:16%;height:7%;background:radial-gradient(ellipse,rgba(255,255,255,.98) 0 7%,rgba(97,218,255,.8) 12%,rgba(0,120,255,.18) 50%,transparent 72%);filter:drop-shadow(0 0 14px #00bfff)}
+#dulon-splash-screen .splash-light.left{left:1%}#dulon-splash-screen .splash-light.right{right:1%}
+#dulon-splash-screen .splash-logo{position:absolute;left:50%;top:43%;transform:translate(-50%,-50%);width:min(64vw,310px);aspect-ratio:1;border-radius:24%;overflow:hidden;box-shadow:0 0 30px rgba(0,199,255,.7),0 0 75px rgba(0,98,255,.6);border:1px solid rgba(87,217,255,.8)}
+#dulon-splash-screen .splash-logo img{width:100%;height:100%;display:block;object-fit:cover}
+#dulon-splash-screen .splash-field{position:absolute;left:-25%;right:-25%;bottom:-13%;height:32%;border-top:4px solid #12d9ff;border-radius:50% 50% 0 0;background:repeating-conic-gradient(from 250deg at 50% 0%,rgba(0,153,255,.24) 0deg 8deg,rgba(0,28,116,.25) 8deg 16deg);box-shadow:0 -8px 26px rgba(0,197,255,.65)}
+#dulon-splash-screen .splash-ball{position:absolute;left:50%;bottom:-12%;width:min(72vw,370px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle at 35% 28%,#8af4ff 0,#168dff 32%,#0635bc 62%,#020b4c 100%);border:5px solid rgba(0,171,255,.9);box-shadow:0 0 26px #008bff,inset 0 0 25px #021052}
+#dulon-splash-screen .splash-ball:before{content:"";position:absolute;left:35%;top:31%;width:30%;height:30%;background:#06145f;clip-path:polygon(50% 0,98% 35%,80% 95%,20% 95%,2% 35%);border:3px solid #4adfff}
+#dulon-splash-screen .dulon-splash-dots{position:absolute;left:25%;top:66.3%;width:50%;display:flex;align-items:center;justify-content:space-between;z-index:3}
+#dulon-splash-screen .dulon-splash-dot{display:block;width:clamp(9px,3.5vw,16px);height:clamp(9px,3.5vw,16px);border-radius:50%;background:#248cff;opacity:.68;transform:scale(.82);animation:dulonSplashPulse 1.05s ease-in-out infinite;box-shadow:0 0 8px rgba(0,154,255,.4)}
 #dulon-splash-screen .dulon-splash-dot:first-child{background:#fff}
-#dulon-splash-screen .dulon-splash-dot:nth-child(2){animation-delay:.13s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(3){animation-delay:.26s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(4){animation-delay:.39s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(5){animation-delay:.52s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(6){animation-delay:.65s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(7){animation-delay:.78s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(8){animation-delay:.91s}
-@keyframes dulonSplashPulse{0%,100%{opacity:.48;transform:scale(.78)}45%{opacity:1;transform:scale(1.08);background:#fff}}
+#dulon-splash-screen .dulon-splash-dot:nth-child(2){animation-delay:.13s}#dulon-splash-screen .dulon-splash-dot:nth-child(3){animation-delay:.26s}#dulon-splash-screen .dulon-splash-dot:nth-child(4){animation-delay:.39s}#dulon-splash-screen .dulon-splash-dot:nth-child(5){animation-delay:.52s}#dulon-splash-screen .dulon-splash-dot:nth-child(6){animation-delay:.65s}#dulon-splash-screen .dulon-splash-dot:nth-child(7){animation-delay:.78s}#dulon-splash-screen .dulon-splash-dot:nth-child(8){animation-delay:.91s}
+@keyframes dulonSplashPulse{0%,100%{opacity:.48;transform:scale(.78)}45%{opacity:1;transform:scale(1.12);background:#fff;box-shadow:0 0 15px #fff}}
+@media(max-height:650px){#dulon-splash-screen .splash-logo{width:min(45vh,250px);top:40%}#dulon-splash-screen .dulon-splash-dots{top:67%}#dulon-splash-screen .splash-ball{width:45vh}}
 @media(prefers-reduced-motion:reduce){#dulon-splash-screen .dulon-splash-dot{animation-duration:2.2s}}
 </style>
 </head>
 <body>
-<div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"><div class="dulon-splash-dots" aria-hidden="true"><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span></div></div>
+<div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"><div class="splash-glow" aria-hidden="true"></div><div class="splash-stands" aria-hidden="true"></div><div class="splash-light left" aria-hidden="true"></div><div class="splash-light right" aria-hidden="true"></div><div class="splash-logo"><img src="/icons/dulonbet-app.svg" alt="Logo officiel DulonBet"></div><div class="splash-field" aria-hidden="true"></div><div class="splash-ball" aria-hidden="true"></div><div class="dulon-splash-dots" aria-hidden="true"><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span></div></div>
 
 <header>
 <button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>

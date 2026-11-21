@@ -4556,12 +4556,25 @@ async function submitTx(e,type){
   // Pas de message supplémentaire sous le bouton pendant l’envoi :
   // le suivi du paiement s’affiche dans la fenêtre dédiée après la réponse FeexPay.
   box.style.display='none';box.dataset.paymentReference='initiating-'+newDulonBetKey();box.textContent='';
+  // Ouvrir le suivi immédiatement : ne pas attendre la réponse parfois lente de FeexPay.
+  const trackingModal=document.getElementById('dulon-payment-tracking-modal');
+  if(trackingModal){
+   trackingModal.classList.remove('is-approved','is-failed');
+   trackingModal.classList.add('is-pending','is-open');
+   const trackingTitle=trackingModal.querySelector('[data-payment-title]');
+   const trackingIntro=trackingModal.querySelector('[data-payment-intro]');
+   const trackingDetail=trackingModal.querySelector('[data-payment-detail]');
+   if(trackingTitle)trackingTitle.textContent='Préparation de la demande…';
+   if(trackingIntro)trackingIntro.textContent='Connexion au service de paiement.';
+   if(trackingDetail)trackingDetail.textContent='Consulte ton téléphone pour autoriser le paiement si la demande Mobile Money arrive. Ne relance pas le dépôt.';
+  }
   try{
    const result=await callFeexPay('initiate',{
     amount_fcfa:amount,xbet_id:xbetId,phone,network:chosen,country,
     idempotency_key:newDulonBetKey()
    });
    if(!result.reference||!result.token){
+    if(trackingModal)trackingModal.classList.remove('is-open');
     box.style.display='block';
     box.textContent='Le statut de la demande de paiement n’est pas disponible pour le moment. Si votre compte a été débité, contactez le support avant toute nouvelle tentative.';
     return;
@@ -4571,6 +4584,7 @@ async function submitTx(e,type){
    f.reset();
   }catch(err){
    console.error('FeexPay initiate:',err);
+   if(trackingModal)trackingModal.classList.remove('is-open');
    box.style.display='block';
    box.textContent=(err&&err.message)?('Échec de la demande : '+err.message):'La demande de paiement n’a pas pu être confirmée. Si ton compte a été débité, contacte le support avant toute nouvelle tentative.';
   }finally{

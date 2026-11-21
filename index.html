@@ -6948,3 +6948,69 @@ body.operation-view #withdraw .operator-pick input[type="radio"] {
  #dulon-mobile-drawer .drawer-share-icon:after{top:21px!important}
 }
 </style>
+
+
+<style id="dulon-home-dual-blue-compact-v1">
+/* Harmonisation de toute la page d'accueil : bleu foncé + bleu clair, dimensions compactes */
+body.home-view, body:not(.operation-view):not(.admin-view) {
+  --dulon-navy:#08285f;
+  --dulon-blue:#087bff;
+  --dulon-light:#eaf4ff;
+}
+body.home-view #home-view{
+  max-width:100%!important;
+  padding:0 12px 18px!important;
+  background:linear-gradient(180deg,#f8fbff 0%,#fff 38%,#edf6ff 100%)!important;
+}
+#home-view .promo-carousel{margin:12px auto 10px!important;max-width:100%!important;border-radius:20px!important;overflow:hidden!important}
+#home-view .promo-slide{box-sizing:border-box!important;min-height:0!important;padding:16px!important;border-radius:20px!important;gap:10px!important}
+#home-view .promo-slide h1,#home-view .promo-slide h2{font-size:clamp(17px,4.7vw,23px)!important;line-height:1.18!important;margin:6px 0 8px!important}
+#home-view .promo-slide p,#home-view .promo-slide .trust-copy{font-size:12px!important;line-height:1.35!important;margin:5px 0!important}
+#home-view .promo-slide .hero-icon,#home-view .promo-slide .promo-ticket{font-size:36px!important}
+#home-view .promo-controls{padding:7px 10px!important;gap:8px!important}
+#home-view .promo-controls button{min-height:32px!important;padding:5px 10px!important;font-size:12px!important;border-radius:10px!important}
+#home-view .actions.dulon-operations-cards{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin:10px 0 14px!important;padding:0!important}
+#home-view .dulon-operation-card{box-sizing:border-box!important;min-width:0!important;min-height:0!important;padding:13px 11px!important;border-radius:18px!important;border:1px solid #c8e2ff!important;background:linear-gradient(145deg,#fff 0%,#edf6ff 100%)!important;box-shadow:0 5px 14px rgba(8,64,145,.10)!important;color:#08285f!important;gap:7px!important}
+#home-view .dulon-operation-icon{width:44px!important;height:44px!important;min-width:44px!important;border-radius:14px!important;background:linear-gradient(145deg,#39baff 0%,#087bff 50%,#0742bd 100%)!important;box-shadow:0 4px 10px rgba(8,80,190,.18)!important}
+#home-view .dulon-operation-icon svg{width:27px!important;height:27px!important}
+#home-view .dulon-operation-card h2{font-size:18px!important;line-height:1.15!important;margin:3px 0!important;color:#08285f!important}
+#home-view .dulon-operation-card p{font-size:11px!important;line-height:1.3!important;margin:0 0 4px!important;color:#355985!important}
+#home-view .dulon-operation-button{box-sizing:border-box!important;min-height:39px!important;padding:8px 9px!important;border-radius:12px!important;border:1px solid #36baff!important;background:linear-gradient(110deg,#087bff,#0743c1)!important;color:#fff!important;font-size:12px!important;font-weight:800!important;box-shadow:0 4px 10px rgba(8,80,190,.16)!important}
+#home-view .dulon-withdraw-card .dulon-operation-icon svg defs linearGradient stop:first-child{stop-color:#9de6ff!important}
+#home-view .dulon-withdraw-card .dulon-operation-icon svg defs linearGradient stop:last-child{stop-color:#0754ff!important}
+#home-view .section{margin:13px 0!important;padding:12px!important;border:1px solid #d7e9ff!important;border-radius:17px!important;background:linear-gradient(145deg,#fff,#f0f7ff)!important;box-shadow:0 4px 12px rgba(8,64,145,.06)!important}
+#home-view .section h3,#home-view #payment-methods-title{font-size:16px!important;line-height:1.2!important;color:#0871ed!important;margin:0 0 9px!important}
+#home-view .brand-networks{gap:8px!important;margin:5px 0!important}
+#home-view .brand-card{padding:7px!important;border-radius:12px!important;border-color:#cfe4ff!important;background:#fff!important}
+#home-view .brand-logo-only{max-width:58px!important;max-height:35px!important;object-fit:contain!important}
+#home-view .how-tabs{gap:7px!important;margin:8px 0!important}
+#home-view .how-tabs button{min-height:37px!important;padding:8px 10px!important;border-radius:11px!important;font-size:12px!important}
+#home-view .how{gap:7px!important}
+#home-view .how > *{padding:10px!important;border-radius:12px!important;font-size:12px!important;line-height:1.35!important}
+#home-view .home-cta{padding:14px 12px!important;margin:14px 0 12px!important;border-radius:17px!important;background:linear-gradient(120deg,#08285f 0%,#087bff 100%)!important;color:#fff!important}
+#home-view .home-cta h2{font-size:18px!important;line-height:1.2!important;margin:0 0 9px!important}
+#home-view .home-cta-actions{gap:8px!important}
+#home-view .home-cta-actions button{min-height:42px!important;padding:8px 10px!important;border-radius:11px!important;font-size:13px!important}
+#home-view .home-footer{padding:13px!important;margin-top:12px!important;border-radius:16px!important;background:linear-gradient(130deg,#08285f,#087bff)!important;color:#fff!important}
+#home-view a,#home-view .seo-africa a{color:#0871ed!important}
+#home-view .seo-africa{padding:10px 0!important;margin:12px 0!important}
+#home-view .seo-africa > h2,#home-view .seo-africa > .seo-accordion > h3{font-size:15px!important;color:#0871ed!important}
+@media(max-width:520px){
+ body.home-view #home-view{padding:0 9px 14px!important}
+ #home-view .promo-slide{padding:13px!important}
+ #home-view .actions.dulon-operations-cards{gap:8px!important;margin:8px 0 11px!important}
+ #home-view .dulon-operation-card{padding:11px 9px!important;border-radius:15px!important}
+ #home-view .dulon-operation-icon{width:38px!important;height:38px!important;min-width:38px!important;border-radius:12px!important}
+ #home-view .dulon-operation-icon svg{width:23px!important;height:23px!important}
+ #home-view .dulon-operation-card h2{font-size:16px!important}
+ #home-view .dulon-operation-card p{font-size:10px!important}
+ #home-view .dulon-operation-button{min-height:36px!important;font-size:11px!important;padding:7px 6px!important}
+ #home-view .section{padding:10px!important;margin:10px 0!important}
+}
+@media(max-width:360px){
+ #home-view .actions.dulon-operations-cards{grid-template-columns:minmax(0,1fr)!important}
+ #home-view .dulon-operation-card{display:grid!important;grid-template-columns:40px 1fr!important;align-items:center!important;column-gap:10px!important}
+ #home-view .dulon-operation-card .dulon-operation-icon{grid-row:1 / span 2!important}
+ #home-view .dulon-operation-card h2,#home-view .dulon-operation-card p,#home-view .dulon-operation-button{grid-column:2!important}
+}
+</style>

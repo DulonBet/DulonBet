@@ -4504,18 +4504,34 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
  const intro=modal.querySelector('[data-payment-intro]');
  const detail=modal.querySelector('[data-payment-detail]');
  const normalized=String(status||'processing').trim().toLowerCase().replace(/[\\s-]+/g,'_');
+ const confirmed=['approved','successful','success','paid','completed'].includes(normalized);
+ const failed=['rejected','failed','failure','cancelled','canceled','expired','declined','refused','unsuccessful','not_paid','payment_failed'].includes(normalized);
+ if(attempt===0){
+  if(modal.dataset.paymentTimeout)window.clearTimeout(Number(modal.dataset.paymentTimeout));
+  modal.dataset.paymentTimeout=String(window.setTimeout(function(){
+   if(!modal.classList.contains('is-open')||modal.classList.contains('is-approved')||modal.classList.contains('is-failed'))return;
+   modal.classList.remove('is-pending','is-approved');
+   modal.classList.add('is-failed');
+   title.textContent='Paiement non confirmé';
+   intro.textContent='Aucune confirmation de paiement reçue après 60 secondes.';
+   detail.textContent='Cela ne prouve pas forcément que le paiement a échoué. Aucun crédit 1XBET ne sera annoncé sans confirmation fiable. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
+  },60000));
+ }
  modal.classList.remove('is-approved','is-failed','is-pending');
- if(['approved','successful','success','paid','completed'].includes(normalized)){
+ if(confirmed){
+  if(modal.dataset.paymentTimeout){window.clearTimeout(Number(modal.dataset.paymentTimeout));delete modal.dataset.paymentTimeout;}
   modal.classList.add('is-approved');
   title.textContent='Paiement confirmé';
   intro.textContent='Le paiement Mobile Money est confirmé.';
   detail.textContent='La prise en compte du crédit 1XBET doit encore être vérifiée. Ne relance pas le dépôt.';
- }else if(['rejected','failed','failure','cancelled','canceled','expired','declined','refused','unsuccessful','not_paid','payment_failed'].includes(normalized)){
+ }else if(failed){
+  if(modal.dataset.paymentTimeout){window.clearTimeout(Number(modal.dataset.paymentTimeout));delete modal.dataset.paymentTimeout;}
   modal.classList.add('is-failed');
   title.textContent='Paiement non confirmé';
   intro.textContent='Le paiement n’a pas été confirmé par FeexPay.';
   detail.textContent='Aucun crédit 1XBET n’est annoncé. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
  }else if(attempt>=20){
+  if(modal.dataset.paymentTimeout){window.clearTimeout(Number(modal.dataset.paymentTimeout));delete modal.dataset.paymentTimeout;}
   modal.classList.add('is-failed');
   title.textContent='Paiement non confirmé';
   intro.textContent='Nous n’avons pas reçu de confirmation de FeexPay dans le délai d’attente.';

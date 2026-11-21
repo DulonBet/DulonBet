@@ -4553,7 +4553,7 @@ async function submitTx(e,type){
    box.style.display='block';box.textContent='Saisis un numéro Mobile Money béninois de 10 chiffres commençant par 01.';return;
   }
   if(submit){submit.disabled=true;submit.textContent='Envoi…';}
-  // La demande FeexPay démarre immédiatement, mais la fenêtre de suivi apparaît après 3 secondes.
+  // La demande FeexPay démarre immédiatement, mais la fenêtre de suivi apparaît après 2 secondes.
   // Le délai concerne uniquement l'affichage et ne confirme pas le paiement.
   box.style.display='none';box.dataset.paymentReference='initiating-'+newDulonBetKey();box.textContent='';
   const trackingModal=document.getElementById('dulon-payment-tracking-modal');
@@ -4569,7 +4569,7 @@ async function submitTx(e,type){
     if(trackingDetail)trackingDetail.textContent='Envoi de la demande au service de paiement. La confirmation dépend de FeexPay et de votre réseau Mobile Money. Ne relance pas le dépôt.';
    }
    resolve();
-  },3000));
+  },2000));
   try{
    const result=await callFeexPay('initiate',{
     amount_fcfa:amount,xbet_id:xbetId,phone,network:chosen,country,

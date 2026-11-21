@@ -4112,22 +4112,10 @@ body:not(.operation-view) #home-view #payment-methods-title{color:#0871e8!import
 <style id="dulon-splash-screen-style">
 #dulon-splash-screen{position:fixed;inset:0;z-index:2147483647;display:block;background:#061b68 url('/icons/dulonbet-splash.jpg') center center/cover no-repeat;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}
 #dulon-splash-screen.dulon-splash-hide{opacity:0;visibility:hidden;pointer-events:none}
-#dulon-splash-screen .dulon-splash-dots{position:absolute;left:22%;top:75.1%;width:60%;display:flex;align-items:center;justify-content:space-between}
-#dulon-splash-screen .dulon-splash-dot{display:block;width:clamp(8px,4vw,16px);height:clamp(8px,4vw,16px);border-radius:50%;background:#268cff;opacity:.72;transform:scale(.82);animation:dulonSplashPulse 1.05s ease-in-out infinite}
-#dulon-splash-screen .dulon-splash-dot:first-child{background:#fff}
-#dulon-splash-screen .dulon-splash-dot:nth-child(2){animation-delay:.13s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(3){animation-delay:.26s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(4){animation-delay:.39s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(5){animation-delay:.52s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(6){animation-delay:.65s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(7){animation-delay:.78s}
-#dulon-splash-screen .dulon-splash-dot:nth-child(8){animation-delay:.91s}
-@keyframes dulonSplashPulse{0%,100%{opacity:.48;transform:scale(.78)}45%{opacity:1;transform:scale(1.08);background:#fff}}
-@media(prefers-reduced-motion:reduce){#dulon-splash-screen .dulon-splash-dot{animation-duration:2.2s}}
 </style>
 </head>
 <body>
-<div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"><div class="dulon-splash-dots" aria-hidden="true"><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span><span class="dulon-splash-dot"></span></div></div>
+<div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>
 <header>
 <button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
 <div class="brand"><span class="mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet"></span> <span class="brand-name"><span class="dulon">Dulon</span><span class="bet">Bet</span></span></div>

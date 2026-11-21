@@ -7465,3 +7465,29 @@ main{max-width:920px!important}
  border-radius:0 0 0 50%!important;
 }
 </style>
+
+<style id="dulonbet-banner-top-left-alignment">
+/* Remonter le bandeau jusqu'au trait supérieur et décaler Accueil/Opérations vers la gauche */
+#deposit .operations-banner,#withdraw .operations-banner{
+ margin-top:0!important;
+ padding-top:clamp(8px,1.6vw,18px)!important;
+}
+#deposit .operations-banner-home,#withdraw .operations-banner-home{
+ align-self:flex-start!important;
+ margin-left:clamp(-10px,-1.2vw,-4px)!important;
+}
+#deposit .operations-banner h2,#withdraw .operations-banner h2{
+ margin-left:clamp(-10px,-1.2vw,-4px)!important;
+ margin-top:clamp(6px,1.2vw,14px)!important;
+}
+@media(max-width:520px){
+ #deposit .operations-banner,#withdraw .operations-banner{
+  margin-top:0!important;padding-top:8px!important;
+ }
+ #deposit .operations-banner-home,#withdraw .operations-banner-home,
+ #deposit .operations-banner h2,#withdraw .operations-banner h2{
+  margin-left:-5px!important;
+ }
+ #deposit .operations-banner h2,#withdraw .operations-banner h2{margin-top:6px!important}
+}
+</style>

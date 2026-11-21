@@ -7363,3 +7363,39 @@ main{max-width:920px!important}
  .ops-coin-one{font-size:12px}.ops-coin-two,.ops-coin-three{font-size:10px}
 }
 </style>
+
+<style id="dulonbet-operations-banner-compact">
+/* Bandeau Opérations légèrement réduit et remonté */
+#deposit .operations-banner,#withdraw .operations-banner{
+ min-height:clamp(132px,30vw,270px)!important;
+ margin-top:-8px!important;
+ margin-bottom:14px!important;
+ padding:clamp(12px,3vw,34px) clamp(16px,4vw,52px)!important;
+}
+#deposit .operations-banner h2,#withdraw .operations-banner h2{
+ margin-top:clamp(7px,1.8vw,20px)!important;
+ font-size:clamp(36px,8.4vw,84px)!important;
+}
+#deposit .operations-banner-home,#withdraw .operations-banner-home{
+ min-height:clamp(34px,6vw,54px)!important;
+}
+#deposit .operations-banner-art,#withdraw .operations-banner-art{
+ top:5%!important;height:82%!important;right:1%!important;
+}
+@media(max-width:520px){
+ #deposit .operations-banner,#withdraw .operations-banner{
+  min-height:clamp(126px,36vw,172px)!important;
+  margin-top:-6px!important;margin-bottom:12px!important;
+  padding:12px 15px!important;border-radius:19px!important;
+ }
+ #deposit .operations-banner h2,#withdraw .operations-banner h2{
+  margin-top:8px!important;font-size:clamp(34px,9.2vw,46px)!important;max-width:72%!important;
+ }
+ #deposit .operations-banner-home,#withdraw .operations-banner-home{
+  min-height:33px!important;font-size:15px!important;padding:3px 12px!important;
+ }
+ #deposit .operations-banner-art,#withdraw .operations-banner-art{
+  top:8%!important;height:78%!important;width:38%!important;right:0!important;
+ }
+}
+</style>

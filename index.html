@@ -4522,6 +4522,7 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
   if(modal.dataset.paymentTimeout){window.clearTimeout(Number(modal.dataset.paymentTimeout));delete modal.dataset.paymentTimeout;}
   modal.classList.add('is-approved');
   title.textContent='Paiement confirmé';
+  modal.querySelector('.payment-modal-dismiss').textContent='Fermer';
   intro.textContent='Le paiement Mobile Money est confirmé.';
   detail.textContent='La prise en compte du crédit 1XBET doit encore être vérifiée. Ne relance pas le dépôt.';
  }else if(failed){

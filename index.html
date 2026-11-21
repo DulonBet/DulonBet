@@ -7014,3 +7014,93 @@ body.home-view #home-view{
  #home-view .dulon-operation-card h2,#home-view .dulon-operation-card p,#home-view .dulon-operation-button{grid-column:2!important}
 }
 </style>
+
+
+<style id="dulon-menu-compact-background-fix">
+/* Menu latéral : fond bicolore visible, entête/pied plus bas et contenu moins encombrant */
+#dulon-mobile-drawer{
+ width:min(78vw,350px)!important;max-width:350px!important;
+ background:linear-gradient(160deg,#e6f4ff 0%,#ffffff 42%,#d9ebff 100%)!important;
+ box-shadow:10px 0 28px rgba(4,35,91,.24)!important;
+}
+#dulon-mobile-drawer .drawer-head{
+ min-height:112px!important;height:auto!important;
+ padding:13px 12px!important;gap:9px!important;
+ background:linear-gradient(115deg,#bfe7ff 0%,#fafdff 48%,#b6d7ff 100%)!important;
+ border-bottom:1px solid #8fc8ff!important;
+}
+#dulon-mobile-drawer .drawer-head:after{font-size:44px!important;opacity:.22!important}
+#dulon-mobile-drawer .drawer-brand-mark{
+ width:48px!important;height:48px!important;flex-basis:48px!important;border-radius:14px!important;
+}
+#dulon-mobile-drawer .drawer-brand-name{font-size:clamp(20px,5vw,28px)!important;letter-spacing:-.7px!important;gap:3px!important}
+#dulon-mobile-drawer .drawer-brand-tagline{font-size:clamp(8px,2.2vw,11px)!important;letter-spacing:0!important}
+#dulon-mobile-drawer .drawer-close{
+ width:40px!important;height:40px!important;flex-basis:40px!important;
+ font-size:25px!important;box-shadow:0 0 0 3px #b8d5ff,0 0 0 5px rgba(8,104,225,.10)!important;
+}
+#dulon-mobile-drawer .drawer-links{
+ padding:12px 11px!important;gap:8px!important;
+ background:linear-gradient(180deg,#f5faff 0%,#eaf4ff 48%,#f9fcff 100%)!important;
+}
+#dulon-mobile-drawer .drawer-link{
+ min-height:55px!important;height:auto!important;
+ padding:8px 26px 8px 9px!important;gap:9px!important;
+ border-radius:17px!important;border-color:#bfdbff!important;
+ background:linear-gradient(110deg,#ffffff 0%,#e0efff 100%)!important;
+ box-shadow:0 4px 10px rgba(19,76,161,.08)!important;
+ font-size:clamp(13px,3.6vw,17px)!important;line-height:1.16!important;
+}
+#dulon-mobile-drawer .drawer-link:after{right:10px!important;font-size:25px!important}
+#dulon-mobile-drawer .drawer-link .drawer-link-icon{
+ width:38px!important;height:38px!important;flex-basis:38px!important;
+ border-radius:12px!important;font-size:21px!important;
+ background:linear-gradient(145deg,#39baff 0%,#087bff 52%,#0742bd 100%)!important;
+}
+#dulon-mobile-drawer .drawer-bottom{
+ padding:11px 11px 13px!important;margin-top:auto!important;
+ border-top:1px solid #a9d4ff!important;
+ background:linear-gradient(135deg,#d9efff 0%,#ffffff 50%,#c6e2ff 100%)!important;
+}
+#dulon-mobile-drawer .drawer-bottom:after{font-size:42px!important;opacity:.10!important}
+#dulon-mobile-drawer .drawer-install{
+ min-height:57px!important;padding:8px 10px!important;gap:8px!important;
+ border-radius:19px!important;border-width:2px!important;
+ font-size:clamp(13px,3.7vw,17px)!important;
+ box-shadow:0 5px 12px rgba(0,67,180,.15)!important;
+}
+#dulon-mobile-drawer .drawer-install-icon{width:27px!important;flex-basis:27px!important;font-size:29px!important}
+#dulon-mobile-drawer .drawer-install-phone{width:20px!important;height:34px!important;flex-basis:20px!important}
+#dulon-mobile-drawer .drawer-install-phone-mark{width:12px!important;height:17px!important;font-size:6px!important}
+#dulon-mobile-drawer .drawer-share{
+ min-height:47px!important;margin-top:5px!important;padding:5px 2px!important;
+ gap:7px!important;font-size:clamp(13px,3.7vw,17px)!important;
+}
+#dulon-mobile-drawer .drawer-share:before,#dulon-mobile-drawer .drawer-share:after{max-width:28px!important;height:2px!important}
+#dulon-mobile-drawer .drawer-share-icon{width:29px!important;height:29px!important;flex-basis:29px!important}
+#dulon-mobile-drawer .drawer-share-icon:before,#dulon-mobile-drawer .drawer-share-icon:after{left:15px!important;width:11px!important}
+#dulon-mobile-drawer .drawer-share-icon:before{top:8px!important}
+#dulon-mobile-drawer .drawer-share-icon:after{top:19px!important}
+@media(max-width:390px){
+ #dulon-mobile-drawer{width:min(78vw,330px)!important;max-width:330px!important}
+ #dulon-mobile-drawer .drawer-head{min-height:94px!important;padding:10px 9px!important;gap:7px!important}
+ #dulon-mobile-drawer .drawer-brand-mark{width:41px!important;height:41px!important;flex-basis:41px!important;border-radius:12px!important}
+ #dulon-mobile-drawer .drawer-brand-name{font-size:21px!important}
+ #dulon-mobile-drawer .drawer-brand-tagline{font-size:8px!important}
+ #dulon-mobile-drawer .drawer-close{width:35px!important;height:35px!important;flex-basis:35px!important;font-size:22px!important}
+ #dulon-mobile-drawer .drawer-links{padding:10px 9px!important;gap:7px!important}
+ #dulon-mobile-drawer .drawer-link{min-height:49px!important;padding:7px 23px 7px 8px!important;font-size:12px!important;border-radius:15px!important;gap:8px!important}
+ #dulon-mobile-drawer .drawer-link .drawer-link-icon{width:33px!important;height:33px!important;flex-basis:33px!important;font-size:18px!important;border-radius:10px!important}
+ #dulon-mobile-drawer .drawer-link:after{right:8px!important;font-size:22px!important}
+ #dulon-mobile-drawer .drawer-bottom{padding:9px 9px 11px!important}
+ #dulon-mobile-drawer .drawer-install{min-height:51px!important;padding:7px 8px!important;font-size:12px!important;border-radius:16px!important}
+ #dulon-mobile-drawer .drawer-install-icon{width:23px!important;flex-basis:23px!important;font-size:25px!important}
+ #dulon-mobile-drawer .drawer-install-phone{width:17px!important;height:29px!important;flex-basis:17px!important}
+ #dulon-mobile-drawer .drawer-install-phone-mark{width:10px!important;height:14px!important}
+ #dulon-mobile-drawer .drawer-share{min-height:40px!important;font-size:12px!important}
+ #dulon-mobile-drawer .drawer-share-icon{width:25px!important;height:25px!important;flex-basis:25px!important}
+ #dulon-mobile-drawer .drawer-share-icon:before,#dulon-mobile-drawer .drawer-share-icon:after{left:13px!important;width:10px!important}
+ #dulon-mobile-drawer .drawer-share-icon:before{top:7px!important}
+ #dulon-mobile-drawer .drawer-share-icon:after{top:16px!important}
+}
+</style>

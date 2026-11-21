@@ -6595,3 +6595,33 @@ body:not(.operation-view) #home-view .actions.dulon-operations-cards .dulon-oper
 }
 </style>
 
+
+
+<style id="dulonbet-separate-operation-cards">
+/* Séparer visuellement Dépôt et Retrait tout en gardant le nouveau style compact */
+body:not(.operation-view) #home-view .actions.dulon-operations-cards{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;
+  padding:0!important;
+  margin:12px 0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+body:not(.operation-view) #home-view .actions.dulon-operations-cards .action.dulon-operation-card{
+  border:1px solid rgba(42,223,255,.85)!important;
+  border-radius:18px!important;
+  background:linear-gradient(135deg,#061943 0%,#06265e 54%,#031638 100%)!important;
+  box-shadow:0 0 0 1px rgba(48,218,255,.12),0 5px 14px rgba(12,40,87,.18)!important;
+  overflow:hidden!important;
+}
+body:not(.operation-view) #home-view .actions.dulon-operations-cards .action.dulon-operation-card + .action.dulon-operation-card{
+  border-left:1px solid rgba(42,223,255,.85)!important;
+}
+@media(max-width:420px){
+  body:not(.operation-view) #home-view .actions.dulon-operations-cards{gap:9px!important}
+  body:not(.operation-view) #home-view .actions.dulon-operations-cards .action.dulon-operation-card{border-radius:15px!important}
+}
+</style>

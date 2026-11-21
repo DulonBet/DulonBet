@@ -6644,7 +6644,7 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
  </div>
  <div class="drawer-bottom">
   <button class="drawer-install" id="dulon-drawer-install" type="button"><span class="drawer-install-icon" aria-hidden="true">↓</span><span class="drawer-install-label">Installer l’application</span><span class="drawer-install-phone" aria-hidden="true"><span class="drawer-install-phone-mark">DB</span></span></button>
-  <button class="drawer-share" id="dulon-drawer-share" type="button"><span class="drawer-share-icon" aria-hidden="true">●</span><span>Partager DulonBet</span></button>
+  <button class="drawer-share" id="dulon-drawer-share" type="button"><span class="drawer-share-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5" fill="white" stroke="white"></circle><circle cx="6" cy="12" r="2.5" fill="white" stroke="white"></circle><circle cx="18" cy="19" r="2.5" fill="white" stroke="white"></circle><path d="M8.3 10.8 15.7 6.2M8.3 13.2l7.4 4.6"></path></svg></span><span>Partager DulonBet</span></button>
  </div>
 </aside>
 <script id="dulon-mobile-drawer-script">
@@ -7194,4 +7194,11 @@ body.home-view #home-view{
  #dulon-mobile-drawer .drawer-share{min-height:37px!important;font-size:11px!important}
  #dulon-mobile-drawer .drawer-share-icon{width:23px!important;height:23px!important;flex-basis:23px!important}
 }
+</style>
+
+<style id="dulon-share-icon-real-svg-fix">
+#dulon-mobile-drawer .drawer-share-icon{font-size:0!important;overflow:visible!important}
+#dulon-mobile-drawer .drawer-share-icon:before,#dulon-mobile-drawer .drawer-share-icon:after{display:none!important;content:none!important}
+#dulon-mobile-drawer .drawer-share-icon svg{display:block!important;width:19px!important;height:19px!important;flex:none!important}
+@media(max-width:390px){#dulon-mobile-drawer .drawer-share-icon svg{width:17px!important;height:17px!important}}
 </style>

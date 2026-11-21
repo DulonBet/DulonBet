@@ -7441,3 +7441,27 @@ main{max-width:920px!important}
  }
 }
 </style>
+
+<style id="dulonbet-operations-banner-fullwidth-background">
+/* Fond du bandeau sur toute la largeur de la page, sans contour ni cadre.
+   Le bouton Accueil et le titre Opérations restent à leur emplacement. */
+#deposit .operations-banner,#withdraw .operations-banner{
+ width:100vw!important;
+ max-width:none!important;
+ box-sizing:border-box!important;
+ position:relative!important;
+ left:50%!important;
+ transform:translateX(-50%)!important;
+ margin: -6px 0 12px!important;
+ border:0!important;
+ outline:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+}
+#deposit .operations-banner:before,#withdraw .operations-banner:before{
+ border-radius:0!important;
+}
+#deposit .operations-banner:after,#withdraw .operations-banner:after{
+ border-radius:0 0 0 50%!important;
+}
+</style>

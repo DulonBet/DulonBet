@@ -4512,7 +4512,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div class="operations-brand-mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet" class="operations-brand-logo" width="76" height="76"></div>
 <div class="operations-brand-copy">
 <div class="operations-brand-name"><span>Dulon</span><strong>Bet</strong></div>
-<div class="operations-brand-tagline">Dépôt &amp; retrait 1xbet, en toute simplicité</div>
+<div class="operations-brand-tagline"><span class="operations-brand-line">Dépôt &amp; retrait <b>1XBET</b></span><span class="operations-brand-slogan">En toute simplicité</span></div>
 </div>
 </div>
 <div id="home-view">
@@ -4668,6 +4668,13 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div aria-label="Pied de page" class="operation-footer dulon-footer-brand"><span class="dulon-footer-title">Dulon<span>Bet</span></span><span class="dulon-footer-subtitle">Dépôt &amp; Retrait</span><span class="dulon-footer-platform">1XBET</span></div>
 </section>
 <section class="panel login-panel" id="login">
+<div aria-label="DulonBet, dépôt et retrait 1XBET" class="operations-brand login-operations-brand">
+<div class="operations-brand-mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet" class="operations-brand-logo" width="76" height="76"></div>
+<div class="operations-brand-copy">
+<div class="operations-brand-name"><span>Dulon</span><strong>Bet</strong></div>
+<div class="operations-brand-tagline"><span class="operations-brand-line">Dépôt &amp; retrait <b>1XBET</b></span><span class="operations-brand-slogan">En toute simplicité</span></div>
+</div>
+</div>
 <div class="operations-page-head">
 <button class="operations-back" onclick="goHome()" type="button">← Accueil</button>
 <h2>Connexion</h2>
@@ -6891,6 +6898,65 @@ body.operation-view #login .operations-page-head .operations-back{
 #login .dulon-footer-platform,#deposit .dulon-footer-platform,#withdraw .dulon-footer-platform{display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-top:2px!important;padding:2px 8px!important;border:1px solid #b9d8ff!important;border-radius:999px!important;background:#edf6ff!important;color:#174b9c!important;font-size:9px!important;font-weight:850!important;letter-spacing:1.5px!important}
 #login .dulon-footer-title{color:#fff!important}#login .dulon-footer-title span{color:#72ddff!important}#login .dulon-footer-subtitle{color:#e0efff!important}#login .dulon-footer-platform{background:rgba(255,255,255,.12)!important;color:#fff!important;border-color:rgba(150,220,255,.65)!important}
 </style>
+
+<style id="dulonbet-premium-shared-headers">
+/* Entête premium partagé : Connexion, Dépôt et Retrait uniquement */
+body.operation-view .operations-brand,
+#login .login-operations-brand{
+ display:flex!important;align-items:center!important;gap:14px!important;
+ width:calc(100% - 28px)!important;max-width:1000px!important;
+ margin:0 auto 18px!important;padding:17px 18px!important;
+ box-sizing:border-box!important;border:1px solid rgba(83,205,255,.8)!important;
+ border-radius:0 0 22px 22px!important;
+ background:radial-gradient(circle at 92% 10%,rgba(22,147,255,.38),transparent 34%),linear-gradient(125deg,#061844 0%,#0a347f 58%,#0759b7 100%)!important;
+ box-shadow:0 10px 28px rgba(3,27,78,.20),inset 0 -2px 0 rgba(74,207,255,.45)!important;
+ position:relative!important;overflow:hidden!important;
+}
+body.operation-view .operations-brand-mark,
+#login .login-operations-brand .operations-brand-mark{
+ width:62px!important;height:62px!important;flex:0 0 62px!important;
+ border-radius:16px!important;padding:3px!important;box-sizing:border-box!important;
+ background:linear-gradient(145deg,#72e4ff,#158bff)!important;
+ box-shadow:0 0 0 3px rgba(101,215,255,.12),0 5px 16px rgba(0,0,0,.2)!important;
+}
+body.operation-view .operations-brand-logo,
+#login .login-operations-brand .operations-brand-logo{
+ width:100%!important;height:100%!important;object-fit:contain!important;border-radius:13px!important;background:#061844!important;
+}
+body.operation-view .operations-brand-copy,
+#login .login-operations-brand .operations-brand-copy{min-width:0!important;display:flex!important;flex-direction:column!important;gap:4px!important}
+body.operation-view .operations-brand-name,
+#login .login-operations-brand .operations-brand-name{
+ margin:0!important;color:#fff!important;font-size:clamp(25px,6vw,32px)!important;
+ line-height:1.02!important;font-weight:900!important;letter-spacing:-.8px!important;
+}
+body.operation-view .operations-brand-name span,
+#login .login-operations-brand .operations-brand-name span{color:#fff!important}
+body.operation-view .operations-brand-name strong,
+#login .login-operations-brand .operations-brand-name strong{color:#58d7ff!important}
+body.operation-view .operations-brand-tagline,
+#login .login-operations-brand .operations-brand-tagline{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:2px!important;
+ margin:0!important;max-width:none!important;color:#e5f2ff!important;
+ font-size:clamp(12px,3.4vw,15px)!important;line-height:1.25!important;font-weight:650!important;
+}
+body.operation-view .operations-brand-line b,
+#login .login-operations-brand .operations-brand-line b{color:#7ce3ff!important;font-weight:900!important;letter-spacing:.5px!important}
+body.operation-view .operations-brand-slogan,
+#login .login-operations-brand .operations-brand-slogan{color:#a9c9f1!important;font-size:.88em!important;font-weight:500!important}
+#login .login-operations-brand{display:flex!important;margin-bottom:16px!important}
+@media(max-width:520px){
+ body.operation-view .operations-brand,
+ #login .login-operations-brand{width:calc(100% - 20px)!important;gap:12px!important;padding:14px 13px!important;margin-bottom:14px!important;border-radius:0 0 18px 18px!important}
+ body.operation-view .operations-brand-mark,
+ #login .login-operations-brand .operations-brand-mark{width:54px!important;height:54px!important;flex-basis:54px!important;border-radius:14px!important}
+ body.operation-view .operations-brand-name,
+ #login .login-operations-brand .operations-brand-name{font-size:clamp(24px,6.4vw,29px)!important}
+ body.operation-view .operations-brand-tagline,
+ #login .login-operations-brand .operations-brand-tagline{font-size:12px!important}
+}
+</style>
+
 </body>
 <style id="dulonbet-support-promo-size-v12">
 /* Ajustement intermédiaire : légèrement au-dessus de V10, sans l'ampleur de V11 */

@@ -4760,7 +4760,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 </section>
 <footer class="home-footer">
 <div class="home-footer-main">
-<div class="home-footer-brand">DulonBet · Dépôt &amp; Retrait<br/>1xbet</div>
+<div class="home-footer-brand"><span class="home-footer-brand-name"><span>Dulon</span><span>Bet</span></span><span class="home-footer-brand-tagline">Dépôt &amp; Retrait</span><span class="home-footer-brand-platform">1XBET</span></div>
 <button class="home-footer-login" onclick="showPanel('login')" type="button">Se connecter</button>
 </div>
 <a class="home-footer-support" href="https://wa.me/2290197131018" rel="noopener" target="_blank">
@@ -7945,4 +7945,25 @@ body.operation-view #withdraw .withdraw-location-card h3{
   text-transform:uppercase!important;
   color:#0c2857!important;
 }
+</style>
+
+
+<style id="dulonbet-home-footer-restored">
+/* Pied de page accueil restauré : logo DulonBet, bouton connexion et contact WhatsApp en texte. */
+body:not(.operation-view) .home-footer{display:flex!important;flex-direction:column!important;align-items:center!important;gap:12px!important;padding:18px 14px!important;border-top:1px solid #dce5f2!important;background:linear-gradient(180deg,#f8fbff 0%,#edf4fc 100%)!important;border-radius:16px 16px 0 0!important;color:#142b50!important}
+body:not(.operation-view) .home-footer-main{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;width:100%!important;max-width:520px!important;background:transparent!important}
+body:not(.operation-view) .home-footer-brand{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:3px!important;line-height:1.2!important}
+body:not(.operation-view) .home-footer-brand-name{display:flex!important;gap:0!important;font-size:20px!important;font-weight:900!important;letter-spacing:-.5px!important}
+body:not(.operation-view) .home-footer-brand-name span:first-child{color:#102e61!important}
+body:not(.operation-view) .home-footer-brand-name span:last-child{color:#43a5f5!important}
+body:not(.operation-view) .home-footer-brand-tagline{font-size:12px!important;font-weight:600!important;color:#3e5577!important}
+body:not(.operation-view) .home-footer-brand-platform{font-size:10px!important;letter-spacing:1.8px!important;font-weight:800!important;color:#6b7c95!important}
+body:not(.operation-view) .home-footer-login{border:0!important;border-radius:10px!important;padding:10px 15px!important;min-height:40px!important;background:linear-gradient(135deg,#123c7a,#1766b5)!important;color:#fff!important;font-size:13px!important;font-weight:700!important;box-shadow:0 4px 10px #123c7a25!important}
+body:not(.operation-view) .home-footer-support{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;max-width:520px!important;padding:9px 8px!important;border-radius:9px!important;background:transparent!important;color:#1766b5!important;font-size:12px!important;font-weight:700!important;text-decoration:none!important}
+body:not(.operation-view) .home-footer-support:active{opacity:.8!important}
+html[data-theme="dark"] body:not(.operation-view) .home-footer{background:linear-gradient(180deg,#111b2d,#0a1220)!important;border-color:#293952!important;color:#f2f5fb!important}
+html[data-theme="dark"] body:not(.operation-view) .home-footer-brand-tagline{color:#bdcce0!important}
+html[data-theme="dark"] body:not(.operation-view) .home-footer-brand-platform{color:#94a7c2!important}
+html[data-theme="dark"] body:not(.operation-view) .home-footer-support{color:#72b9ff!important}
+@media(max-width:360px){body:not(.operation-view) .home-footer-brand-name{font-size:18px!important}body:not(.operation-view) .home-footer-login{padding:9px 11px!important;font-size:12px!important}}
 </style>

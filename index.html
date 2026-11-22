@@ -7694,3 +7694,60 @@ body.operation-view #withdraw details.procedure{
  body.operation-view #withdraw .field select{min-height:41px!important;padding:8px 10px!important}
 }
 </style>
+
+
+<style id="dulonbet-remove-extra-form-gaps">
+/* Supprime les espaces excessifs signalés dans les formulaires Dépôt et Retrait */
+body.operation-view #deposit .formgrid,
+body.operation-view #withdraw .formgrid{
+  row-gap:7px!important;
+  column-gap:10px!important;
+}
+body.operation-view #deposit .field.full,
+body.operation-view #withdraw .field.full{
+  margin-top:0!important;
+  margin-bottom:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+}
+body.operation-view #deposit .field.full > label,
+body.operation-view #withdraw .field.full > label{
+  display:block!important;
+  margin:0 0 3px!important;
+  padding:0!important;
+  line-height:1.2!important;
+}
+body.operation-view #deposit .field.full > input:not([type="radio"]),
+body.operation-view #withdraw .field.full > input:not([type="radio"]),
+body.operation-view #deposit .field.full > select,
+body.operation-view #withdraw .field.full > select{
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+body.operation-view #deposit .field.full > .small,
+body.operation-view #withdraw .field.full > .small{
+  display:block!important;
+  margin:3px 0 0!important;
+  padding:0!important;
+  line-height:1.35!important;
+}
+body.operation-view #deposit .field.full:has(.operator-picks),
+body.operation-view #withdraw .field.full:has(.operator-picks){
+  margin-bottom:7px!important;
+}
+body.operation-view #deposit .field.full:has(.operator-picks) > label,
+body.operation-view #withdraw .field.full:has(.operator-picks) > label{
+  margin-bottom:5px!important;
+}
+body.operation-view #deposit .operator-picks,
+body.operation-view #withdraw .operator-picks{
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+@media(max-width:420px){
+  body.operation-view #deposit .formgrid,
+  body.operation-view #withdraw .formgrid{row-gap:6px!important}
+  body.operation-view #deposit .field.full > label,
+  body.operation-view #withdraw .field.full > label{margin-bottom:2px!important}
+}
+</style>

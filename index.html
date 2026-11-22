@@ -4366,100 +4366,7 @@ header.dulon-header-hd .theme-toggle{flex:0 0 50px;width:50px;height:50px;paddin
 .support-whatsapp-icon svg{width:31px;height:31px;display:block}
 </style>
 
-<style>
-/* DulonBet connexion — design premium appliqué 2026-11-22 */
-#login.login-panel{
-  display:none;
-  position:relative!important;
-  isolation:isolate;
-  overflow:hidden!important;
-  margin:24px auto!important;
-  max-width:900px!important;
-  padding:clamp(18px,4vw,34px)!important;
-  border:1px solid rgba(79,194,255,.8)!important;
-  border-radius:28px!important;
-  background:
-    radial-gradient(ellipse at 10% 8%,rgba(0,174,255,.35),transparent 33%),
-    radial-gradient(ellipse at 92% 20%,rgba(23,113,255,.48),transparent 32%),
-    linear-gradient(145deg,#06184f 0%,#092b83 52%,#0758bd 100%)!important;
-  box-shadow:0 18px 48px rgba(5,29,91,.24)!important;
-}
-#login.login-panel.active{display:block!important}
-#login.login-panel:before{
-  content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;
-  opacity:.45;
-  background:
-    radial-gradient(circle at 80% 14%,rgba(255,255,255,.85) 0 2px,transparent 3px),
-    radial-gradient(circle at 84% 18%,rgba(69,206,255,.8) 0 3px,transparent 4px),
-    radial-gradient(ellipse at 50% 0%,transparent 0 35%,rgba(0,0,0,.18) 75%);
-}
-/* Retire la bannière DulonBet répétée en haut de la connexion */
-#login .login-operations-brand{display:none!important}
-#login .login-brand{display:none!important}
-#login .operations-page-head{
-  position:relative!important;z-index:1;
-  display:flex!important;flex-direction:column!important;
-  align-items:flex-start!important;gap:18px!important;
-  margin:0 auto 24px!important;max-width:650px!important;
-}
-#login .operations-page-head h2{
-  width:100%;text-align:center!important;
-  color:#fff!important;font-size:clamp(30px,6vw,42px)!important;
-  line-height:1.12!important;font-weight:950!important;
-  margin:0!important;letter-spacing:-.025em;
-  text-shadow:0 3px 16px rgba(0,0,0,.18);
-}
-#login .operations-back{
-  border:1px solid rgba(255,255,255,.36)!important;
-  border-radius:999px!important;padding:10px 16px!important;
-  background:rgba(255,255,255,.12)!important;color:#fff!important;
-  backdrop-filter:blur(8px);
-}
-#login .login-card{
-  position:relative!important;z-index:1;
-  max-width:650px!important;margin:0 auto!important;
-  padding:clamp(22px,5vw,42px)!important;
-  border:1px solid #d9e7ff!important;border-radius:28px!important;
-  background:linear-gradient(155deg,#fff 0%,#f4f8ff 100%)!important;
-  box-shadow:0 18px 42px rgba(0,12,65,.28)!important;
-}
-#login .login-card .field{gap:9px!important}
-#login .login-card .field label{
-  color:#102e72!important;font-size:15px!important;font-weight:850!important;
-}
-#login .login-card input{
-  width:100%!important;min-height:58px!important;
-  padding:15px 17px!important;border:1.5px solid #c7dcff!important;
-  border-radius:16px!important;background:#fff!important;
-  color:#10265d!important;font-size:16px!important;
-  box-shadow:inset 0 1px 2px rgba(10,50,120,.025);
-}
-#login .login-card input::placeholder{color:#7888a7!important}
-#login .password-wrap{position:relative;display:flex;align-items:center}
-#login .password-wrap input{padding-right:112px!important}
-#login .password-toggle{
-  position:absolute;right:7px;top:50%;transform:translateY(-50%);
-  min-height:42px;padding:8px 13px!important;border-radius:12px!important;
-  background:#e9f0ff!important;color:#174bb1!important;
-  font-weight:800!important;
-}
-#login .login-submit{
-  width:100%!important;min-height:62px!important;margin-top:7px!important;
-  border:1px solid #36d6ff!important;border-radius:999px!important;
-  background:linear-gradient(105deg,#08a7ff 0%,#0755e8 52%,#091d91 100%)!important;
-  color:#fff!important;font-size:18px!important;font-weight:900!important;
-  box-shadow:0 10px 24px rgba(0,82,220,.25)!important;
-}
-#login .login-submit:active{transform:translateY(1px)}
-#login .login-feedback{color:#123b86!important}
-#login .operation-footer{position:relative;z-index:1;color:#e5f3ff!important}
-@media(max-width:680px){
-  #login.login-panel{margin:14px 0!important;padding:18px 14px 22px!important;border-radius:22px!important}
-  #login .operations-page-head{gap:17px!important;margin-bottom:20px!important}
-  #login .operations-page-head h2{font-size:32px!important}
-  #login .login-card{padding:23px 18px!important;border-radius:24px!important}
-}
-</style>
+
 
 </head>
 <body>
@@ -4764,13 +4671,6 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div aria-label="Pied de page" class="operation-footer dulon-footer-brand"><span class="dulon-footer-title">Dulon<span>Bet</span></span><span class="dulon-footer-subtitle">Dépôt &amp; Retrait</span><span class="dulon-footer-platform">1XBET</span></div>
 </section>
 <section class="panel login-panel" id="login">
-<div aria-label="DulonBet, dépôt et retrait 1XBET" class="operations-brand login-operations-brand">
-<div class="operations-brand-mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet" class="operations-brand-logo" width="76" height="76"></div>
-<div class="operations-brand-copy">
-<div class="operations-brand-name"><span>Dulon</span><strong>Bet</strong></div>
-<div class="operations-brand-tagline"><span class="operations-brand-line">Dépôt &amp; retrait <b>1XBET</b></span><span class="operations-brand-slogan">En toute simplicité</span></div>
-</div>
-</div>
 <div class="operations-page-head">
 <button class="operations-back" onclick="goHome()" type="button">← Accueil</button>
 <h2>Connexion</h2>

@@ -141,9 +141,13 @@ Deno.serve(async (req) => {
   if (!customerName || customerName.length > 120) return json({ error: "Nom complet invalide." }, 400);
   if (!uuidKey(idempotencyKey)) return json({ error: "Référence de demande invalide." }, 400);
 
-  const { data: sameRequest } = await supabase.from("dulonbet_transactions")
+  const { data: sameRequest, error: sameRequestError } = await supabase.from("dulonbet_transactions")
     .select("reference,status,amount_fcfa,provider_status")
     .eq("idempotency_key", idempotencyKey).maybeSingle();
+  if (sameRequestError) {
+    console.error("PAYOUT_IDEMPOTENCY_READ_ERROR", { message: sameRequestError.message });
+    return json({ error: "Impossible de vérifier si cette demande existe déjà. Aucun retrait n'a été demandé." }, 503);
+  }
   if (sameRequest) {
     return json({
       reference: sameRequest.reference, status: sameRequest.status, amount_fcfa: sameRequest.amount_fcfa,
@@ -152,11 +156,16 @@ Deno.serve(async (req) => {
   }
 
   const codeHash = await sha256(code);
-  const { data: activeCode } = await supabase.from("dulonbet_transactions")
-    .select("reference,status").eq("withdrawal_code_hash", codeHash)
-    .in("status", ["processing", "xbet_validated", "paid"]).maybeSingle();
-  if (activeCode) {
-    return json({ reference: activeCode.reference, status: activeCode.status, error: "Ce code de retrait a déjà été traité ou doit être vérifié. Ne le soumets pas une seconde fois." }, 409);
+  // Un code de retrait ne doit jamais être réutilisé, même si une ancienne demande a été rejetée :
+  // le rejet peut être ambigu et seule une vérification humaine peut autoriser une reprise.
+  const { data: priorCode, error: priorCodeError } = await supabase.from("dulonbet_transactions")
+    .select("reference,status").eq("withdrawal_code_hash", codeHash).maybeSingle();
+  if (priorCodeError) {
+    console.error("PAYOUT_CODE_HASH_READ_ERROR", { message: priorCodeError.message });
+    return json({ error: "Impossible de vérifier l'historique du code. Aucun retrait n'a été demandé." }, 503);
+  }
+  if (priorCode) {
+    return json({ reference: priorCode.reference, status: priorCode.status, error: "Ce code de retrait a déjà été enregistré. Vérification administrative requise; ne le soumets pas une seconde fois." }, 409);
   }
 
   // Sécurité métier : le joueur doit déjà avoir un dépôt confirmé via DulonBet.

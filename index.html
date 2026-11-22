@@ -4723,6 +4723,11 @@ body.operation-view #dulon-install-banner{display:none!important}
   </div>
 </div>
 
+<section class="home-help-cta" aria-label="Centre d’aide DulonBet">
+  <p>Besoin d'explications sur les délais, les moyens de paiement ou le suivi de vos demandes ?</p>
+  <a href="/centre-aide.html">Consultez le Centre d'aide</a>
+</section>
+
 <section aria-label="Choisir une opération" class="home-cta">
 <h2>Prêt ? Choisis ton opération</h2>
 <div class="home-cta-actions">
@@ -5916,6 +5921,51 @@ body.operation-view #withdraw .withdraw-location-item span{
 
 </style>
 
+<style id="dulonbet-home-help-cta">
+/* Petit encadré d’aide centré à l’emplacement demandé, entre les étapes et les opérations. */
+.home-help-cta{
+  box-sizing:border-box;
+  width:calc(100% - 32px);
+  max-width:560px;
+  margin:10px auto 16px!important;
+  padding:12px 14px!important;
+  text-align:center;
+  background:linear-gradient(135deg,#f2f8ff 0%,#e5f2ff 100%);
+  border:1px solid #c8e0ff;
+  border-radius:14px;
+  box-shadow:0 4px 12px rgba(20,75,140,.07);
+}
+.home-help-cta p{
+  margin:0 auto 10px!important;
+  max-width:460px;
+  color:#173766;
+  font-size:14px;
+  line-height:1.4;
+  font-weight:500;
+}
+.home-help-cta a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  max-width:100%;
+  box-sizing:border-box;
+  padding:9px 15px;
+  border-radius:10px;
+  background:#0865d9;
+  color:#fff!important;
+  font-size:14px;
+  line-height:1.2;
+  font-weight:700;
+  text-align:center;
+  text-decoration:none!important;
+  box-shadow:0 3px 8px rgba(8,101,217,.18);
+}
+@media(max-width:520px){
+  .home-help-cta{width:calc(100% - 36px);padding:11px 12px!important;margin:9px auto 14px!important;border-radius:13px}
+  .home-help-cta p{font-size:13px;line-height:1.38;margin-bottom:9px!important}
+  .home-help-cta a{font-size:13px;padding:9px 13px}
+}
+</style>
 
 <style id="dulonbet-compact-operation-payment-cards">
 /* Réduction du bloc « Prêt ? Choisis ton opération » */

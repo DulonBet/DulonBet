@@ -4354,6 +4354,39 @@ header.dulon-header-hd .theme-toggle{flex:0 0 50px;width:50px;height:50px;paddin
 
 
 
+
+<style id="dulonbet-reference-design">
+.db-design-brand{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 -2px 16px;padding:10px 0 14px;border-bottom:3px solid #087df1}
+.db-design-brand-main{display:flex;align-items:center;gap:11px;min-width:0}
+.db-design-logo{width:54px;height:54px;flex:0 0 54px;display:grid;place-items:center;border-radius:15px;color:#fff;background:linear-gradient(145deg,#078bff,#071d83 75%);box-shadow:0 5px 13px #0b58c744;font-size:29px;font-weight:900}
+.db-design-word{font-size:clamp(23px,5vw,32px);line-height:1;font-weight:900;font-style:italic;color:#102e83;letter-spacing:-1px}
+.db-design-word span{color:#078df3}
+.db-design-tagline{margin-top:5px;color:#142d72;font-size:12px;font-style:italic;font-weight:650}
+.db-design-nav{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.db-design-nav button{border:0;border-radius:24px;padding:9px 12px;color:white;background:linear-gradient(110deg,#087ef5,#071b85);font-size:12px;font-weight:800}
+.db-design-hero{position:relative;overflow:hidden;margin:0 -2px 20px;padding:25px 18px;border-radius:15px;color:#fff;background:radial-gradient(circle at 85% 50%,#167cff 0,#0b3eaf 27%,transparent 54%),linear-gradient(120deg,#04175f,#0638a7 65%,#007df0);box-shadow:inset 0 -4px 0 #08b8ff}
+.db-design-hero:after{content:"⚽";position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:clamp(58px,15vw,100px);opacity:.95;filter:drop-shadow(0 0 10px #42c5ff);pointer-events:none}
+.db-design-hero h2{position:relative;z-index:1;margin:0 85px 4px 0;color:#fff;font-size:clamp(25px,6vw,38px);font-weight:900;font-style:italic}
+.db-design-hero p{position:relative;z-index:1;margin:0;color:#e9f5ff;font-size:clamp(13px,3.5vw,18px);font-weight:750}
+.db-design-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 18px}
+.db-design-card{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0;padding:15px 11px;border:1px solid #bdd9fa;border-radius:19px;background:linear-gradient(155deg,#fff,#edf5ff);box-shadow:0 7px 18px #104da014}
+.db-design-card .db-design-card-icon{font-size:37px;line-height:1.2;margin-bottom:8px}
+.db-design-card h3{margin:0 0 8px;color:#fff;background:linear-gradient(100deg,#087ef4,#09238e);border-radius:30px;padding:9px 10px;width:100%;font-size:clamp(13px,3.5vw,17px);font-weight:850}
+.db-design-card p{margin:0 0 12px;color:#12275d;font-size:12px;line-height:1.45;flex:1}
+.db-design-card button{width:100%;border:0;border-radius:28px;padding:11px 8px;color:#fff;background:linear-gradient(105deg,#058dfb,#0929b8);font-size:12px;font-weight:850;box-shadow:0 4px 9px #0755c52e}
+.db-design-security{display:flex;align-items:center;justify-content:center;gap:12px;margin:18px 0 20px;padding:15px 12px;border:1px solid #bdd9fa;border-radius:15px;background:linear-gradient(110deg,#eaf4ff,#d8eaff);color:#123079}
+.db-design-security .db-shield{font-size:34px}
+.db-design-security strong{display:block;font-size:15px;font-style:italic}
+.db-design-security span{display:block;margin-top:3px;font-size:12px}
+body.operation-view #deposit.panel,body.operation-view #withdraw.panel,body.operation-view #login.panel{border-color:#e0edff}
+#deposit .operation-switch,#withdraw .operation-switch{display:none!important}
+body.operation-view .operation-footer{margin:26px -2px 0;padding:25px 10px 18px;border:0;border-radius:16px;color:#fff;background:radial-gradient(circle at 12% 50%,#087df4,#0a2b9a 42%,#06154e);font-size:16px;font-weight:850;box-shadow:inset 0 4px 0 #09b5ff}
+#login .db-design-brand{margin-bottom:18px}
+#login .db-design-hero{padding:20px 16px}
+#login .db-design-hero h2{font-size:26px}
+@media(max-width:480px){.db-design-brand{align-items:flex-start}.db-design-logo{width:45px;height:45px;flex-basis:45px;font-size:24px;border-radius:13px}.db-design-tagline{max-width:190px;font-size:11px}.db-design-nav{flex-direction:column}.db-design-nav button{padding:8px 10px}.db-design-cards{gap:9px}.db-design-card{padding:12px 8px}.db-design-card p{font-size:11px}.db-design-card button{font-size:11px;padding:10px 5px}.db-design-security{align-items:flex-start}.db-design-security strong{font-size:14px}}
+</style>
+
 </head>
 <body>
 <div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>
@@ -4577,7 +4610,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <button class="operations-back" onclick="goHome()" type="button">← Accueil</button>
 <h2>Opérations</h2>
 </div>
-<div class="support-card">
+<div class="db-design-brand"><div class="db-design-brand-main"><div class="db-design-logo" aria-hidden="true">DB</div><div><div class="db-design-word">Dulon<span>Bet</span></div><div class="db-design-tagline">Dépôt &amp; retrait 1xbet, en toute simplicité</div></div></div><div class="db-design-nav"><button type="button" onclick="goHome()">⌂ Accueil</button><button type="button" onclick="showPanel('login')">♙ Connexion</button></div></div><div class="db-design-hero"><h2>Dépôt &amp; Retrait</h2><p>Rapide · Sécurisé · Fiable</p></div><div class="db-design-cards"><div class="db-design-card"><div class="db-design-card-icon" aria-hidden="true">👛 ⬇️</div><h3>Faire un Dépôt</h3><p>Rechargez votre compte 1XBET facilement et rapidement.</p><button type="button" onclick="document.querySelector('#deposit form').scrollIntoView({behavior:'smooth',block:'start'})">▣ Déposer maintenant ›</button></div><div class="db-design-card"><div class="db-design-card-icon" aria-hidden="true">👛 ⬆️</div><h3>Faire un Retrait</h3><p>Retirez vos gains 1XBET en toute sécurité.</p><button type="button" onclick="showPanel('withdraw')">💰 Retirer maintenant ›</button></div></div><div class="db-design-security"><div class="db-shield" aria-hidden="true">🛡️</div><div><strong>Votre sécurité, notre priorité !</strong><span>Toutes vos transactions sont protégées et sécurisées.</span></div></div><div class="support-card">
 <b>Besoin d'aide ?</b>
 <p>Un souci avec votre dépôt ou retrait ?</p>
 <a class="support-link" href="https://wa.me/2290197131018" rel="noopener" target="_blank">Support WhatsApp · <span class="support-number-line">+229 01 97 13 10 18 ↗</span></a>
@@ -4619,7 +4652,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <button class="operations-back" onclick="goHome()" type="button">← Accueil</button>
 <h2>Opérations</h2>
 </div>
-<div class="support-card">
+<div class="db-design-brand"><div class="db-design-brand-main"><div class="db-design-logo" aria-hidden="true">DB</div><div><div class="db-design-word">Dulon<span>Bet</span></div><div class="db-design-tagline">Dépôt &amp; retrait 1xbet, en toute simplicité</div></div></div><div class="db-design-nav"><button type="button" onclick="goHome()">⌂ Accueil</button><button type="button" onclick="showPanel('login')">♙ Connexion</button></div></div><div class="db-design-hero"><h2>Dépôt &amp; Retrait</h2><p>Rapide · Sécurisé · Fiable</p></div><div class="db-design-cards"><div class="db-design-card"><div class="db-design-card-icon" aria-hidden="true">👛 ⬇️</div><h3>Faire un Dépôt</h3><p>Rechargez votre compte 1XBET facilement et rapidement.</p><button type="button" onclick="document.querySelector('#deposit form').scrollIntoView({behavior:'smooth',block:'start'})">▣ Déposer maintenant ›</button></div><div class="db-design-card"><div class="db-design-card-icon" aria-hidden="true">👛 ⬆️</div><h3>Faire un Retrait</h3><p>Retirez vos gains 1XBET en toute sécurité.</p><button type="button" onclick="showPanel('withdraw')">💰 Retirer maintenant ›</button></div></div><div class="db-design-security"><div class="db-shield" aria-hidden="true">🛡️</div><div><strong>Votre sécurité, notre priorité !</strong><span>Toutes vos transactions sont protégées et sécurisées.</span></div></div><div class="support-card">
 <b>Besoin d'aide ?</b>
 <p>Un souci avec votre dépôt ou retrait ?</p>
 <a class="support-link" href="https://wa.me/2290197131018" rel="noopener" target="_blank">Support WhatsApp · <span class="support-number-line">+229 01 97 13 10 18 ↗</span></a>
@@ -4665,7 +4698,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div aria-label="Pied de page" class="operation-footer">DulonBet · Dépôt &amp; Retrait<br/>1xbet</div>
 </section>
 <section class="panel login-panel" id="login">
-<div class="operations-page-head">
+<div class="db-design-brand"><div class="db-design-brand-main"><div class="db-design-logo" aria-hidden="true">DB</div><div><div class="db-design-word">Dulon<span>Bet</span></div><div class="db-design-tagline">Dépôt &amp; retrait 1xbet, en toute simplicité</div></div></div><div class="db-design-nav"><button type="button" onclick="goHome()">⌂ Accueil</button><button type="button" onclick="showPanel('login')">♙ Connexion</button></div></div><div class="db-design-hero"><h2>Connexion</h2><p>Accédez à votre espace DulonBet</p></div><div class="operations-page-head">
 <button class="operations-back" onclick="goHome()" type="button">← Accueil</button>
 <h2>Connexion</h2>
 </div>

@@ -4502,6 +4502,14 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div class="operations-brand-tagline">Dépôt &amp; retrait 1xbet, en toute simplicité</div>
 </div>
 </div>
+<nav class="dulon-template-nav" aria-label="Navigation DulonBet">
+<button type="button" onclick="goHome()" aria-label="Accueil"><span aria-hidden="true">⌂</span><b>Accueil</b></button>
+<i aria-hidden="true"></i>
+<button type="button" onclick="showPanel('deposit')" data-page="deposit"><span aria-hidden="true">⇩</span><b>Dépôt</b></button>
+<button type="button" onclick="showPanel('withdraw')" data-page="withdraw"><span aria-hidden="true">⇧</span><b>Retrait</b></button>
+<i aria-hidden="true"></i>
+<button type="button" onclick="showPanel('login')" data-page="login"><span aria-hidden="true">♙</span><b>Connexion</b></button>
+</nav>
 <div id="home-view">
 <section aria-label="Présentation et code promo" class="promo-carousel">
 <div class="promo-slides">
@@ -6773,7 +6781,90 @@ body.operation-view .operations-tabs{border-color:#c8e0fb!important}
 }
 </style>
 
-</body>
+<style id="dulonbet-template-platform-design">
+/* Application du modèle de plateforme directement aux pages du site */
+.dulon-template-nav{display:none}
+body.operation-view .dulon-template-nav{
+ display:flex;align-items:center;justify-content:space-around;gap:5px;
+ position:relative;width:100%;margin:0 auto 22px;padding:8px 10px;
+ background:linear-gradient(110deg,#061b57,#0c367e);color:#fff;
+ border-radius:18px;box-shadow:0 7px 18px rgba(7,35,96,.22);
+}
+.dulon-template-nav button{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:7px;
+ padding:12px 5px;border-radius:14px;background:transparent;color:#fff;font-size:clamp(12px,3.5vw,16px);font-weight:750}
+.dulon-template-nav button span{font-size:clamp(22px,6vw,30px);line-height:1;font-weight:800}
+.dulon-template-nav button[data-page="deposit"].is-current,
+.dulon-template-nav button[data-page="withdraw"].is-current,
+.dulon-template-nav button[data-page="login"].is-current{background:#0874ff;box-shadow:0 3px 12px #001c70}
+.dulon-template-nav i{height:36px;width:2px;background:rgba(255,255,255,.85);flex:0 0 2px}
+body.operation-view{background:linear-gradient(180deg,#eaf5ff 0%,#f5f9ff 48%,#e3f2ff 100%)!important}
+body.operation-view .operations-brand{margin-bottom:0!important;border-radius:0 0 20px 20px!important}
+body.operation-view #deposit.panel,body.operation-view #withdraw.panel{
+ width:calc(100% - 28px)!important;max-width:1000px!important;margin:0 auto 22px!important;
+ padding:18px 18px 24px!important;background:#fff!important;border:1px solid #d4e8ff!important;
+ border-radius:26px!important;box-shadow:0 8px 28px rgba(20,80,160,.12)!important;overflow:hidden
+}
+body.operation-view #deposit .operations-page-head,
+body.operation-view #withdraw .operations-page-head,
+#login .operations-page-head{margin:0 0 16px!important;padding:0 0 13px!important;border-bottom:1px solid #dcecff!important}
+body.operation-view .operations-page-head h2{color:#092b70!important;font-size:clamp(22px,5.5vw,28px)!important;text-align:center;margin:0 0 4px!important}
+body.operation-view .operations-back{font-size:15px!important;color:#1554a8!important}
+body.operation-view .support-card{background:#fff!important;border:1px solid #d7e9ff!important;border-radius:20px!important;box-shadow:0 5px 16px rgba(13,70,150,.08)!important}
+body.operation-view .operations-promo{background:linear-gradient(110deg,#063b9f,#061b57 70%,#087bff)!important;border:1px solid #2f9eff!important;border-radius:18px!important}
+body.operation-view .operation-switch{background:#eaf4ff!important;border:1px solid #c9e3ff!important;border-radius:20px!important;padding:5px!important}
+body.operation-view .operation-switch-btn{min-height:52px!important;border-radius:15px!important;font-weight:800!important}
+body.operation-view .operation-switch-btn.active{background:linear-gradient(110deg,#087cff,#0738b4)!important;color:#fff!important;box-shadow:0 4px 12px rgba(4,65,180,.22)!important}
+body.operation-view #deposit .notice,
+body.operation-view #withdraw .notice,
+body.operation-view #withdraw .withdraw-location-card{
+ background:linear-gradient(115deg,#edf7ff,#dcecff)!important;border:1px solid #b7d8ff!important;
+ border-radius:20px!important;color:#12336d!important;padding:17px!important
+}
+body.operation-view #deposit .field input,
+body.operation-view #deposit .field select,
+body.operation-view #withdraw .field input,
+body.operation-view #withdraw .field select,
+#login .login-card input{
+ min-height:54px!important;border:1.5px solid #c5e0ff!important;border-radius:15px!important;
+ background:#fff!important;box-shadow:0 2px 8px rgba(10,74,170,.04)!important
+}
+body.operation-view #deposit .field label,
+body.operation-view #withdraw .field label,
+#login .login-card .field label{color:#0b2e73!important;font-weight:800!important}
+body.operation-view #deposit .btn-blue,
+body.operation-view #withdraw .btn-blue,
+#login .login-submit{background:linear-gradient(110deg,#087dff,#0637b3)!important;border-radius:18px!important;min-height:56px!important;box-shadow:0 5px 15px rgba(0,85,220,.22)!important}
+body.operation-view .operation-footer{background:linear-gradient(110deg,#061b57,#0645b8)!important;color:white!important;border:0!important;border-radius:20px 20px 0 0!important;padding:20px!important}
+#login .login-brand{display:none!important}
+#login.login-panel .login-card{background:#fff!important;border:1px solid #d4e8ff!important;border-radius:24px!important;box-shadow:0 8px 28px rgba(20,80,160,.12)!important}
+@media(max-width:520px){
+ body.operation-view .dulon-template-nav{margin-bottom:16px;padding:7px 5px;border-radius:0 0 16px 16px}
+ .dulon-template-nav button{gap:4px;padding:10px 2px;flex-direction:column;font-size:12px}
+ .dulon-template-nav button span{font-size:24px}
+ .dulon-template-nav i{height:34px}
+ body.operation-view #deposit.panel,body.operation-view #withdraw.panel{width:calc(100% - 20px)!important;padding:14px 13px 20px!important;border-radius:22px!important}
+}
+</style>
+<script id="dulonbet-template-nav-active">
+(function(){
+ function syncDulonTemplateNav(){
+  const active=document.querySelector('.dulon-template-nav');
+  if(!active)return;
+  const isLogin=!!document.querySelector('#login.active');
+  const isWithdraw=!!document.querySelector('#withdraw.active');
+  active.querySelectorAll('button[data-page]').forEach(b=>b.classList.toggle('is-current',
+    (b.dataset.page==='login'&&isLogin)||(b.dataset.page==='withdraw'&&isWithdraw)||(b.dataset.page==='deposit'&&!isLogin&&!isWithdraw)));
+ }
+ const oldShowPanel=window.showPanel;
+ if(typeof oldShowPanel==='function'&&!oldShowPanel.__dulonNavWrapped){
+  const wrapped=function(id){oldShowPanel(id);setTimeout(syncDulonTemplateNav,0)};
+  wrapped.__dulonNavWrapped=true;window.showPanel=wrapped;
+ }
+ document.addEventListener('click',e=>{if(e.target.closest('.dulon-template-nav button'))setTimeout(syncDulonTemplateNav,0)});
+ document.addEventListener('DOMContentLoaded',syncDulonTemplateNav);
+ setTimeout(syncDulonTemplateNav,0);
+})();
+</script></body>
 <style id="dulonbet-support-promo-size-v12">
 /* Ajustement intermédiaire : légèrement au-dessus de V10, sans l'ampleur de V11 */
 body.operation-view .support-card { padding: 21px !important; }

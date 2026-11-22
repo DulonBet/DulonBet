@@ -7595,3 +7595,102 @@ body.operation-view #withdraw .operation-switch-btn span{
  }
 }
 </style>
+
+
+<style id="dulonbet-compact-fields-color-shades-v1">
+/* Cadres de saisie plus compacts et nuances de bleu/cyan de la maquette */
+body.operation-view #deposit form,
+body.operation-view #withdraw form{
+  padding:clamp(12px,3vw,20px)!important;
+  border:1.5px solid #8fdfff!important;
+  border-radius:22px!important;
+  background:linear-gradient(155deg,#ffffff 0%,#f5faff 54%,#eaf5ff 100%)!important;
+  box-shadow:0 8px 22px rgba(7,42,126,.13)!important;
+}
+body.operation-view #deposit .formgrid,
+body.operation-view #withdraw .formgrid{
+  gap:10px!important;
+}
+body.operation-view #deposit .field,
+body.operation-view #withdraw .field{
+  margin:0!important;min-width:0!important;
+}
+body.operation-view #deposit .field label,
+body.operation-view #withdraw .field label{
+  margin-bottom:5px!important;
+  font-size:13px!important;
+  line-height:1.25!important;
+  color:#123b91!important;
+}
+body.operation-view #deposit .field input:not([type="radio"]),
+body.operation-view #withdraw .field input:not([type="radio"]),
+body.operation-view #deposit .field select,
+body.operation-view #withdraw .field select{
+  min-height:43px!important;
+  padding:9px 12px!important;
+  border:1.5px solid #a8d2ff!important;
+  border-radius:13px!important;
+  background:linear-gradient(180deg,#fff 0%,#fafdff 100%)!important;
+  color:#153780!important;
+  font-size:14px!important;
+  box-shadow:inset 0 1px 2px rgba(15,68,151,.04)!important;
+}
+body.operation-view #deposit .field input:focus,
+body.operation-view #withdraw .field input:focus,
+body.operation-view #deposit .field select:focus,
+body.operation-view #withdraw .field select:focus{
+  border-color:#14baf5!important;
+  box-shadow:0 0 0 3px rgba(20,186,245,.13)!important;
+  outline:none!important;
+}
+body.operation-view #deposit .field .small,
+body.operation-view #withdraw .field .small{
+  margin-top:4px!important;font-size:10.5px!important;line-height:1.35!important;
+  color:#637ca7!important;
+}
+body.operation-view #deposit .operator-picks,
+body.operation-view #withdraw .operator-picks{
+  gap:7px!important;
+}
+body.operation-view #deposit .operator-pick,
+body.operation-view #withdraw .operator-pick{
+  min-height:52px!important;padding:5px!important;
+  border:1.5px solid #b5d9ff!important;border-radius:13px!important;
+  background:linear-gradient(150deg,#fff 0%,#eff7ff 100%)!important;
+}
+body.operation-view #deposit .operator-pick:has(input:checked),
+body.operation-view #withdraw .operator-pick:has(input:checked){
+  border-color:#08b9f4!important;
+  background:linear-gradient(145deg,#e7faff 0%,#dceaff 100%)!important;
+  box-shadow:0 0 0 2px rgba(8,185,244,.12)!important;
+}
+body.operation-view #deposit .operator-card-image,
+body.operation-view #withdraw .operator-card-image{max-height:26px!important}
+body.operation-view #deposit .btn-blue,
+body.operation-view #withdraw .btn-green{
+  min-height:48px!important;padding:11px 13px!important;
+  border:1.5px solid #31dfff!important;border-radius:999px!important;
+  background:linear-gradient(105deg,#16c8f5 0%,#0878f8 48%,#1538c8 100%)!important;
+  box-shadow:0 6px 15px rgba(8,94,220,.2)!important;
+  font-size:15px!important;
+}
+body.operation-view #deposit .notice,
+body.operation-view #withdraw .withdraw-warning,
+body.operation-view #withdraw .withdraw-location-card,
+body.operation-view #withdraw details.procedure{
+  padding:9px 11px!important;margin-bottom:9px!important;
+  border-radius:12px!important;
+  background:linear-gradient(110deg,#eaf8ff 0%,#e9efff 100%)!important;
+  border-color:#b7ddff!important;color:#1b438c!important;
+}
+@media(max-width:420px){
+ body.operation-view #deposit form,
+ body.operation-view #withdraw form{padding:11px 10px!important;border-radius:19px!important}
+ body.operation-view #deposit .formgrid,
+ body.operation-view #withdraw .formgrid{gap:9px!important}
+ body.operation-view #deposit .field input:not([type="radio"]),
+ body.operation-view #withdraw .field input:not([type="radio"]),
+ body.operation-view #deposit .field select,
+ body.operation-view #withdraw .field select{min-height:41px!important;padding:8px 10px!important}
+}
+</style>

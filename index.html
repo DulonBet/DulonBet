@@ -7606,3 +7606,61 @@ body.operation-view #withdraw .operation-footer{
  body.operation-view #withdraw .formgrid{gap:15px!important}
 }
 </style>
+
+
+<style id="dulonbet-payment-form-ui-v2">
+/* Habillage du formulaire inspiré de la maquette mobile, sans toucher aux traitements */
+body.operation-view #deposit form:before,
+body.operation-view #withdraw form:before{
+  display:flex!important;align-items:center!important;gap:10px!important;
+  margin:0 0 22px!important;padding:0 0 17px!important;
+  border-bottom:1px solid #e0ebfc!important;
+  color:#102f7e!important;font-size:clamp(17px,4vw,21px)!important;
+  font-weight:900!important;letter-spacing:-.02em!important;
+}
+body.operation-view #deposit form:before{
+  content:"DÉPÔT 1XBET  ·  FORMULAIRE SÉCURISÉ";
+}
+body.operation-view #withdraw form:before{
+  content:"RETRAIT 1XBET  ·  DEMANDE DE RETRAIT";
+}
+body.operation-view #deposit form:after,
+body.operation-view #withdraw form:after{
+  content:"Tes informations sont utilisées pour traiter ta demande.";
+  display:block!important;margin:17px 0 0!important;padding:12px 13px!important;
+  border-radius:12px!important;background:#edf5ff!important;
+  color:#46618e!important;font-size:12px!important;line-height:1.5!important;
+}
+body.operation-view #deposit .field,
+body.operation-view #withdraw .field{min-width:0!important}
+body.operation-view #deposit .field input:focus,
+body.operation-view #withdraw .field input:focus,
+body.operation-view #deposit .field select:focus,
+body.operation-view #withdraw .field select:focus{
+  outline:none!important;border-color:#178bff!important;
+  box-shadow:0 0 0 4px rgba(23,139,255,.13)!important;
+}
+body.operation-view #deposit .operator-pick,
+body.operation-view #withdraw .operator-pick{
+  min-height:65px!important;display:flex!important;align-items:center!important;
+  justify-content:center!important;padding:9px!important;transition:border-color .18s,box-shadow .18s!important;
+}
+body.operation-view #deposit .operator-card-image,
+body.operation-view #withdraw .operator-card-image{
+  max-width:100%!important;max-height:38px!important;object-fit:contain!important;
+}
+body.operation-view #deposit .btn-blue,
+body.operation-view #withdraw .btn-green{
+  letter-spacing:.01em!important;transition:filter .18s,transform .18s!important;
+}
+body.operation-view #deposit .btn-blue:hover,
+body.operation-view #withdraw .btn-green:hover{filter:brightness(1.06)!important}
+body.operation-view #deposit .success,
+body.operation-view #withdraw .success{position:relative;z-index:1}
+@media(max-width:520px){
+ body.operation-view #deposit form:before,
+ body.operation-view #withdraw form:before{font-size:16px!important;line-height:1.4!important}
+ body.operation-view #deposit .operator-pick,
+ body.operation-view #withdraw .operator-pick{min-height:58px!important}
+}
+</style>

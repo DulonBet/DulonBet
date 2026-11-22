@@ -112,7 +112,8 @@ Deno.serve(async (req) => {
 
   let body: any;
   try { body = await req.json(); } catch { return json({ error: "Demande invalide." }, 400); }
-  const forwarded = req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") ||
+  // Ce header n'est accepté qu'après vérification du secret interne ci-dessus.
+  const forwarded = req.headers.get("x-dulonbet-client-ip") || req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") ||
     (req.headers.get("x-forwarded-for") || "").split(",").map((x) => x.trim()).filter(Boolean).slice(-1)[0] || "unknown";
   const rateKey = await sha256(forwarded);
   const { data: allowed, error: rateError } = await supabase.rpc("dulonbet_check_payout_rate_limit", { p_key_hash: rateKey });

@@ -4619,7 +4619,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div class="field full"><label>Numéro de téléphone</label><input autocomplete="tel" id="deposit-phone" inputmode="numeric" maxlength="13" minlength="10" pattern="(?:[0-9]{10}|229[0-9]{10})" placeholder="0190000000 ou 2290190000000" required="" title="Saisis 10 chiffres locaux (01…) ou 13 chiffres avec l’indicatif 229."/><span class="small">Utilise le numéro Mobile Money associé au réseau choisi.</span></div>
 <div class="field full"><button class="btn-blue">Payer et recharger</button></div>
 </div></form><div class="success" id="deposit-success"></div>
-<div aria-label="Pied de page" class="operation-footer login-footer-brand"><span class="login-footer-name">Dulon<span>Bet</span></span><span class="login-footer-caption">Dépôt &amp; Retrait</span><span class="login-footer-platform">1XBET</span></div>
+<div aria-label="Pied de page" class="operation-footer">DulonBet · Dépôt &amp; Retrait<br/>1xbet</div>
 </section>
 <section class="panel" id="withdraw"><h2>Opération de retrait</h2>
 <div class="operations-page-head">
@@ -6884,27 +6884,56 @@ body.operation-view #login .operations-page-head .operations-back{
 
 
 <style id="dulonbet-login-footer-design">
-.operation-footer.login-footer-brand{
-  display:flex!important; flex-direction:column!important; align-items:center!important; justify-content:center!important;
-  gap:5px!important; margin:26px 0 2px!important; padding:22px 10px 8px!important; border-top:0!important;
-  color:#eaf7ff!important; text-align:center!important; line-height:1.25!important;
+body.operation-view #login, body.operation-view #deposit, body.operation-view #withdraw .operation-footer.login-footer-brand{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  margin:26px 0 2px!important;
+  padding:22px 10px 8px!important;
+  border-top:0!important;
+  color:#eaf7ff!important;
+  text-align:center!important;
+  line-height:1.25!important;
 }
-.operation-footer.login-footer-brand:before{
-  content:""; display:block; width:76px; height:3px; margin:0 auto 9px; border-radius:99px;
-  background:linear-gradient(90deg,#22d3ff,#ffffff,#22d3ff); box-shadow:0 0 12px rgba(34,211,255,.65);
+body.operation-view #login, body.operation-view #deposit, body.operation-view #withdraw .login-footer-brand:before{
+  content:"";
+  display:block;
+  width:76px;
+  height:3px;
+  margin:0 auto 9px;
+  border-radius:99px;
+  background:linear-gradient(90deg,#22d3ff,#ffffff,#22d3ff);
+  box-shadow:0 0 12px rgba(34,211,255,.65);
 }
-.operation-footer.login-footer-brand .login-footer-name{
-  color:#fff!important; font-size:clamp(20px,5vw,25px)!important; font-weight:950!important;
-  letter-spacing:-.6px!important; text-shadow:0 2px 9px rgba(0,0,0,.18);
+body.operation-view #login, body.operation-view #deposit, body.operation-view #withdraw .login-footer-name{
+  color:#fff!important;
+  font-size:clamp(20px,5vw,25px)!important;
+  font-weight:950!important;
+  letter-spacing:-.6px!important;
+  text-shadow:0 2px 9px rgba(0,0,0,.18);
 }
-.operation-footer.login-footer-brand .login-footer-name span{color:#55d8ff!important}
-.operation-footer.login-footer-brand .login-footer-caption{
-  color:#e5f3ff!important; font-size:13px!important; font-weight:650!important; letter-spacing:.35px!important;
+body.operation-view #login, body.operation-view #deposit, body.operation-view #withdraw .login-footer-name span{color:#55d8ff!important}
+body.operation-view #login, body.operation-view #deposit, body.operation-view #withdraw .login-footer-caption{
+  color:#e5f3ff!important;
+  font-size:13px!important;
+  font-weight:650!important;
+  letter-spacing:.35px!important;
 }
-.operation-footer.login-footer-brand .login-footer-platform{
-  display:inline-flex!important; align-items:center!important; justify-content:center!important; margin-top:3px!important;
-  padding:4px 12px!important; border:1px solid rgba(126,226,255,.65)!important; border-radius:999px!important;
-  background:rgba(255,255,255,.10)!important; color:#fff!important; font-size:10px!important; font-weight:850!important; letter-spacing:2px!important;
+body.operation-view #login, body.operation-view #deposit, body.operation-view #withdraw .login-footer-platform{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin-top:3px!important;
+  padding:4px 12px!important;
+  border:1px solid rgba(126,226,255,.65)!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.10)!important;
+  color:#fff!important;
+  font-size:10px!important;
+  font-weight:850!important;
+  letter-spacing:2px!important;
 }
 </style>
 

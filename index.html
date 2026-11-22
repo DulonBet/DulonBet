@@ -7751,3 +7751,28 @@ body.operation-view #withdraw .operator-picks{
   body.operation-view #withdraw .field.full > label{margin-bottom:2px!important}
 }
 </style>
+
+
+<style id="dulonbet-label-to-input-gap-fix">
+/* Correction précise : réduit le gap FLEX entre le nom du champ et son cadre */
+body.operation-view #deposit .field,
+body.operation-view #withdraw .field{
+  gap:1px!important;
+}
+body.operation-view #deposit .field.full > label,
+body.operation-view #withdraw .field.full > label{
+  margin:0!important;
+  padding:0!important;
+  line-height:1.2!important;
+}
+body.operation-view #deposit .field.full > input:not([type="radio"]),
+body.operation-view #withdraw .field.full > input:not([type="radio"]),
+body.operation-view #deposit .field.full > select,
+body.operation-view #withdraw .field.full > select{
+  margin-top:0!important;
+}
+body.operation-view #deposit .field.full > .small,
+body.operation-view #withdraw .field.full > .small{
+  margin-top:2px!important;
+}
+</style>

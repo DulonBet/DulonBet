@@ -19,7 +19,7 @@ export const ONEXBET_LNG = Deno.env.get("ONEXBET_LNG") ?? "ru";
 export const ONEXBET_CURRENCY_ID = Deno.env.get("ONEXBET_CURRENCY_ID") ?? "";
 export const ONEXBET_API_ENABLED = (Deno.env.get("ONEXBET_API_ENABLED") ?? "false").trim().toLowerCase();
 export const ONEXBET_API_BASE = "https://partners.servcul.com/CashdeskBotAPI";
-export const INTERNAL_SECRET = Deno.env.get("DULONBET_FEEXPAY_INTERNAL_SECRET") ?? "";
+export const INTERNAL_SECRET = Deno.env.get("DULONBET_PAYOUT_INTERNAL_SECRET") ?? "";
 
 export const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
   auth: { persistSession: false, autoRefreshToken: false },
@@ -246,25 +246,42 @@ Deno.serve(async (req) => {
 
   const raw = await response.text();
   let result: any = {};
-  try { result = JSON.parse(raw); } catch { result = {}; }
+  let validJson = false;
+  try {
+    result = JSON.parse(raw);
+    validJson = Boolean(result && typeof result === "object" && !Array.isArray(result));
+  } catch { result = {}; }
+
+  // Une réponse HTTP non-OK ne prouve pas que le retrait n'a pas été exécuté.
+  // On conserve donc processing et on exige une vérification manuelle avant toute reprise.
   if (!response.ok) {
-    const unknown = response.status >= 500;
-    const status = unknown ? "processing" : "failed";
     await supabase.from("dulonbet_transactions").update({
-      status, provider_status: unknown ? "1XBET_UNKNOWN" : `1XBET_HTTP_${response.status}`,
-      last_error: `Réponse HTTP ${response.status} de l'API 1XBET`,
+      status: "processing", provider_status: `1XBET_HTTP_${response.status}_UNKNOWN`,
+      last_error: `Résultat incertain après réponse HTTP ${response.status} de l'API 1XBET; vérification manuelle obligatoire.`,
       updated_at: new Date().toISOString(),
     }).eq("reference", reference);
     await supabase.from("dulonbet_payment_events").insert({
-      reference, event_type: unknown ? "ONEXBET_PAYOUT_UNKNOWN" : "ONEXBET_PAYOUT_API_ERROR",
-      provider_status: String(response.status), details: { http_status: response.status, messageId: result?.messageId ?? null },
+      reference, event_type: "ONEXBET_PAYOUT_UNKNOWN", provider_status: String(response.status),
+      details: { http_status: response.status, messageId: result?.messageId ?? null },
     });
-    return json({ reference, status, message: unknown
-      ? "Le statut du retrait doit être vérifié. Ne soumets pas à nouveau ce code."
-      : "Le service 1XBET n'a pas accepté la demande. Aucun paiement Mobile Money n'a été demandé." }, unknown ? 202 : 502);
+    return json({ reference, status: "processing", message: "Résultat incertain. Vérifie la caisse 1XBET avant toute autre action; ne soumets pas à nouveau ce code." }, 202);
   }
 
-  if (result?.success !== true) {
+  // Une réponse vide, mal formée ou sans booléen success est ambiguë, pas un refus.
+  if (!validJson || typeof result?.success !== "boolean") {
+    await supabase.from("dulonbet_transactions").update({
+      status: "processing", provider_status: "1XBET_RESPONSE_UNKNOWN",
+      last_error: "Réponse API 1XBET illisible ou incomplète; vérification manuelle obligatoire.",
+      updated_at: new Date().toISOString(),
+    }).eq("reference", reference);
+    await supabase.from("dulonbet_payment_events").insert({
+      reference, event_type: "ONEXBET_PAYOUT_UNKNOWN", provider_status: "UNKNOWN",
+      details: { http_status: response.status, response_parseable: validJson },
+    });
+    return json({ reference, status: "processing", message: "La réponse de 1XBET est ambiguë. Ne soumets pas à nouveau ce code; une vérification administrative est nécessaire." }, 202);
+  }
+
+  if (result.success === false) {
     await supabase.from("dulonbet_transactions").update({
       status: "rejected", provider_status: "1XBET_REJECTED",
       last_error: norm(result?.message).slice(0, 300) || "L'API 1XBET a refusé le retrait.",

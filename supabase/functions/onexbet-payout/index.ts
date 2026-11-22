@@ -295,7 +295,7 @@ Deno.serve(async (req) => {
   }
 
   const actualAmount = Number(result?.summa);
-  if (!Number.isFinite(actualAmount) || actualAmount <= 0) {
+  if (!Number.isSafeInteger(actualAmount) || actualAmount <= 0) {
     await supabase.from("dulonbet_transactions").update({
       status: "processing", provider_status: "1XBET_SUCCESS_AMOUNT_UNKNOWN",
       last_error: "1XBET indique success=true mais ne retourne pas un montant exploitable; revue manuelle obligatoire.",

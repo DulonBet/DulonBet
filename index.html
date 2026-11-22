@@ -5124,16 +5124,57 @@ async function submitTx(e,type){
   if(!['MTN MoMo','Moov Money','Celtiis Cash'].includes(chosen)){alert('Choisis MTN MoMo, Moov Money ou Celtiis Cash.');return;}
   if(country!=='Bénin'||!/^01[0-9]{8}$/.test(phone)){alert('Pour un retrait au Bénin, sélectionne le Bénin et saisis un numéro à 10 chiffres commençant par 01.');return;}
  }
- const ref='DB-'+(window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10));
- box.style.display='block';box.textContent='Enregistrement de ta demande de retrait…';
- const row={reference:ref,operation_type:type,amount_fcfa:amount,network:chosen||'Non précisé',country,xbet_id:xbetId,phone,customer_name:customerName||null,withdrawal_code:withdrawalCode||null,status:'pending'};
+ const idempotencyKey=newDulonBetKey();
+ const client=window.dulonSupabaseClient;
+ const supabaseUrl='https://abagofwqjostilsilafk.supabase.co';
+ const anonKey='sb_publishable_DMHadyt-Bq_bvqM2Wbj9Nw_0tBHcINd';
+ if(submit){submit.disabled=true;submit.textContent='Vérification 1XBET…';}
+ box.style.display='block';
+ box.textContent='Transmission sécurisée à 1XBET pour vérifier le code. Ne soumets pas cette demande une seconde fois.';
  try{
-  const {error}=await window.dulonSupabaseClient.from('dulonbet_transactions').insert(row);
-  if(error)throw error;
-  box.textContent='Demande de retrait enregistrée. Référence : '+ref+'. Le retrait reste manuel et doit être traité par l’administrateur. Conserve cette référence.';
-  f.reset();
+  const response=await fetch(supabaseUrl+'/functions/v1/onexbet-payout',{
+   method:'POST',
+   headers:{
+    'Content-Type':'application/json',
+    'apikey':anonKey,
+    'Authorization':'Bearer '+anonKey
+   },
+   body:JSON.stringify({
+    xbet_id:xbetId,
+    withdrawal_code:withdrawalCode,
+    amount_fcfa:amount,
+    phone,
+    customer_name:customerName,
+    network:chosen,
+    country,
+    idempotency_key:idempotencyKey
+   })
+  });
+  let result={};
+  try{result=await response.json();}catch(_){}
+  if(result.reference){
+   const status=String(result.status||'processing').toLowerCase();
+   if(status==='xbet_validated'){
+    box.textContent='Code validé automatiquement par 1XBET. Référence : '+result.reference+'. Montant confirmé : '+Number(result.amount_fcfa||amount).toLocaleString('fr-FR')+' FCFA. Le paiement Mobile Money reste à effectuer par l’administrateur. Conserve cette référence.';
+    f.reset();
+   }else if(status==='rejected'||status==='failed'){
+    box.textContent=(result.message||'1XBET n’a pas accepté cette demande.')+' Référence : '+result.reference+'. Ne réutilise pas ce code pour cette demande.';
+    f.reset();
+   }else{
+    box.textContent=(result.message||'La demande est enregistrée mais son résultat doit être vérifié.')+' Référence : '+result.reference+'. Ne soumets pas à nouveau ce code.';
+    f.reset();
+   }
+  }else{
+   box.textContent=(result.error||result.message||'Le service 1XBET ne permet pas encore de vérifier cette demande.')+' Aucun nouveau dépôt ou paiement Mobile Money ne doit être tenté sans vérification.';
+  }
+  if(!response.ok && !result.reference){
+   console.error('onexbet-payout HTTP status',response.status);
+  }
  }catch(err){
-  console.error(err);box.textContent='Impossible d’enregistrer la demande de retrait. Vérifie ta connexion puis réessaie.';
+  console.error('onexbet-payout network error',String(err));
+  box.textContent='La réponse du service de validation n’est pas disponible. Le résultat peut être incertain : ne soumets pas à nouveau ce code. Contacte l’administrateur en précisant l’heure de la demande.';
+ }finally{
+  if(submit){submit.disabled=false;submit.textContent='Retirer';}
  }
 }
 function render(){}

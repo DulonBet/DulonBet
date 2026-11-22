@@ -6963,6 +6963,25 @@ body.operation-view .operations-promo strong { font-size: 31px !important; }
 }
 </style>
 
+
+<style id="dulonbet-hide-promo-on-operations">
+/* Masque les promotions uniquement sur les écrans Dépôt et Retrait */
+body.operation-view #deposit .operations-promo,
+body.operation-view #withdraw .operations-promo,
+body.operation-view #deposit .promo-code-title,
+body.operation-view #withdraw .promo-code-title,
+body.operation-view #deposit .promo-line,
+body.operation-view #withdraw .promo-line,
+body.operation-view #deposit .promo-exclusive,
+body.operation-view #withdraw .promo-exclusive,
+body.operation-view #deposit #dulon-promo,
+body.operation-view #withdraw #dulon-promo,
+body.operation-view #deposit .promo-controls,
+body.operation-view #withdraw .promo-controls{
+  display:none!important;
+}
+</style>
+
 </html>
 <style id="dulonbet-payment-cards-exact-fit">
 /* Dépôt et Retrait : visuels opérateurs ajustés à leurs carrés */

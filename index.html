@@ -4728,11 +4728,10 @@ body.operation-view #dulon-install-banner{display:none!important}
   <a href="/centre-aide.html">Consultez le Centre d'aide</a>
 </section>
 
-<section aria-label="Choisir une opération" class="home-cta">
-<h2>Prêt ? Choisis ton opération</h2>
+<section aria-label="Commencer une demande" class="home-cta">
+<h2>Prêt à commencer ?</h2>
 <div class="home-cta-actions">
-<button class="home-cta-deposit" onclick="showPanel('deposit')" type="button">Dépôt</button>
-<button class="home-cta-withdraw" onclick="showPanel('withdraw')" type="button">Retrait</button>
+<button class="home-cta-open-form" onclick="showPanel('deposit')" type="button">Ouvrir le formulaire Dépôt / Retrait</button>
 </div>
 </section>
 <footer class="home-footer">
@@ -5968,31 +5967,40 @@ body.operation-view #withdraw .withdraw-location-item span{
 </style>
 
 <style id="dulonbet-compact-operation-payment-cards">
-/* Réduction du bloc « Prêt ? Choisis ton opération » */
+/* Bloc d’action compact avec un seul bouton vers le formulaire */
 .home-cta{
-  padding:22px 16px!important;
-  margin:22px 0 18px!important;
-  border-radius:22px!important;
+  box-sizing:border-box!important;
+  padding:15px 14px!important;
+  margin:14px 0 12px!important;
+  border-radius:17px!important;
+  text-align:center!important;
 }
 .home-cta h2{
-  font-size:clamp(18px,2.4vw,25px)!important;
-  line-height:1.18!important;
-  margin:0 0 15px!important;
-  letter-spacing:-.25px!important;
+  font-size:clamp(17px,2.2vw,21px)!important;
+  line-height:1.2!important;
+  margin:0 0 11px!important;
+  letter-spacing:-.2px!important;
 }
-.home-cta-actions{gap:10px!important}
-.home-cta-actions button{
-  min-height:54px!important;
-  padding:10px 14px!important;
-  border-radius:15px!important;
-  font-size:16px!important;
-  line-height:1.15!important;
+.home-cta-actions{display:flex!important;justify-content:center!important;gap:0!important;width:100%!important}
+.home-cta-actions .home-cta-open-form{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:48px!important;
+  padding:10px 12px!important;
+  border-radius:12px!important;
+  font-size:15px!important;
+  line-height:1.2!important;
+  white-space:normal!important;
+  text-align:center!important;
+  overflow-wrap:anywhere!important;
 }
 @media(max-width:520px){
-  .home-cta{padding:19px 13px!important;margin:20px 0 16px!important;border-radius:19px!important}
-  .home-cta h2{font-size:19px!important;line-height:1.18!important;margin-bottom:13px!important}
-  .home-cta-actions{gap:8px!important}
-  .home-cta-actions button{min-height:49px!important;padding:9px 10px!important;font-size:15px!important;border-radius:13px!important}
+  .home-cta{padding:13px 11px!important;margin:11px 0 10px!important;border-radius:15px!important}
+  .home-cta h2{font-size:17px!important;line-height:1.2!important;margin-bottom:9px!important}
+  .home-cta-actions .home-cta-open-form{min-height:46px!important;padding:9px 8px!important;font-size:13.5px!important;line-height:1.2!important;border-radius:11px!important}
 }
 
 /* Présentation compacte : trois titres bleus identiques et contenus resserrés */

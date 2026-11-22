@@ -7520,3 +7520,55 @@ body.operation-view #withdraw .operation-footer{
  body.operation-view #withdraw .operation-switch-btn{min-height:42px!important;font-size:14px!important}
 }
 </style>
+
+
+<style id="dulonbet-exact-deposit-withdraw-tabs">
+/* Reproduction du sélecteur Dépôt / Retrait de la référence fournie */
+body.operation-view #deposit .operation-switch,
+body.operation-view #withdraw .operation-switch{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:0!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  padding:4px!important;
+  margin:14px 0 18px!important;
+  border:2px solid #078bff!important;
+  border-radius:999px!important;
+  background:linear-gradient(110deg,#031747 0%,#061b50 100%)!important;
+  box-shadow:0 0 0 1px rgba(28,203,255,.22),0 5px 16px rgba(0,13,60,.25)!important;
+  overflow:hidden!important;
+}
+body.operation-view #deposit .operation-switch-btn,
+body.operation-view #withdraw .operation-switch-btn{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:clamp(7px,2vw,15px)!important;
+  min-width:0!important;
+  min-height:56px!important;
+  padding:10px 8px!important;
+  border:1px solid transparent!important;
+  border-radius:999px!important;
+  background:transparent!important;
+  color:#fff!important;
+  font-size:clamp(15px,4.1vw,20px)!important;
+  font-weight:850!important;
+  line-height:1.1!important;
+  box-shadow:none!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.18)!important;
+}
+body.operation-view #deposit .operation-switch-btn.active,
+body.operation-view #withdraw .operation-switch-btn.active{
+  color:#fff!important;
+  border:1px solid #43e7ff!important;
+  background:linear-gradient(105deg,#09c8ff 0%,#078aff 57%,#0750f4 100%)!important;
+  box-shadow:0 0 10px rgba(0,205,255,.6),inset 0 0 0 1px rgba(255,255,255,.18),0 2px 7px rgba(0,84,255,.25)!important;
+}
+@media(max-width:420px){
+ body.operation-view #deposit .operation-switch,
+ body.operation-view #withdraw .operation-switch{padding:3px!important;border-width:2px!important}
+ body.operation-view #deposit .operation-switch-btn,
+ body.operation-view #withdraw .operation-switch-btn{min-height:48px!important;gap:6px!important;font-size:14px!important;padding:8px 5px!important}
+}
+</style>

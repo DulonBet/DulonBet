@@ -5132,7 +5132,7 @@ async function submitTx(e,type){
  box.style.display='block';
  box.textContent='Transmission sécurisée à 1XBET pour vérifier le code. Ne soumets pas cette demande une seconde fois.';
  try{
-  const response=await fetch(supabaseUrl+'/functions/v1/onexbet-payout',{
+  const response=await fetch(supabaseUrl+'/functions/v1/onexbet-withdrawal-request',{
    method:'POST',
    headers:{
     'Content-Type':'application/json',

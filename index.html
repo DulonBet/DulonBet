@@ -4392,6 +4392,75 @@ body.home-view .home-help-cta{display:block!important}
 /* Masquer tout le pied de page uniquement sur l’accueil. */
 body.home-view .home-footer{display:none!important}
 </style>
+
+<style id="dulonbet-home-footer-compact-centered">
+/* Pied de page d'accueil compact et centré uniquement sur l'accueil */
+body.home-view .home-footer{
+  display:block!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:14px auto 0!important;
+  padding:10px 12px 12px!important;
+  border-top:1px solid #dce6f2!important;
+  border-radius:12px 12px 0 0!important;
+  background:linear-gradient(180deg,#f8fbff 0%,#edf4fc 100%)!important;
+  color:#526782!important;
+  text-align:center!important;
+}
+body.home-view .home-footer-main{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:0!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0 auto!important;
+  padding:0!important;
+  background:transparent!important;
+}
+body.home-view .home-footer-brand{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:2px!important;
+  margin:0!important;
+  text-align:center!important;
+  line-height:1.15!important;
+}
+body.home-view .home-footer-brand-name{
+  display:flex!important;
+  justify-content:center!important;
+  gap:0!important;
+  font-size:18px!important;
+  font-weight:900!important;
+  letter-spacing:-.4px!important;
+  line-height:1.2!important;
+}
+body.home-view .home-footer-brand-name span:first-child{color:#102e61!important}
+body.home-view .home-footer-brand-name span:last-child{color:#43a5f5!important}
+body.home-view .home-footer-brand-tagline{
+  color:#3e5577!important;
+  font-size:11px!important;
+  font-weight:600!important;
+}
+body.home-view .home-footer-brand-platform{
+  color:#6b7c95!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:1.6px!important;
+}
+html[data-theme="dark"] body.home-view .home-footer{
+  background:linear-gradient(180deg,#111a2b 0%,#0b1220 100%)!important;
+  border-color:#303b50!important;
+  color:#e5edf8!important;
+}
+html[data-theme="dark"] body.home-view .home-footer-brand-name span:first-child{color:#e5edf8!important}
+html[data-theme="dark"] body.home-view .home-footer-brand-tagline{color:#c0d0e6!important}
+html[data-theme="dark"] body.home-view .home-footer-brand-platform{color:#9aacc5!important}
+</style>
+
 </head>
 <body>
 <div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>

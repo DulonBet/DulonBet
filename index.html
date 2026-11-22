@@ -4632,7 +4632,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <button class="operation-switch-btn" onclick="showPanel('deposit')" type="button">Dépôt</button>
 <button class="operation-switch-btn active" onclick="showPanel('withdraw')" type="button">Retrait</button>
 </div>
-<div class="withdraw-warning" role="alert">NB : 50 FCFA seront prélevés sur le montant de votre retrait.</div>
+<div class="withdraw-marquee" role="note" aria-label="NB : 50 FCFA seront prélevés sur le montant de votre retrait."><div class="withdraw-marquee-track"><span>NB : 50 FCFA seront prélevés sur le montant de votre retrait.</span><span aria-hidden="true">NB : 50 FCFA seront prélevés sur le montant de votre retrait.</span></div></div>
 <div class="withdraw-location-card">
 <h3>Informations pour votre retrait 1xbet</h3>
 <p>Utilisez exactement cette ville et cette rue dans votre compte 1xbet avant de continuer ici.</p>
@@ -7862,5 +7862,36 @@ body.operation-view #withdraw details.procedure summary{
   opacity:1!important;
   font-size:14px!important;
   font-weight:750!important;
+}
+</style>
+
+
+<style id="dulonbet-withdraw-marquee-notice">
+/* Bande défilante du message de frais, uniquement sur la page Retrait */
+body.operation-view #withdraw .withdraw-marquee{
+  width:100%;overflow:hidden;box-sizing:border-box;
+  margin:0 0 13px;padding:11px 0;
+  border:1px solid #8fdfff;border-radius:12px;
+  background:linear-gradient(100deg,#071b70 0%,#0c397e 55%,#087bba 100%);
+  color:#fff;box-shadow:0 4px 12px rgba(7,42,126,.12);
+}
+body.operation-view #withdraw .withdraw-marquee-track{
+  display:flex;width:max-content;align-items:center;
+  animation:dulonWithdrawMarquee 17s linear infinite;
+}
+body.operation-view #withdraw .withdraw-marquee span{
+  display:block;flex:0 0 auto;padding:0 28px;
+  font-size:13px;font-weight:800;line-height:1.5;white-space:nowrap;
+}
+@keyframes dulonWithdrawMarquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+body.operation-view #withdraw .withdraw-marquee:hover .withdraw-marquee-track{
+  animation-play-state:paused;
+}
+@media(prefers-reduced-motion:reduce){
+  body.operation-view #withdraw .withdraw-marquee-track{animation:none;transform:none}
+  body.operation-view #withdraw .withdraw-marquee span[aria-hidden="true"]{display:none}
 }
 </style>

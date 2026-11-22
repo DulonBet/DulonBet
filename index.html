@@ -6610,8 +6610,6 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
   <button class="drawer-link" id="dulon-drawer-operations" type="button"><span class="drawer-link-icon" aria-hidden="true">↕</span><span>Opérations</span></button>
   <a class="drawer-link" id="dulon-drawer-registration" href="https://1xbet.bj/fr/registration" target="_blank" rel="noopener"><span class="drawer-link-icon" aria-hidden="true">↗</span><span>Inscription 1XBET</span></a>
   <button class="drawer-link" id="dulon-drawer-track" type="button"><span class="drawer-link-icon" aria-hidden="true">⌕</span><span>Suivre ma demande</span></button>
-  <button class="drawer-link" id="dulon-drawer-how" type="button"><span class="drawer-link-icon" aria-hidden="true">☷</span><span>Comment ça marche ?</span></button>
-  <button class="drawer-link" id="dulon-drawer-faq" type="button"><span class="drawer-link-icon" aria-hidden="true">?</span><span>Aide et questions fréquentes</span></button>
   <a class="drawer-link" id="dulon-drawer-help-centre" href="/centre-aide.html"><span class="drawer-link-icon" aria-hidden="true">☷</span><span>Centre d’aide DulonBet</span></a>
   <a class="drawer-link" id="dulon-drawer-support" href="https://wa.me/2290197131018" target="_blank" rel="noopener"><span class="drawer-link-icon" aria-hidden="true">☏</span><span>Contacter le support</span></a>
  </div>
@@ -6664,12 +6662,6 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
    console.error('Suivi demande indisponible',err);
    window.alert('Le suivi automatique n’est pas accessible pour le moment. Contacte le support WhatsApp avec ta référence.');
   }
- });
- document.getElementById('dulon-drawer-how').addEventListener('click',function(){
-  closeMenu();goHome();const section=document.getElementById('dulon-how');if(section)section.scrollIntoView({behavior:'smooth',block:'start'});
- });
- document.getElementById('dulon-drawer-faq').addEventListener('click',function(){
-  closeMenu();goHome();const faq=document.querySelector('.faq');if(faq)faq.scrollIntoView({behavior:'smooth',block:'start'});else window.alert('Consulte la rubrique Comment ça marche ? ou contacte le support WhatsApp pour obtenir de l’aide.');
  });
  document.getElementById('dulon-drawer-install').addEventListener('click',function(){closeMenu();const install=document.getElementById('dulon-install-button');if(install)install.click();});
  const shareButton=document.getElementById('dulon-drawer-share');

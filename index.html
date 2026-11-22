@@ -4619,7 +4619,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div class="field full"><label>Numéro de téléphone</label><input autocomplete="tel" id="deposit-phone" inputmode="numeric" maxlength="13" minlength="10" pattern="(?:[0-9]{10}|229[0-9]{10})" placeholder="0190000000 ou 2290190000000" required="" title="Saisis 10 chiffres locaux (01…) ou 13 chiffres avec l’indicatif 229."/><span class="small">Utilise le numéro Mobile Money associé au réseau choisi.</span></div>
 <div class="field full"><button class="btn-blue">Payer et recharger</button></div>
 </div></form><div class="success" id="deposit-success"></div>
-<div aria-label="Pied de page" class="operation-footer">DulonBet · Dépôt &amp; Retrait<br/>1xbet</div>
+<div aria-label="Pied de page" class="operation-footer dulon-footer-brand"><span class="dulon-footer-title">Dulon<span>Bet</span></span><span class="dulon-footer-subtitle">Dépôt &amp; Retrait</span><span class="dulon-footer-platform">1XBET</span></div>
 </section>
 <section class="panel" id="withdraw"><h2>Opération de retrait</h2>
 <div class="operations-page-head">
@@ -4665,7 +4665,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 
 <div class="field full"><button class="btn-green">Retirer</button></div>
 </div></form><div class="success" id="withdraw-success"></div>
-<div aria-label="Pied de page" class="operation-footer">DulonBet · Dépôt &amp; Retrait<br/>1xbet</div>
+<div aria-label="Pied de page" class="operation-footer dulon-footer-brand"><span class="dulon-footer-title">Dulon<span>Bet</span></span><span class="dulon-footer-subtitle">Dépôt &amp; Retrait</span><span class="dulon-footer-platform">1XBET</span></div>
 </section>
 <section class="panel login-panel" id="login">
 <div class="operations-page-head">
@@ -4681,7 +4681,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 </form>
 <p aria-live="polite" class="login-feedback" id="loginFeedback" role="status"></p>
 </div>
-<div aria-label="Pied de page" class="operation-footer">DulonBet · Dépôt &amp; Retrait<br/>1xbet</div>
+<div aria-label="Pied de page" class="operation-footer dulon-footer-brand"><span class="dulon-footer-title">Dulon<span>Bet</span></span><span class="dulon-footer-subtitle">Dépôt &amp; Retrait</span><span class="dulon-footer-platform">1XBET</span></div>
 </section>
 <section class="panel" id="admin">
 <div class="admin-shell" id="adminShell">
@@ -6883,6 +6883,14 @@ body.operation-view #login .operations-page-head .operations-back{
 </style>
 
 
+<style id="dulonbet-footer-unified-design">
+#login .dulon-footer-brand,#deposit .dulon-footer-brand,#withdraw .dulon-footer-brand{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;margin:26px 0 2px!important;padding:18px 10px 8px!important;border-top:0!important;text-align:center!important;line-height:1.25!important}
+#login .dulon-footer-title,#deposit .dulon-footer-title,#withdraw .dulon-footer-title{color:#123b83!important;font-size:clamp(19px,4.8vw,23px)!important;font-weight:900!important;letter-spacing:-.45px!important}
+#login .dulon-footer-title span,#deposit .dulon-footer-title span,#withdraw .dulon-footer-title span{color:#168bfa!important}
+#login .dulon-footer-subtitle,#deposit .dulon-footer-subtitle,#withdraw .dulon-footer-subtitle{color:#60769a!important;font-size:12px!important;font-weight:650!important;letter-spacing:.25px!important}
+#login .dulon-footer-platform,#deposit .dulon-footer-platform,#withdraw .dulon-footer-platform{display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-top:3px!important;padding:3px 10px!important;border:1px solid #b9d8ff!important;border-radius:999px!important;background:#edf6ff!important;color:#174b9c!important;font-size:10px!important;font-weight:850!important;letter-spacing:1.8px!important}
+#login .dulon-footer-title{color:#fff!important}#login .dulon-footer-title span{color:#72ddff!important}#login .dulon-footer-subtitle{color:#e0efff!important}#login .dulon-footer-platform{background:rgba(255,255,255,.12)!important;color:#fff!important;border-color:rgba(150,220,255,.65)!important}
+</style>
 </body>
 <style id="dulonbet-support-promo-size-v12">
 /* Ajustement intermédiaire : légèrement au-dessus de V10, sans l'ampleur de V11 */

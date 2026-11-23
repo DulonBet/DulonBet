@@ -6243,7 +6243,7 @@ document.addEventListener('DOMContentLoaded',function(){
   if(!r||r.operation_type!=='Dépôt')return '—';
   const s=String(r.xbet_credit_status||'').toLowerCase();
   if(s==='credited')return 'Crédité';
-  if(s==='failed')return 'Échec du crédit';
+  if(s==='failed')return 'Refusé';
   if(['processing','started','pending'].includes(s))return 'Crédit en cours';
   if(r.payment_verified_at||String(r.provider_status||'').toUpperCase()==='SUCCESSFUL')return 'Paiement confirmé — crédit à vérifier';
   return 'En attente du paiement';

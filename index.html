@@ -4965,6 +4965,32 @@ body:not(.operation-view) #home-view > .promo-carousel .promo-controls .promo-ar
   #dulon-payment-tracking-modal [data-payment-title]{font-size:19px!important}
 }
 </style>
+
+<style id="dulonbet-footer-border-bottom">
+/* Garder la bordure du pied de page tout en bas de l'écran quand le contenu est court. */
+html, body { min-height:100%; }
+body.home-view {
+  min-height:100vh!important;
+  min-height:100dvh!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+body.home-view > main {
+  display:flex!important;
+  flex:1 0 auto!important;
+  flex-direction:column!important;
+  width:100%!important;
+}
+body.home-view > main > #home-view {
+  display:flex!important;
+  flex:1 0 auto!important;
+  flex-direction:column!important;
+}
+body.home-view footer.home-footer {
+  margin-top:auto!important;
+  align-self:stretch!important;
+}
+</style>
 </head>
 <body>
 <header class="dulon-header-hd">

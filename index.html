@@ -4796,6 +4796,26 @@ body:not(.operation-view) #home-view .promo-slide.active{
   },{once:true});
 })();
 </script>
+
+<style id="dulonbet-home-whatsapp-button">
+#dulon-install-banner a#dulon-share-button{
+  box-sizing:border-box;flex:0 0 84px;width:84px;min-height:142px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid #bdebcf;border-radius:27px;
+  background:linear-gradient(145deg,#f4fff7,#e0f8e9);
+  color:#25D366;box-shadow:0 7px 18px rgba(37,211,102,.16);
+  padding:0;text-decoration:none;
+}
+#dulon-install-banner a#dulon-share-button svg{width:40px;height:40px;display:block}
+#dulon-install-banner a#dulon-share-button:active{transform:translateY(1px)}
+@media(max-width:680px){
+  #dulon-install-banner a#dulon-share-button{flex-basis:54px;width:54px;min-height:104px;border-radius:18px}
+  #dulon-install-banner a#dulon-share-button svg{width:29px;height:29px}
+}
+@media(max-width:380px){
+  #dulon-install-banner a#dulon-share-button{flex-basis:46px;width:46px}
+}
+</style>
 </head>
 <body>
 <div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>
@@ -4810,12 +4830,11 @@ body:not(.operation-view) #home-view .promo-slide.active{
     <span class="dulon-install-laptop" aria-hidden="true"><svg viewBox="0 0 100 74" width="100" height="74" fill="none"><rect x="14" y="5" width="72" height="49" rx="5" fill="#061b57" stroke="#66e8ff" stroke-width="3"/><rect x="20" y="11" width="60" height="36" rx="2" fill="#0866ed"/><path d="M50 16v19m-9-9 9 10 9-10M37 37v4h26v-4" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 58h86l-9 9H16z" fill="#bdefff" stroke="#fff" stroke-width="2"/><path d="M38 60h24" stroke="#168cff" stroke-width="2" stroke-linecap="round"/></svg></span>
     <span class="dulon-install-copy"><strong>Installer <em>maintenant</em></strong><small>Accédez plus rapidement à DulonBet&nbsp;!</small></span>
   </button>
-  <button id="dulon-share-button" type="button" aria-label="Partager DulonBet" title="Partager DulonBet">
-    <svg aria-hidden="true" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
-      <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"></path>
+  <a id="dulon-share-button" href="https://wa.me/2290197131018" target="_blank" rel="noopener noreferrer" aria-label="Contacter DulonBet sur WhatsApp" title="Contacter DulonBet sur WhatsApp">
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32" width="25" height="25">
+      <path fill="currentColor" d="M16.02 3.2A12.63 12.63 0 0 0 5.15 22.25L3.4 28.65l6.56-1.72a12.66 12.66 0 1 0 6.06-23.73Zm0 2.55a10.08 10.08 0 0 1 0 20.16 10.1 10.1 0 0 1-5.14-1.41l-.37-.22-3.89 1.02 1.04-3.79-.24-.39a10.08 10.08 0 0 1 8.6-15.37Zm-4.35 4.4c-.24 0-.63.09-.96.45-.33.36-1.26 1.23-1.26 3s1.29 3.48 1.47 3.72c.18.24 2.49 3.99 6.15 5.43 3.04 1.2 3.66.96 4.32.9.66-.06 2.13-.87 2.43-1.71.3-.84.3-1.56.21-1.71-.09-.15-.33-.24-.69-.42-.36-.18-2.13-1.05-2.46-1.17-.33-.12-.57-.18-.81.18-.24.36-.93 1.17-1.14 1.41-.21.24-.42.27-.78.09-.36-.18-1.52-.56-2.9-1.79-1.07-.95-1.79-2.13-2-2.49-.21-.36-.02-.56.16-.74.16-.16.36-.42.54-.63.18-.21.24-.36.36-.6.12-.24.06-.45-.03-.63-.09-.18-.81-1.95-1.11-2.67-.29-.7-.59-.61-.81-.62Z"/>
     </svg>
-  </button>
+  </a>
 </section>
 <style id="dulon-pwa-install-style">
 #dulon-install-banner{max-width:1080px;margin:12px auto 0;padding:0 18px;display:flex;align-items:stretch;gap:10px}
@@ -7037,25 +7056,6 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
 (function(){
   let installPromptEvent = null;
   const button = document.getElementById('dulon-install-button');
-  const shareButton = document.getElementById('dulon-share-button');
-  if (shareButton) {
-    shareButton.addEventListener('click', async function(){
-      const shareData = {
-        title: 'DulonBet – Recharge et retrait 1XBET',
-        text: 'Découvre DulonBet pour les demandes de dépôt et de retrait 1XBET.',
-        url: 'https://www.dulonbet.com/'
-      };
-      if (navigator.share) {
-        try { await navigator.share(shareData); }
-        catch (error) { if (error && error.name !== 'AbortError') window.alert('Le partage n’a pas pu être ouvert. Tu peux copier le lien : https://www.dulonbet.com/'); }
-      } else if (navigator.clipboard && navigator.clipboard.writeText) {
-        try { await navigator.clipboard.writeText(shareData.url); window.alert('Lien DulonBet copié : https://www.dulonbet.com/'); }
-        catch (error) { window.prompt('Copie le lien DulonBet :', shareData.url); }
-      } else {
-        window.prompt('Copie le lien DulonBet :', shareData.url);
-      }
-    });
-  }
   if (!button) return;
 
   window.addEventListener('beforeinstallprompt', function(event){

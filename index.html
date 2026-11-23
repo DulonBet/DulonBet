@@ -6139,7 +6139,9 @@ document.addEventListener('DOMContentLoaded',function(){
   try{await endServerAdminSession();if(client)await client.auth.signOut();}catch(err){console.error('Déconnexion automatique :',err);}
   loginForm.reset();
   loginForm.hidden=false;
-  message('Session fermée après 3 minutes d’inactivité. Reconnecte-toi pour accéder au tableau de bord.');
+  feedback.innerHTML='<span class="session-expired-title">Session expirée</span><span class="session-expired-action">Reconnecte-toi</span>';
+  feedback.classList.remove('success-text');
+  feedback.classList.add('session-expired-message');
   showPanel('login');
   idleLogoutInProgress=false;
  }
@@ -7582,7 +7584,7 @@ body.operation-view .operations-brand-slogan,
 </style>
 
 
-</body>
+\n<style id="dulonbet-session-expired-message">\n#login .login-feedback.session-expired-message{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;white-space:normal!important;gap:4px!important;width:100%!important}\n#login .login-feedback .session-expired-title{display:block!important;color:#dc2626!important;font-weight:800!important;text-align:center!important}\n#login .login-feedback .session-expired-action{display:block!important;color:#16a34a!important;font-weight:800!important;text-align:center!important}\n</style>\n</body>
 <style id="dulonbet-support-promo-size-v12">
 /* Ajustement intermédiaire : légèrement au-dessus de V10, sans l'ampleur de V11 */
 body.operation-view .support-card { padding: 21px !important; }

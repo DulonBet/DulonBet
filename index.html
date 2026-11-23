@@ -4753,6 +4753,49 @@ html[data-theme="dark"] body.home-view footer.home-footer .home-footer-brand-pla
 }
 </style>
 
+
+<style id="dulonbet-refresh-progress-stable">
+/* Actualisation de l'accueil : seul un indicateur discret apparaît en haut. */
+html.dulon-home-loading body:not(.operation-view)::before{
+  content:"";
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:3px;
+  z-index:2147483647;
+  pointer-events:none;
+  background:linear-gradient(90deg,#163f91 0%,#42b5ff 55%,#163f91 100%);
+  transform:scaleX(.35);
+  transform-origin:left center;
+  animation:dulonHomeRefreshProgress 1.25s ease-in-out infinite alternate;
+}
+@keyframes dulonHomeRefreshProgress{
+  from{transform:scaleX(.12)}
+  to{transform:scaleX(.92)}
+}
+/* Le contenu de l'accueil reste visible à sa place, sans fondu ni déplacement. */
+body:not(.operation-view) #home-view .scroll-reveal,
+body:not(.operation-view) #home-view .scroll-reveal.is-visible{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  transition:none!important;
+  animation:none!important;
+}
+body:not(.operation-view) #home-view .promo-slide.active{
+  animation:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html.dulon-home-loading body:not(.operation-view)::before{animation:none!important;transform:scaleX(.7)}
+}
+</style>
+<script id="dulonbet-refresh-progress-stable-script">
+(function(){
+  document.documentElement.classList.add('dulon-home-loading');
+  window.addEventListener('load',function(){
+    document.documentElement.classList.remove('dulon-home-loading');
+  },{once:true});
+})();
+</script>
 </head>
 <body>
 <div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>

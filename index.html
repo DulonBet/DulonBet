@@ -5,6 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="#F1F3F5" name="theme-color"/>
+<script>try{if(sessionStorage.getItem("dulonbet-current-panel-v1")&&sessionStorage.getItem("dulonbet-current-panel-v1")!=="home"){document.documentElement.classList.add("dulonbet-restore-operation");}}catch(e){}</script>
 <title>DulonBet - Dépôt &amp; Retrait 1XBET en Afrique francophone</title>
 <meta name="application-name" content="DulonBet">
 <meta name="description" content="Découvrez DulonBet pour préparer vos demandes de dépôt et de retrait 1XBET en Afrique francophone. Consultez les pays proposés, les étapes et les informations utiles.">
@@ -440,6 +441,7 @@ header .brand-name .bet{
 
 
 /* Navigation en vraies pages : l'accueil et les formulaires ne s'affichent jamais ensemble */
+html.dulonbet-restore-operation body:not(.operation-view) #home-view{display:none!important}
 body.home-view #home-view{display:block}
 body.home-view .panel{display:none!important}
 body.operation-view #home-view{display:none!important}

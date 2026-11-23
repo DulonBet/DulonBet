@@ -5349,6 +5349,7 @@ const panels=['deposit','withdraw','login','admin'];let transactions=[];
 function showPanel(id){
  if(id==='admin' && !window.dulonAdminAuthorized){id='login';}
  if(id==='admin' && window.dulonAdminAuthorized && window.loadDulonAdminDashboard){setTimeout(window.loadDulonAdminDashboard,0);}
+ try{sessionStorage.setItem('dulonbet-current-panel-v1',id);}catch(e){}
  panels.forEach(p=>document.getElementById(p).classList.toggle('active',p===id));
  document.body.classList.remove('home-view');
  document.body.classList.add('operation-view');
@@ -5601,12 +5602,19 @@ async function submitTx(e,type){
 function render(){}
 
 function goHome(){
+ try{sessionStorage.setItem('dulonbet-current-panel-v1','home');}catch(e){}
  panels.forEach(p=>document.getElementById(p).classList.remove('active'));
  document.body.classList.remove('operation-view');
  document.body.classList.add('home-view');
  window.scrollTo({top:0,behavior:'smooth'});
 }
 document.body.classList.add('home-view');
+document.addEventListener('DOMContentLoaded',function(){
+ let savedPanel='home';
+ try{savedPanel=sessionStorage.getItem('dulonbet-current-panel-v1')||'home';}catch(e){}
+ if(savedPanel==='home'||!panels.includes(savedPanel)){goHome();return;}
+ showPanel(savedPanel);
+});
 
 </script>
 <script>

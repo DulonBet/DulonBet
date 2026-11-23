@@ -4878,6 +4878,26 @@ body:not(.operation-view) #home-view .promo-slide.active{
   }
 }
 </style>
+<style id="dulonbet-support-glow">
+/* Fond bleu clair et halo lumineux animé autour du carré Support. */
+#dulon-install-banner a#dulon-share-button{
+  position:relative!important;isolation:isolate!important;overflow:visible!important;
+  background:linear-gradient(145deg,#ffffff 0%,#e5f4ff 48%,#c8e8ff 100%)!important;
+  border:1px solid #55aaff!important;
+  box-shadow:0 0 7px rgba(49,151,255,.75),0 0 16px rgba(49,151,255,.55),inset 0 0 8px rgba(255,255,255,.95)!important;
+  animation:dulonSupportGlow 1.8s ease-in-out infinite alternate!important;
+}
+#dulon-install-banner a#dulon-share-button svg{
+  filter:drop-shadow(0 0 3px rgba(36,89,183,.35))!important;
+}
+@keyframes dulonSupportGlow{
+  from{box-shadow:0 0 5px rgba(49,151,255,.55),0 0 10px rgba(49,151,255,.35),inset 0 0 6px rgba(255,255,255,.9)}
+  to{box-shadow:0 0 9px rgba(49,151,255,.9),0 0 22px rgba(49,151,255,.7),0 0 30px rgba(87,190,255,.35),inset 0 0 10px rgba(255,255,255,1)}
+}
+@media(prefers-reduced-motion:reduce){
+  #dulon-install-banner a#dulon-share-button{animation:none!important}
+}
+</style>
 </head>
 <body>
 <div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>

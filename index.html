@@ -586,6 +586,154 @@ body.operation-view #withdraw .withdraw-location-item span{
 .home-help-link{margin:8px 0 0!important;text-align:center!important}
 .home-help-link a{color:#2459b7!important;font-weight:800!important;text-decoration:none!important}
 .home-help-link a:hover{text-decoration:underline!important}
+
+/* DulonBet homepage — redesign ciblé opérateurs + guide d'opération */
+.dulon-operators-section,
+#dulon-how{
+  margin:26px 0;
+  padding:0;
+}
+.dulon-operators-section > h3,
+#dulon-how > h3{
+  margin:0 0 14px;
+  padding:15px 18px;
+  border-radius:17px 17px 10px 10px;
+  background:linear-gradient(112deg,#10295f 0%,#075fd0 68%,#38a9ff 100%);
+  color:#fff;
+  font-size:clamp(20px,3.5vw,26px);
+  font-weight:850;
+  line-height:1.25;
+  box-shadow:0 8px 20px rgba(20,89,190,.16);
+}
+.dulon-operators-section > p.small{
+  margin:0 4px 14px;
+  color:#66758c;
+  font-size:15px;
+}
+.dulon-operators-section .logo-only-networks{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+  gap:12px;
+  margin:0;
+}
+.dulon-operators-section .logo-only-card{
+  width:100%;
+  min-width:0;
+  height:clamp(100px,20vw,150px);
+  padding:7px;
+  border:3px solid #dce9ff;
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 7px 18px rgba(28,79,155,.12);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.dulon-operators-section .logo-only-card:first-child{background:#ffca05}
+.dulon-operators-section .logo-only-card:nth-child(2){background:#0868b2}
+.dulon-operators-section .logo-only-card:nth-child(3){background:#1d3d72}
+.dulon-operators-section .logo-only-card .brand-logo-only{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:16px;
+}
+.dulon-operators-section > p.small:last-child{
+  margin:12px 2px 0;
+  text-align:center;
+  color:#63728a;
+}
+#dulon-how .how-tabs{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:7px;
+  padding:7px;
+  margin:0 0 15px;
+  border-radius:20px;
+  background:#e5eefc;
+}
+#dulon-how .how-tab{
+  min-height:58px;
+  padding:12px 10px;
+  border:1px solid transparent;
+  border-radius:15px;
+  background:transparent;
+  color:#536782;
+  font-size:clamp(16px,2.7vw,20px);
+  font-weight:850;
+}
+#dulon-how .how-tab.active{
+  background:#fff;
+  color:#2057a5;
+  border-color:#d9e7ff;
+  box-shadow:0 4px 12px rgba(24,71,140,.10);
+}
+#dulon-how .how{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+#dulon-how .how[hidden]{display:none!important}
+#dulon-how .step{
+  display:grid;
+  grid-template-columns:44px minmax(0,1fr);
+  align-items:center;
+  column-gap:13px;
+  row-gap:3px;
+  min-width:0;
+  padding:16px 17px;
+  border:1px solid #dce7f5;
+  border-radius:23px;
+  background:linear-gradient(135deg,#fff 0%,#f7faff 100%);
+  box-shadow:0 5px 16px rgba(32,74,130,.06);
+}
+#dulon-how .step .num{
+  grid-column:1;
+  grid-row:1 / span 2;
+  width:42px;
+  height:42px;
+  margin:0;
+  border-radius:50%;
+  background:linear-gradient(145deg,#2b9aff,#0751c5 72%);
+  color:#fff;
+  font-size:20px;
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.45),0 3px 7px rgba(17,83,185,.2);
+}
+#dulon-how .step b{
+  grid-column:2;
+  margin:0;
+  color:#142c59;
+  font-size:clamp(16px,2.7vw,21px);
+  line-height:1.25;
+}
+#dulon-how .step .small{
+  grid-column:2;
+  color:#65758e;
+  font-size:clamp(13px,2.1vw,16px);
+  line-height:1.45;
+}
+@media(max-width:520px){
+  .dulon-operators-section,
+  #dulon-how{margin:21px 0}
+  .dulon-operators-section > h3,
+  #dulon-how > h3{padding:14px 15px;border-radius:15px;font-size:20px}
+  .dulon-operators-section .logo-only-networks{gap:7px}
+  .dulon-operators-section .logo-only-card{
+    height:clamp(88px,27vw,120px);
+    padding:4px;
+    border-width:2px;
+    border-radius:18px;
+  }
+  .dulon-operators-section .logo-only-card .brand-logo-only{border-radius:12px}
+  .dulon-operators-section > p.small:last-child{font-size:12px}
+  #dulon-how .how-tabs{border-radius:17px}
+  #dulon-how .how-tab{min-height:54px;border-radius:13px}
+  #dulon-how .step{grid-template-columns:38px minmax(0,1fr);column-gap:11px;padding:14px;border-radius:19px}
+  #dulon-how .step .num{width:36px;height:36px;font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .dulon-operators-section .logo-only-card{transition:none}
+}
+
 </style>
 <style id="dulonbet-operation-brand">
 .operations-brand{display:none;align-items:center;gap:18px;padding:26px 28px;margin:0 auto 18px;max-width:1100px;background:#fff;border:1px solid #dce6f5;border-radius:0 0 18px 18px;box-shadow:0 8px 28px rgba(16,35,68,.06)}
@@ -4738,7 +4886,7 @@ body.operation-view #dulon-install-banner{display:none!important}
   <button class="dulon-operation-button dulon-withdraw-button" type="button" onclick="showPanel('withdraw')">Faire un retrait <span aria-hidden="true">›</span></button>
 </article>
 </section>
-<section class="section">
+<section class="section dulon-operators-section">
 <h3 id="payment-methods-title">Opérateurs disponibles</h3>
 <p class="small">Disponible dans 8 pays d’Afrique.</p>
 <div class="networks brand-networks logo-only-networks">

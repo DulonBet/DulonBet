@@ -4325,10 +4325,6 @@ body:not(.operation-view) #home-view #payment-methods-title{color:#0871e8!import
 #home-view > .section#dulon-how .how[hidden] { display: none !important; }
 </style>
 
-<style id="dulon-splash-screen-style">
-#dulon-splash-screen{position:fixed;inset:0;z-index:2147483647;display:block;background:transparent;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}
-#dulon-splash-screen.dulon-splash-hide{opacity:0;visibility:hidden;pointer-events:none}
-</style>
 
 <!-- Styles critiques des cartes Dépôt/Retrait chargés avant le premier affichage -->
 <style id="dulonbet-new-deposit-withdraw-design">
@@ -4462,8 +4458,6 @@ body:not(.operation-view) #home-view .actions.dulon-operations-cards .action.dul
 }
 </style>
 <style id="dulonbet-home-cards-refresh-visibility">
-/* Après actualisation, le splash transparent ne doit jamais intercepter les interactions. */
-#dulon-splash-screen{pointer-events:none!important}
 /* Garder les cartes Dépôt/Retrait dans le flux normal et au-dessus des décorations voisines. */
 body:not(.operation-view) #home-view > .actions.dulon-operations-cards{
   position:relative!important;
@@ -4922,7 +4916,6 @@ body.operation-view #withdraw .withdraw-helper-small{
 </style>
 </head>
 <body>
-<div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>
 <header class="dulon-header-hd">
 <button id="dulon-mobile-menu-open" class="dulon-mobile-menu-open" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
 <div class="brand dulon-hd-brand"><span class="mark"><img src="/icons/dulonbet-app.svg" alt="Logo DulonBet"></span><span class="dulon-hd-brand-copy"><span class="brand-name"><span class="dulon">Dulon</span><span class="bet">Bet</span></span><span class="dulon-hd-tagline">Pariez • Gagnez • Retirez</span></span></div>
@@ -7295,7 +7288,7 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
  if(shareButton)shareButton.addEventListener('click',async function(){closeMenu();const shareData={title:'DulonBet',text:'Dépôt et retrait 1XBET avec DulonBet : https://dulonbet.com',url:'https://dulonbet.com'};try{if(navigator.share){await navigator.share(shareData);}else if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText('https://dulonbet.com');window.alert('Lien DulonBet copié : https://dulonbet.com');}else{window.prompt('Copie le lien DulonBet :','https://dulonbet.com');}}catch(error){if(error&&error.name!=='AbortError')window.alert('Pour partager DulonBet, copie ce lien : https://dulonbet.com');}});
 })();
 </script>
-<script id="dulon-splash-screen-script">(function(){var splash=document.getElementById('dulon-splash-screen');if(!splash)return;var started=Date.now();var finished=false;function finish(){if(finished)return;finished=true;var remaining=Math.max(0,3000-(Date.now()-started));window.setTimeout(function(){splash.classList.add('dulon-splash-hide');window.setTimeout(function(){if(splash.parentNode)splash.parentNode.removeChild(splash);},400);},remaining);}if(document.readyState==='complete'){finish();}else{window.addEventListener('load',finish,{once:true});}window.setTimeout(finish,15000);})();</script>
+
 
 
 

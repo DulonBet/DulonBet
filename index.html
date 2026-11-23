@@ -7452,6 +7452,50 @@ body.operation-view #withdraw .promo-controls{
 }
 </style>
 
+
+
+<style id="dulonbet-home-operators-no-motion-v2">
+/* Accueil uniquement : logos MTN, Moov et Celtiis plus petits et totalement fixes */
+#home-view .dulon-operators-section,
+#home-view .dulon-operators-section.scroll-reveal,
+#home-view .dulon-operators-section .logo-only-networks,
+#home-view .dulon-operators-section .logo-only-card,
+#home-view .dulon-operators-section .brand-logo-only,
+#home-view .dulon-operators-section .logo-only-card:hover,
+#home-view .dulon-operators-section .logo-only-card:active {
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  animation:none!important;
+  transition:none!important;
+}
+#home-view .dulon-operators-section .logo-only-card {
+  height:clamp(44px,5.5vw,62px)!important;
+  min-height:0!important;
+  padding:2px!important;
+  border-width:2px!important;
+  border-radius:10px!important;
+  box-shadow:none!important;
+}
+#home-view .dulon-operators-section .brand-logo-only {
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  border-radius:7px!important;
+}
+@media(max-width:520px){
+  #home-view .dulon-operators-section .logo-only-card {
+    height:clamp(40px,12vw,52px)!important;
+    padding:2px!important;
+    border-radius:9px!important;
+  }
+  #home-view .dulon-operators-section .brand-logo-only {
+    border-radius:6px!important;
+  }
+}
+</style>
+
 </html>
 <style id="dulonbet-payment-cards-exact-fit">
 /* Dépôt et Retrait : visuels opérateurs ajustés à leurs carrés */

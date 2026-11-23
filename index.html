@@ -734,6 +734,43 @@ body.operation-view #withdraw .withdraw-location-item span{
   .dulon-operators-section .logo-only-card{transition:none}
 }
 
+
+/* Correctifs ciblés page d'accueil DulonBet */
+.dulon-operators-section > h3,
+#dulon-how > h3{
+  color:#fff !important;
+  background:linear-gradient(112deg,#10295f 0%,#075fd0 68%,#38a9ff 100%) !important;
+  -webkit-text-fill-color:#fff !important;
+  -webkit-background-clip:border-box !important;
+  background-clip:border-box !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.18);
+}
+.dulon-operators-section .logo-only-card{
+  height:clamp(76px,12vw,112px);
+  padding:5px;
+  border-width:2px;
+  border-radius:19px;
+}
+.dulon-operators-section .logo-only-card .brand-logo-only{
+  border-radius:13px;
+}
+@media(max-width:520px){
+  .dulon-operators-section .logo-only-networks{gap:7px}
+  .dulon-operators-section .logo-only-card{
+    height:clamp(72px,23vw,94px);
+    padding:3px;
+    border-radius:15px;
+  }
+  .dulon-operators-section .logo-only-card .brand-logo-only{border-radius:10px}
+  .dulon-operators-section > h3,
+  #dulon-how > h3{
+    color:#fff !important;
+    -webkit-text-fill-color:#fff !important;
+    font-size:19px;
+    padding:13px 14px;
+  }
+}
+
 </style>
 <style id="dulonbet-operation-brand">
 .operations-brand{display:none;align-items:center;gap:18px;padding:26px 28px;margin:0 auto 18px;max-width:1100px;background:#fff;border:1px solid #dce6f5;border-radius:0 0 18px 18px;box-shadow:0 8px 28px rgba(16,35,68,.06)}

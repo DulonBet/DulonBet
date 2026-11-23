@@ -5885,7 +5885,7 @@ body.operation-view #withdraw .withdraw-location-item span{
 document.addEventListener('DOMContentLoaded',function(){
   const home=document.getElementById('home-view');
   if(!home || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const targets=home.querySelectorAll(':scope > section:not(.promo-carousel):not(.actions), .actions .action:not(.dulon-operation-card)');
+  const targets=home.querySelectorAll(':scope > section:not(.promo-carousel):not(.actions):not(.dulon-operators-section), .actions .action:not(.dulon-operation-card)');
   targets.forEach(function(el){el.classList.add('scroll-reveal');});
   const observer=new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
@@ -7413,6 +7413,13 @@ body.operation-view .operations-brand-slogan,
   transform:none!important;
   animation:none!important;
   transition:none!important;
+}
+#home-view .dulon-operators-section .logo-only-card{
+  background:#fff!important;
+  border-color:#dce7f7!important;
+}
+#home-view .dulon-operators-section .brand-logo-only{
+  background:#fff!important;
 }
 </style>
 </body>

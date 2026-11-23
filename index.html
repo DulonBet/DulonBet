@@ -4816,6 +4816,34 @@ body:not(.operation-view) #home-view .promo-slide.active{
   #dulon-install-banner a#dulon-share-button svg{width:28px;height:28px}
 }
 </style>
+<style id="dulonbet-install-support-size-adjustment">
+/* Bouton Installer légèrement réduit, carré Support agrandi. */
+#dulon-install-button{
+  min-height:50px!important;
+  padding:8px 12px!important;
+  font-size:clamp(16px,3vw,20px)!important;
+}
+#dulon-install-button .dulon-install-icon{font-size:23px!important}
+#dulon-install-banner a#dulon-share-button{
+  flex:0 0 62px!important;width:62px!important;height:62px!important;min-height:62px!important;
+  border-radius:11px!important;
+}
+#dulon-install-banner a#dulon-share-button svg{width:39px!important;height:39px!important}
+@media(max-width:520px){
+  #dulon-install-button{min-height:45px!important;padding:7px 7px!important;font-size:15px!important}
+  #dulon-install-button .dulon-install-icon{font-size:20px!important}
+  #dulon-install-banner a#dulon-share-button{
+    flex-basis:58px!important;width:58px!important;height:58px!important;min-height:58px!important;
+  }
+  #dulon-install-banner a#dulon-share-button svg{width:36px!important;height:36px!important}
+}
+@media(max-width:380px){
+  #dulon-install-banner a#dulon-share-button{
+    flex-basis:54px!important;width:54px!important;height:54px!important;min-height:54px!important;
+  }
+  #dulon-install-banner a#dulon-share-button svg{width:33px!important;height:33px!important}
+}
+</style>
 </head>
 <body>
 <div id="dulon-splash-screen" role="status" aria-label="Chargement de DulonBet"></div>

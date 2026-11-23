@@ -7398,6 +7398,23 @@ body.operation-view .operations-brand-slogan,
 }
 </style>
 
+
+<style id="dulonbet-stable-operator-logos">
+/* Empêche le clignotement des cartes opérateurs au chargement et au défilement */
+#home-view .dulon-operators-section,
+#home-view .dulon-operators-section.scroll-reveal,
+#home-view .dulon-operators-section .scroll-reveal,
+#home-view .dulon-operators-section .scroll-reveal.is-visible,
+#home-view .dulon-operators-section .logo-only-networks,
+#home-view .dulon-operators-section .logo-only-card,
+#home-view .dulon-operators-section .brand-logo-only{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  animation:none!important;
+  transition:none!important;
+}
+</style>
 </body>
 <style id="dulonbet-support-promo-size-v12">
 /* Ajustement intermédiaire : légèrement au-dessus de V10, sans l'ampleur de V11 */

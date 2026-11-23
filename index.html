@@ -5158,14 +5158,14 @@ async function submitTx(e,type){
     box.textContent='Code validé automatiquement par 1XBET. Référence : '+result.reference+'. Montant confirmé : '+Number(result.amount_fcfa||amount).toLocaleString('fr-FR')+' FCFA. Le paiement Mobile Money reste à effectuer par l’administrateur. Conserve cette référence.';
     f.reset();
    }else if(status==='rejected'||status==='failed'){
-    box.textContent=(result.message||'1XBET n’a pas accepté cette demande.')+' Référence : '+result.reference+'. Ne réutilise pas ce code pour cette demande.';
+    box.textContent='Retrait non confirmé\\nLe retrait 1XBET n’a pas été confirmé. Contacte le support avant de recommencer.\\n\\nSi le résultat te semble incorrect, contacte le support avant toute nouvelle tentative. Référence : '+result.reference+'.';
     f.reset();
    }else{
-    box.textContent=(result.message||'La demande est enregistrée mais son résultat doit être vérifié.')+' Référence : '+result.reference+'. Ne soumets pas à nouveau ce code.';
+    box.textContent='Retrait non confirmé\\nLe retrait 1XBET n’a pas été confirmé. Contacte le support avant de recommencer.\\n\\nSi le résultat te semble incorrect, contacte le support avant toute nouvelle tentative. Référence : '+result.reference+'.';
     f.reset();
    }
   }else{
-   box.textContent=(result.error||result.message||'Le service 1XBET ne permet pas encore de vérifier cette demande.')+' Aucun nouveau dépôt ou paiement Mobile Money ne doit être tenté sans vérification.';
+   box.textContent='Retrait non confirmé\\nLe retrait 1XBET n’a pas été confirmé. Contacte le support avant de recommencer.\\n\\nSi le résultat te semble incorrect, contacte le support avant toute nouvelle tentative.';
   }
   if(!response.ok && !result.reference){
    console.error('onexbet-payout HTTP status',response.status);

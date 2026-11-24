@@ -184,7 +184,7 @@ Deno.serve(async (req: Request) => {
 
   let payoutResult: any = null;
   try {
-    const payoutResponse = await fetch(\`\${SUPABASE_URL}/functions/v1/onexbet-payout\`, {
+    const payoutResponse = await fetch(`${SUPABASE_URL}/functions/v1/onexbet-payout`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-dulonbet-internal-secret": PAYOUT_INTERNAL_SECRET },
       body: JSON.stringify({ reference: inserted.reference }),

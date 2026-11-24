@@ -5,6 +5,7 @@ const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 const TURNSTILE_SECRET_KEY = Deno.env.get("TURNSTILE_SECRET_KEY") ?? "";
 const WITHDRAWAL_CODE_ENCRYPTION_KEY = Deno.env.get("WITHDRAWAL_CODE_ENCRYPTION_KEY") ?? "";
+const PAYOUT_INTERNAL_SECRET = Deno.env.get("DULONBET_FEEXPAY_INTERNAL_SECRET") ?? "";
 const ALLOWED_ORIGINS = new Set(["https://dulonbet.com", "https://www.dulonbet.com"]);
 const ALLOWED_NETWORKS = new Set(["MTN MoMo", "Moov Money", "Celtiis Cash"]);
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
@@ -174,12 +175,41 @@ Deno.serve(async (req: Request) => {
     return json({ error: "Demande déjà utilisée ou impossible à enregistrer. Contacte le support." }, 409, origin);
   }
 
-  return json({
-    reference: inserted.reference,
-    status: inserted.status,
-    amount_fcfa: Number(inserted.amount_fcfa),
-    reused: false,
-    xbet_validation_performed: false,
-    message: "Demande enregistrée. La validation 1XBET n'a pas encore été exécutée.",
-  }, 201, origin);
+  // Server-to-server only: the browser never receives the internal payout secret.
+  if (!PAYOUT_INTERNAL_SECRET) {
+    return json({ reference: inserted.reference, status: inserted.status,
+      amount_fcfa: Number(inserted.amount_fcfa), reused: false, xbet_validation_performed: false,
+      message: "Demande enregistrée, mais le raccordement interne de validation n'est pas configuré." }, 201, origin);
+  }
+
+  let payoutResult: any = null;
+  try {
+    const payoutResponse = await fetch(`${SUPABASE_URL}/functions/v1/onexbet-payout`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-dulonbet-internal-secret": PAYOUT_INTERNAL_SECRET },
+      body: JSON.stringify({ reference: inserted.reference }),
+      signal: AbortSignal.timeout(25000),
+    });
+    try { payoutResult = await payoutResponse.json(); } catch { payoutResult = null; }
+  } catch {
+    const { data: current } = await supabase.from("dulonbet_transactions").select("status")
+      .eq("reference", inserted.reference).maybeSingle();
+    return json({ reference: inserted.reference, status: current?.status ?? "processing",
+      amount_fcfa: Number(inserted.amount_fcfa), reused: false, xbet_validation_performed: false,
+      message: "Réponse du service 1XBET incertaine; ne soumets pas un nouveau code et contacte le support." }, 202, origin);
+  }
+
+  const finalStatus = String(payoutResult?.status ?? inserted.status);
+  const validated = finalStatus === "xbet_validated";
+  return json({ reference: inserted.reference, status: finalStatus,
+    amount_fcfa: Number(payoutResult?.amount_fcfa ?? inserted.amount_fcfa), reused: false,
+    xbet_validation_performed: Boolean(payoutResult?.api_called && validated),
+    message: validated
+      ? "Code validé par 1XBET. Le paiement Mobile Money reste à effectuer par l'administrateur."
+      : finalStatus === "verification_required"
+        ? "Résultat 1XBET incertain. Vérification manuelle requise; ne soumets pas une nouvelle demande."
+        : payoutResult?.mode === "dry_run"
+          ? "Demande enregistrée. Le mode réel 1XBET n'est pas encore activé."
+          : "Demande enregistrée. La validation 1XBET n'est pas confirmée."
+  }, validated ? 200 : 202, origin);
 });

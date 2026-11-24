@@ -3,6 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 const TURNSTILE_SECRET_KEY = Deno.env.get("TURNSTILE_SECRET_KEY") ?? "";
+const WITHDRAWAL_CODE_ENCRYPTION_KEY = Deno.env.get("WITHDRAWAL_CODE_ENCRYPTION_KEY") ?? "";
 const ALLOWED_ORIGINS = new Set(["https://dulonbet.com", "https://www.dulonbet.com"]);
 const ALLOWED_NETWORKS = new Set(["MTN MoMo", "Moov Money", "Celtiis Cash"]);
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
@@ -21,6 +22,23 @@ function json(body: unknown, status = 200, origin = "") {
   return new Response(JSON.stringify(body), { status, headers });
 }
 const norm = (v: unknown) => String(v ?? "").trim();
+function bytesToBase64(bytes: Uint8Array) {
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary);
+}
+function base64ToBytes(value: string) {
+  const binary = atob(value);
+  return Uint8Array.from(binary, (char) => char.charCodeAt(0));
+}
+async function encryptWithdrawalCode(code: string) {
+  const rawKey = base64ToBytes(WITHDRAWAL_CODE_ENCRYPTION_KEY);
+  if (rawKey.length !== 32) throw new Error("WITHDRAWAL_CODE_ENCRYPTION_KEY doit contenir 32 octets encodés en base64.");
+  const key = await crypto.subtle.importKey("raw", rawKey, { name: "AES-GCM" }, false, ["encrypt"]);
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ciphertext = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, new TextEncoder().encode(code));
+  return "enc:v1:" + bytesToBase64(iv) + ":" + bytesToBase64(new Uint8Array(ciphertext));
+}
 async function sha256(value: string) {
   const bytes = new TextEncoder().encode(value);
   const digest = await crypto.subtle.digest("SHA-256", bytes);
@@ -59,7 +77,7 @@ Deno.serve(async (req: Request) => {
   }
   if (req.method !== "POST") return json({ error: "Méthode non autorisée." }, 405, origin);
   if (!ALLOWED_ORIGINS.has(origin)) return json({ error: "Origine non autorisée." }, 403, origin);
-  if (!SUPABASE_URL || !SERVICE_ROLE_KEY || !TURNSTILE_SECRET_KEY) {
+  if (!SUPABASE_URL || !SERVICE_ROLE_KEY || !TURNSTILE_SECRET_KEY || !WITHDRAWAL_CODE_ENCRYPTION_KEY) {
     return json({ error: "Configuration serveur incomplète." }, 503, origin);
   }
   const contentLength = Number(req.headers.get("content-length") ?? "0");
@@ -102,7 +120,7 @@ Deno.serve(async (req: Request) => {
   if (!(await verifyTurnstile(token, ip))) {
     return json({ error: "Vérification de sécurité échouée. Recharge le contrôle et réessaie." }, 403, origin);
   }
-  const codeHash = await sha256(p.withdrawal_code);
+  const codeHash = await sha256(p.withdrawal_code);\n  let encryptedWithdrawalCode: string;\n  try { encryptedWithdrawalCode = await encryptWithdrawalCode(p.withdrawal_code); }\n  catch { return json({ error: "Protection du code de retrait indisponible." }, 503, origin); }
 
   // Une reprise avec la même clé renvoie la transaction existante, sans en créer une seconde.
   const { data: existing, error: lookupError } = await supabase
@@ -141,7 +159,7 @@ Deno.serve(async (req: Request) => {
       xbet_id: p.xbet_id,
       phone: p.phone,
       customer_name: p.customer_name,
-      withdrawal_code: p.withdrawal_code,
+      withdrawal_code: encryptedWithdrawalCode,
       withdrawal_code_hash: codeHash,
       idempotency_key: p.idempotency_key,
       status: "pending",

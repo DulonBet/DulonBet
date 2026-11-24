@@ -83,10 +83,10 @@ Deno.serve(async (req: Request) => {
       note: "Mode simulation : aucun appel Payout n'a été envoyé à 1XBET." }, 200);
   }
 
-  const first = sha256(\`hash=\${HASH}&lng=\${LNG}&UserId=\${userId}\`);
-  const second = md5(\`code=\${code}&cashierpass=\${CASHIERPASS}&cashdeskid=\${CASHDESKID}\`);
+  const first = sha256(`hash=${HASH}&lng=${LNG}&UserId=${userId}`);
+  const second = md5(`code=${code}&cashierpass=${CASHIERPASS}&cashdeskid=${CASHDESKID}`);
   const sign = sha256(first + second);
-  const confirm = md5(\`\${userId}:\${HASH}\`);
+  const confirm = md5(`${userId}:${HASH}`);
 
   const { data: claimed, error: claimError } = await supabase.from("dulonbet_transactions")
     .update({ status: "processing", last_error: null })
@@ -101,7 +101,7 @@ Deno.serve(async (req: Request) => {
   let apiResponse: Response;
   try {
     apiResponse = await fetch(
-      \`https://partners.servcul.com/CashdeskBotAPI/Deposit/\${encodeURIComponent(userId)}/Payout\`,
+      `https://partners.servcul.com/CashdeskBotAPI/Deposit/${encodeURIComponent(userId)}/Payout`,
       { method: "POST", headers: { "content-type": "application/json", "sign": sign },
         body: JSON.stringify({ cashdeskId: Number(CASHDESKID), lng: LNG, code, confirm }),
         signal: AbortSignal.timeout(15000) },
@@ -131,7 +131,7 @@ Deno.serve(async (req: Request) => {
       message: "Code accepté par 1XBET et montant confirmé. Le paiement Mobile Money reste manuel." }, 200);
   }
 
-  const safeError = !apiResponse.ok ? \`1XBET_HTTP_\${apiResponse.status}\`
+  const safeError = !apiResponse.ok ? `1XBET_HTTP_${apiResponse.status}`
     : result?.success === false ? "1XBET_PAYOUT_NOT_CONFIRMED" : "1XBET_RESPONSE_UNCERTAIN";
   await supabase.from("dulonbet_transactions").update({ status: "verification_required", last_error: safeError })
     .eq("reference", reference).eq("status", "processing");

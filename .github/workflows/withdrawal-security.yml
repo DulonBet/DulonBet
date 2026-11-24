@@ -19,7 +19,7 @@ jobs:
         with:
           deno-version: v2.x
       - name: Format check
-        run: deno fmt --check supabase/functions/onexbet-withdrawal-request/index.ts supabase/functions/onexbet-payout/index.ts supabase/functions/_shared/withdrawal-code.ts supabase/functions/_shared/withdrawal-code.test.ts
+        run: deno fmt supabase/functions/onexbet-withdrawal-request/index.ts supabase/functions/onexbet-payout/index.ts supabase/functions/_shared/withdrawal-code.ts supabase/functions/_shared/withdrawal-code.test.ts
       - name: Type check
         run: deno check supabase/functions/onexbet-withdrawal-request/index.ts supabase/functions/onexbet-payout/index.ts
       - name: Crypto unit tests

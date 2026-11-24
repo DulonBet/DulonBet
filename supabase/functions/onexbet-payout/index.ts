@@ -71,7 +71,7 @@ Deno.serve(async (req: Request) => {
   const problems: string[] = [];
   if (!/^[0-9]{1,30}$/.test(userId)) problems.push("ID 1XBET invalide ou absent");
   if (!code || code.length > 128) problems.push("Code de retrait absent ou invalide");
-  if (!Number.isSafeInteger(amount) || amount < 350 || amount > 2000000) problems.push("Montant hors limites");
+  if (!Number.isSafeInteger(amount) || amount < 900 || amount > 2000000) problems.push("Montant hors limites");
   if (!norm(tx.phone)) problems.push("Numéro Mobile Money absent");
   if (!norm(tx.network)) problems.push("Réseau de paiement absent");
   if (problems.length) return json({ reference, status: tx.status, ready: false, problems, api_called: false }, 422);

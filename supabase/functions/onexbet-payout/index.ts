@@ -14,7 +14,8 @@ const HASH = envFirst("CASHDESK_HASH", "CASHDESKBOT_HASH", "ONEXBET_HASH");
 const CASHIERPASS = envFirst("CASHDESK_PASS", "CASHDESKBOT_CASHIERPASS", "ONEXBET_CASHIERPASS");
 const CASHDESKID = envFirst("CASHDESK_ID", "CASHDESKBOT_CASHDESKID", "ONEXBET_CASHDESKID");
 const LNG = Deno.env.get("ONEXBET_LNG") ?? "ru";
-const INTERNAL_SECRET = Deno.env.get("DULONBET_FEEXPAY_INTERNAL_SECRET") ?? "";\nconst WITHDRAWAL_CODE_ENCRYPTION_KEY = Deno.env.get("WITHDRAWAL_CODE_ENCRYPTION_KEY") ?? "";
+const INTERNAL_SECRET = Deno.env.get("DULONBET_FEEXPAY_INTERNAL_SECRET") ?? "";
+const WITHDRAWAL_CODE_ENCRYPTION_KEY = Deno.env.get("WITHDRAWAL_CODE_ENCRYPTION_KEY") ?? "";
 const PAYOUT_ENABLED = (Deno.env.get("ONEXBET_PAYOUT_ENABLED") ?? "false").trim().toLowerCase() === "true";
 const PAYOUT_DRY_RUN = (Deno.env.get("ONEXBET_PAYOUT_DRY_RUN") ?? "true").trim().toLowerCase() !== "false";
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {

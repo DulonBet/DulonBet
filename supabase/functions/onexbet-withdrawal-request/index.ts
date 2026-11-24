@@ -120,7 +120,10 @@ Deno.serve(async (req: Request) => {
   if (!(await verifyTurnstile(token, ip))) {
     return json({ error: "Vérification de sécurité échouée. Recharge le contrôle et réessaie." }, 403, origin);
   }
-  const codeHash = await sha256(p.withdrawal_code);\n  let encryptedWithdrawalCode: string;\n  try { encryptedWithdrawalCode = await encryptWithdrawalCode(p.withdrawal_code); }\n  catch { return json({ error: "Protection du code de retrait indisponible." }, 503, origin); }
+  const codeHash = await sha256(p.withdrawal_code);
+  let encryptedWithdrawalCode: string;
+  try { encryptedWithdrawalCode = await encryptWithdrawalCode(p.withdrawal_code); }
+  catch { return json({ error: "Protection du code de retrait indisponible." }, 503, origin); }
 
   // Une reprise avec la même clé renvoie la transaction existante, sans en créer une seconde.
   const { data: existing, error: lookupError } = await supabase

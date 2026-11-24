@@ -9,12 +9,16 @@ function base64ToBytes(value: string): Uint8Array {
   return Uint8Array.from(binary, (char) => char.charCodeAt(0));
 }
 
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  return bytes.slice().buffer as ArrayBuffer;
+}
+
 function importAesKey(encodedKey: string, usage: KeyUsage[]): Promise<CryptoKey> {
   const rawKey = base64ToBytes(encodedKey);
   if (rawKey.length !== 32) {
     throw new Error("WITHDRAWAL_CODE_ENCRYPTION_KEY doit contenir 32 octets encodés en base64.");
   }
-  return crypto.subtle.importKey("raw", rawKey, { name: "AES-GCM" }, false, usage);
+  return crypto.subtle.importKey("raw", toArrayBuffer(rawKey), { name: "AES-GCM" }, false, usage);
 }
 
 export async function encryptWithdrawalCode(code: string, encodedKey: string): Promise<string> {
@@ -35,9 +39,9 @@ export async function decryptWithdrawalCode(envelope: string, encodedKey: string
   }
   const key = await importAesKey(encodedKey, ["decrypt"]);
   const clear = await crypto.subtle.decrypt(
-    { name: "AES-GCM", iv: base64ToBytes(parts[2]) },
+    { name: "AES-GCM", iv: toArrayBuffer(base64ToBytes(parts[2])) },
     key,
-    base64ToBytes(parts[3]),
+    toArrayBuffer(base64ToBytes(parts[3])),
   );
   return new TextDecoder().decode(clear);
 }

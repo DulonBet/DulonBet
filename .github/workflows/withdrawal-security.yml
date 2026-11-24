@@ -1,0 +1,26 @@
+name: Withdrawal security checks
+
+on:
+  push:
+    branches:
+      - security/turnstile-withdrawal-2026-11-24
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Format check
+        run: deno fmt --check supabase/functions/onexbet-withdrawal-request/index.ts supabase/functions/onexbet-payout/index.ts supabase/functions/_shared/withdrawal-code.ts supabase/functions/_shared/withdrawal-code.test.ts
+      - name: Type check
+        run: deno check supabase/functions/onexbet-withdrawal-request/index.ts supabase/functions/onexbet-payout/index.ts
+      - name: Crypto unit tests
+        run: deno test supabase/functions/_shared/withdrawal-code.test.ts

@@ -1,4 +1,4 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2";\nimport { decryptWithdrawalCode } from "../_shared/withdrawal-code.ts";
 import { createHash } from "node:crypto";
 
 const envFirst = (...names: string[]) => {
@@ -33,21 +33,6 @@ const json = (body: unknown, status = 200) => new Response(JSON.stringify(body),
 const norm = (v: unknown) => String(v ?? "").trim();
 const md5 = (v: string) => createHash("md5").update(v, "utf8").digest("hex");
 const sha256 = (v: string) => createHash("sha256").update(v, "utf8").digest("hex");
-function base64ToBytes(value: string) {
-  const binary = atob(value);
-  return Uint8Array.from(binary, (char) => char.charCodeAt(0));
-}
-async function decryptWithdrawalCode(envelope: string) {
-  const parts = envelope.split(":");
-  if (parts.length !== 4 || parts[0] !== "enc" || parts[1] !== "v1") {
-    throw new Error("Le code enregistré n'est pas chiffré au format attendu.");
-  }
-  const rawKey = base64ToBytes(WITHDRAWAL_CODE_ENCRYPTION_KEY);
-  if (rawKey.length !== 32) throw new Error("Clé de chiffrement indisponible ou invalide.");
-  const key = await crypto.subtle.importKey("raw", rawKey, { name: "AES-GCM" }, false, ["decrypt"]);
-  const clear = await crypto.subtle.decrypt({ name: "AES-GCM", iv: base64ToBytes(parts[2]) }, key, base64ToBytes(parts[3]));
-  return new TextDecoder().decode(clear);
-}
 const safeEqual = (a: string, b: string) => {
   if (!a || !b || a.length !== b.length) return false;
   let diff = 0;
@@ -77,7 +62,7 @@ Deno.serve(async (req: Request) => {
 
   const userId = norm(tx.xbet_id);
   let code = "";
-  try { code = await decryptWithdrawalCode(norm(tx.withdrawal_code)); }
+  try { code = await decryptWithdrawalCode(norm(tx.withdrawal_code), WITHDRAWAL_CODE_ENCRYPTION_KEY); }
   catch { return json({ error: "Code de retrait non chiffré ou clé de chiffrement incorrecte. Aucune validation 1XBET effectuée." }, 409); }
   const amount = Number(tx.requested_amount_fcfa ?? tx.amount_fcfa);
   const problems: string[] = [];

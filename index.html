@@ -5046,6 +5046,18 @@ body.operation-view #dulon-install-banner{display:none!important}
   body.home-view #dulon-share-button{flex-basis:48px!important;width:48px!important;height:48px!important;min-height:48px!important}
 }
 </style>
+<style id="dulon-home-banner-promo-gap-fix">
+/* Accueil mobile : rapprocher le carrousel promo du bandeau Installer/Support */
+@media(max-width:680px){
+  body:not(.operation-view) #home-view > .promo-carousel{
+    margin-top:2px!important;
+    padding-top:0!important;
+  }
+  body:not(.operation-view) #dulon-install-banner{
+    margin-bottom:0!important;
+  }
+}
+</style>
 </head>
 <body>
 <header class="dulon-header-hd">

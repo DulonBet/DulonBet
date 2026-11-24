@@ -5591,6 +5591,13 @@ function showWithdrawalStatus(state, reference='', amount=0, message=''){
   detail.textContent='Paiement Mobile Money encours.';
   button.textContent='VALIDÉ';
   button.disabled=false;
+ }else if(state==='invalid'){
+  modal.classList.add('is-invalid');
+  title.textContent='Échec de la vérification';
+  intro.textContent='Code de retrait invalide';
+  detail.textContent='Le code fourni n’a pas été reconnu ou validé par la caisse 1XBET. Vérifiez votre code et réessayez. Aucun retrait n’a été confirmé.';
+  button.textContent='FERMER';
+  button.disabled=false;
  }else if(state==='failed'){
   modal.classList.add('is-failed');
   title.textContent='Retrait non confirmé';
@@ -5745,8 +5752,11 @@ async function submitTx(e,type){
    if(status==='xbet_validated'){
     showWithdrawalStatus('approved',result.reference,confirmedAmount);
     f.reset();
-   }else if(status==='rejected'||status==='failed'){
-    showWithdrawalStatus('failed',result.reference,confirmedAmount,'Contacte le support avant toute nouvelle tentative. Si le résultat te semble incorrect, ne recommence pas le retrait.');
+   }else if(status==='rejected'){
+    showWithdrawalStatus('invalid',result.reference,confirmedAmount);
+    f.reset();
+   }else if(status==='failed'){
+    showWithdrawalStatus('failed',result.reference,confirmedAmount,'Le retrait n’a pas été confirmé. Contacte le support avant toute nouvelle tentative.');
     f.reset();
    }else if(status==='verification_required'||status==='processing'){
     showWithdrawalStatus('warning',result.reference,confirmedAmount,'La réponse 1XBET nécessite une vérification. Ne soumets pas un nouveau code. Contacte l’administrateur avec cette référence.');
@@ -8971,6 +8981,17 @@ html:not([data-theme="dark"]) body.home-view .home-help-cta{
 .withdrawal-status-modal.is-warning .withdrawal-status-symbol span,.withdrawal-status-modal.is-failed .withdrawal-status-symbol span{width:auto;height:auto;border:0;animation:none;color:#b7791f;font-size:34px}
 .withdrawal-status-modal.is-warning .withdrawal-status-symbol span:before,.withdrawal-status-modal.is-failed .withdrawal-status-symbol span:before{content:"!"}
 .withdrawal-status-modal.is-warning .withdrawal-status-close,.withdrawal-status-modal.is-failed .withdrawal-status-close{background:#52627a;cursor:pointer}
+.withdrawal-status-modal.is-invalid .withdrawal-status-card{border:1px solid #fecaca;background:linear-gradient(180deg,#fff 0%,#fffafa 100%)}
+.withdrawal-status-modal.is-invalid .withdrawal-status-symbol{width:76px;height:76px;background:linear-gradient(145deg,#fee2e2 0%,#fecaca 100%);box-shadow:0 8px 22px rgba(220,38,38,.14)}
+.withdrawal-status-modal.is-invalid .withdrawal-status-symbol span{width:30px;height:30px;border:0;border-radius:0;animation:none;position:relative}
+.withdrawal-status-modal.is-invalid .withdrawal-status-symbol span:before,.withdrawal-status-modal.is-invalid .withdrawal-status-symbol span:after{content:"";position:absolute;left:13px;top:-2px;width:5px;height:34px;border-radius:5px;background:#dc2626;transform:rotate(45deg)}
+.withdrawal-status-modal.is-invalid .withdrawal-status-symbol span:after{transform:rotate(-45deg)}
+.withdrawal-status-modal.is-invalid .withdrawal-status-card h2{color:#b91c1c}
+.withdrawal-status-modal.is-invalid .withdrawal-status-intro{display:block;margin:14px 0;padding:13px 12px;border:1px solid #fda4af;border-radius:13px;background:linear-gradient(135deg,#fff1f2 0%,#ffe4e6 100%);color:#991b1b;font-size:17px;font-weight:900}
+.withdrawal-status-modal.is-invalid .withdrawal-status-detail{padding:14px;border:1px solid #dbeafe;border-radius:13px;background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);color:#183b70;font-size:14px;line-height:1.65}
+.withdrawal-status-modal.is-invalid .withdrawal-status-reference{border:1px solid #e2e8f0;background:#f8fafc}
+.withdrawal-status-modal.is-invalid .withdrawal-status-amount{color:#334155}
+.withdrawal-status-modal.is-invalid .withdrawal-status-close{background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);box-shadow:0 6px 16px rgba(185,28,28,.2);cursor:pointer}
 @media(max-width:420px){.withdrawal-status-card{padding:25px 17px 20px;border-radius:20px}.withdrawal-status-card h2{font-size:22px}}
 </style>
 </body>

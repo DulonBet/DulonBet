@@ -4999,6 +4999,53 @@ body > main {
   margin-bottom: 0 !important;
 }
 </style>
+<style id="dulon-home-install-support-restore">
+/* Restaurer la bannière Installer maintenant et le bouton Support uniquement sur l'accueil */
+body:not(.operation-view) #dulon-install-banner,
+body.home-view #dulon-install-banner{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  align-items:center!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  max-width:920px!important;
+  width:100%!important;
+  margin:12px auto 0!important;
+  padding:0 12px!important;
+  gap:10px!important;
+  box-sizing:border-box!important;
+}
+body:not(.operation-view) #dulon-install-button,
+body.home-view #dulon-install-button{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  flex:1 1 0!important;
+  min-width:0!important;
+}
+body:not(.operation-view) #dulon-share-button,
+body.home-view #dulon-share-button{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  flex:0 0 54px!important;
+  width:54px!important;
+  min-height:54px!important;
+  height:54px!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+body.operation-view #dulon-install-banner{display:none!important}
+@media(max-width:520px){
+  body:not(.operation-view) #dulon-install-banner,
+  body.home-view #dulon-install-banner{padding:0 9px!important;gap:8px!important;margin-top:9px!important}
+  body:not(.operation-view) #dulon-install-button,
+  body.home-view #dulon-install-button{min-height:54px!important}
+  body:not(.operation-view) #dulon-share-button,
+  body.home-view #dulon-share-button{flex-basis:48px!important;width:48px!important;height:48px!important;min-height:48px!important}
+}
+</style>
 </head>
 <body>
 <header class="dulon-header-hd">

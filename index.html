@@ -2810,6 +2810,7 @@ body.operation-view #withdraw .withdraw-location-item span{
 #admin .act-approve{background:#e5f7ec;color:#126332}.act-reject{background:#fff0ef;color:#a12620}.act-process{background:#eaf2ff;color:#174b91}
 #admin .status-pill{display:inline-block;border-radius:20px;padding:4px 8px;background:#fff4d8;color:#795300;font-size:12px;white-space:nowrap}
 #admin .status-approved{background:#e5f7ec;color:#126332}#admin .status-rejected{background:#fff0ef;color:#a12620}#admin .status-processing{background:#eaf2ff;color:#174b91}
+#admin .status-xbet_validated,#adminStatusModal .status-xbet_validated{background:#dcfce7;color:#166534;border:1px solid #86efac;font-weight:800;padding:5px 10px;border-radius:20px;}
 #admin .status-pill.status-credit-credited{background:#dcfce7;color:#166534;border:1px solid #86efac;font-weight:800}#admin .status-pill.status-credit-failed{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;font-weight:800}#admin .status-pill.status-credit-pending{background:#fff4d8;color:#795300;font-weight:700}
 @media(max-width:650px){#admin .admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#admin .admin-stats strong{font-size:17px}}
 
@@ -7339,6 +7340,10 @@ html[data-theme="dark"] #adminStatusModal .status-processing{
 html[data-theme="dark"] #admin .status-approved,
 html[data-theme="dark"] #adminStatusModal .status-approved{
   background:#b8efca!important;color:#10552c!important;
+}
+html[data-theme="dark"] #admin .status-xbet_validated,
+html[data-theme="dark"] #adminStatusModal .status-xbet_validated{
+  background:#b8efca!important;color:#10552c!important;border:1px solid #86efac!important;font-weight:800!important;
 }
 html[data-theme="dark"] #admin .status-rejected,
 html[data-theme="dark"] #admin .status-failed,

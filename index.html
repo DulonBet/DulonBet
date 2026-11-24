@@ -4991,6 +4991,7 @@ body.home-view footer.home-footer {
   align-self:stretch!important;
 }
 </style>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <header class="dulon-header-hd">
@@ -5282,6 +5283,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div class="field full"><label>Numéro de téléphone</label><input autocomplete="tel-national" id="withdraw-phone" name="phone" inputmode="numeric" maxlength="10" minlength="10" pattern="[0-9]{10}" placeholder="Ex. 0190000000" required="" title="Pour le Bénin, saisis exactement 10 chiffres."/><span class="small withdraw-helper-small">Vérifie que ce numéro peut recevoir de l'argent sur le réseau choisi.</span></div>
 <div class="field full"><label>Nom complet du bénéficiaire</label><input autocomplete="name" id="withdraw-full-name" name="customer_name" placeholder="Nom et prénoms" required=""/></div>
 
+<div class="field full"><div class="cf-turnstile" data-sitekey="0x4AAAAAAGPpCZipiNgwKHZP"></div></div>
 <div class="field full"><button class="btn-green">Retirer</button></div>
 </div></form><div class="success" id="withdraw-success"></div>
 <div aria-label="Pied de page" class="operation-footer dulon-footer-brand"><span class="dulon-footer-title">Dulon<span>Bet</span></span><span class="dulon-footer-subtitle">Dépôt &amp; Retrait</span><span class="dulon-footer-platform">1XBET</span></div>
@@ -5571,13 +5573,15 @@ async function submitTx(e,type){
   if(!['MTN MoMo','Moov Money','Celtiis Cash'].includes(chosen)){alert('Choisis MTN MoMo, Moov Money ou Celtiis Cash.');return;}
   if(country!=='Bénin'||!/^01[0-9]{8}$/.test(phone)){alert('Pour un retrait au Bénin, sélectionne le Bénin et saisis un numéro à 10 chiffres commençant par 01.');return;}
  }
+ const turnstileToken=type==='Retrait'?(f.querySelector('[name="cf-turnstile-response"]')?.value||''):'';
+ if(type==='Retrait'&&!turnstileToken){alert('Valide la vérification de sécurité avant de continuer.');return;}
  const idempotencyKey=newDulonBetKey();
  const client=window.dulonSupabaseClient;
  const supabaseUrl='https://abagofwqjostilsilafk.supabase.co';
  const anonKey='sb_publishable_DMHadyt-Bq_bvqM2Wbj9Nw_0tBHcINd';
  if(submit){submit.disabled=true;submit.textContent='Vérification 1XBET…';}
  box.style.display='block';
- box.textContent='Transmission sécurisée à 1XBET pour vérifier le code. Ne soumets pas cette demande une seconde fois.';
+ box.textContent='Transmission sécurisée de ta demande de retrait. Ne soumets pas cette demande une seconde fois.';
  try{
   const response=await fetch(supabaseUrl+'/functions/v1/onexbet-withdrawal-request',{
    method:'POST',
@@ -5587,6 +5591,7 @@ async function submitTx(e,type){
     'Authorization':'Bearer '+anonKey
    },
    body:JSON.stringify({
+    turnstile_token:turnstileToken,
     xbet_id:xbetId,
     withdrawal_code:withdrawalCode,
     amount_fcfa:amount,
@@ -5607,6 +5612,9 @@ async function submitTx(e,type){
    }else if(status==='rejected'||status==='failed'){
     box.textContent='Retrait non confirmé\nLe retrait 1XBET n’a pas été confirmé. Contacte le support avant de recommencer.\n\nSi le résultat te semble incorrect, contacte le support avant toute nouvelle tentative. Référence : '+result.reference+'.';
     f.reset();
+   }else if(status==='pending'){
+    box.textContent='Demande de retrait enregistrée. La vérification du code 1XBET n’a pas encore été effectuée. Référence : '+result.reference+'. Conserve cette référence et attends la confirmation de l’administrateur.';
+    f.reset();
    }else{
     box.textContent='Retrait non confirmé\nLe retrait 1XBET n’a pas été confirmé. Contacte le support avant de recommencer.\n\nSi le résultat te semble incorrect, contacte le support avant toute nouvelle tentative. Référence : '+result.reference+'.';
     f.reset();
@@ -5621,6 +5629,7 @@ async function submitTx(e,type){
   console.error('onexbet-payout network error',String(err));
   box.textContent='La réponse du service de validation n’est pas disponible. Le résultat peut être incertain : ne soumets pas à nouveau ce code. Contacte l’administrateur en précisant l’heure de la demande.';
  }finally{
+  if(type==='Retrait'&&window.turnstile){try{window.turnstile.reset();}catch(_){}}
   if(submit){submit.disabled=false;submit.textContent='Retirer';}
  }
 }

@@ -5572,6 +5572,59 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
  if(attempt===0)modal.classList.add('is-open');
 }
 
+function showWithdrawalStatus(state, reference='', amount=0, message=''){
+ const modal=document.getElementById('dulon-withdrawal-status');
+ if(!modal)return;
+ const title=modal.querySelector('[data-withdrawal-title]');
+ const intro=modal.querySelector('[data-withdrawal-intro]');
+ const detail=modal.querySelector('[data-withdrawal-detail]');
+ const ref=modal.querySelector('[data-withdrawal-reference]');
+ const sum=modal.querySelector('[data-withdrawal-amount]');
+ const button=modal.querySelector('[data-withdrawal-close]');
+ modal.classList.remove('is-pending','is-approved','is-warning','is-failed');
+ if(state==='approved'){
+  modal.classList.add('is-approved');
+  title.textContent='Retrait validé';
+  intro.textContent='Code validé automatiquement par 1XBET.';
+  detail.textContent='Le paiement Mobile Money reste à effectuer par l’administrateur.';
+  button.textContent='VALIDÉ';
+  button.disabled=false;
+ }else if(state==='failed'){
+  modal.classList.add('is-failed');
+  title.textContent='Retrait non confirmé';
+  intro.textContent='Le code 1XBET n’a pas été confirmé.';
+  detail.textContent=message||'Contacte le support avant toute nouvelle tentative.';
+  button.textContent='FERMER';
+  button.disabled=false;
+ }else if(state==='warning'){
+  modal.classList.add('is-warning');
+  title.textContent='Vérification nécessaire';
+  intro.textContent='Le résultat de la validation 1XBET est incertain.';
+  detail.textContent=message||'Ne recommence pas le retrait. Contacte l’administrateur en donnant cette référence.';
+  button.textContent='COMPRIS';
+  button.disabled=false;
+ }else{
+  modal.classList.add('is-pending');
+  title.textContent='Retrait en cours';
+  intro.textContent='Ta demande est transmise. Vérification du code auprès de 1XBET…';
+  detail.textContent=message||'Patiente quelques instants et ne soumets pas une deuxième demande.';
+  button.textContent='EN COURS…';
+  button.disabled=true;
+ }
+ ref.textContent=reference?'Référence : '+reference:'';
+ sum.textContent=Number(amount)>0?'Montant : '+Number(amount).toLocaleString('fr-FR')+' FCFA':'';
+ modal.hidden=false;
+ modal.setAttribute('aria-hidden','false');
+ document.body.classList.add('withdrawal-status-open');
+}
+function closeWithdrawalStatus(){
+ const modal=document.getElementById('dulon-withdrawal-status');
+ if(!modal)return;
+ modal.hidden=true;
+ modal.setAttribute('aria-hidden','true');
+ document.body.classList.remove('withdrawal-status-open');
+}
+
 async function submitTx(e,type){
  e.preventDefault();
  const f=e.target;
@@ -5656,8 +5709,12 @@ async function submitTx(e,type){
  const supabaseUrl='https://abagofwqjostilsilafk.supabase.co';
  const anonKey='sb_publishable_DMHadyt-Bq_bvqM2Wbj9Nw_0tBHcINd';
  if(submit){submit.disabled=true;submit.textContent='Vérification 1XBET…';}
- box.style.display='block';
- box.textContent='Transmission sécurisée de ta demande de retrait. Ne soumets pas cette demande une seconde fois.';
+ box.style.display='none';
+ if(type==='Retrait')showWithdrawalStatus('pending','',amount);
+ else{
+  box.style.display='block';
+  box.textContent='Transmission sécurisée de ta demande. Ne soumets pas cette demande une seconde fois.';
+ }
  try{
   const response=await fetch(supabaseUrl+'/functions/v1/onexbet-withdrawal-request',{
    method:'POST',
@@ -5682,28 +5739,30 @@ async function submitTx(e,type){
   try{result=await response.json();}catch(_){}
   if(result.reference){
    const status=String(result.status||'processing').toLowerCase();
+   const confirmedAmount=Number(result.amount_fcfa||amount);
    if(status==='xbet_validated'){
-    box.textContent='Code validé automatiquement par 1XBET. Référence : '+result.reference+'. Montant confirmé : '+Number(result.amount_fcfa||amount).toLocaleString('fr-FR')+' FCFA. Le paiement Mobile Money reste à effectuer par l’administrateur. Conserve cette référence.';
+    showWithdrawalStatus('approved',result.reference,confirmedAmount);
     f.reset();
    }else if(status==='rejected'||status==='failed'){
-    box.textContent='Retrait non confirmé\nLe retrait 1XBET n’a pas été confirmé. Contacte le support avant de recommencer.\n\nSi le résultat te semble incorrect, contacte le support avant toute nouvelle tentative. Référence : '+result.reference+'.';
+    showWithdrawalStatus('failed',result.reference,confirmedAmount,'Contacte le support avant toute nouvelle tentative. Si le résultat te semble incorrect, ne recommence pas le retrait.');
     f.reset();
-   }else if(status==='pending'){
-    box.textContent='Demande de retrait enregistrée. La vérification du code 1XBET n’a pas encore été effectuée. Référence : '+result.reference+'. Conserve cette référence et attends la confirmation de l’administrateur.';
+   }else if(status==='verification_required'||status==='processing'){
+    showWithdrawalStatus('warning',result.reference,confirmedAmount,'La réponse 1XBET nécessite une vérification. Ne soumets pas un nouveau code. Contacte l’administrateur avec cette référence.');
     f.reset();
    }else{
-    box.textContent='Retrait non confirmé\nLe retrait 1XBET n’a pas été confirmé. Contacte le support avant de recommencer.\n\nSi le résultat te semble incorrect, contacte le support avant toute nouvelle tentative. Référence : '+result.reference+'.';
+    showWithdrawalStatus('pending',result.reference,confirmedAmount,'Demande enregistrée. La vérification du code n’est pas encore confirmée. Conserve cette référence et attends.');
     f.reset();
    }
   }else{
-   box.textContent='Retrait non confirmé\nLe retrait 1XBET n’a pas été confirmé. Contacte le support avant de recommencer.\n\nSi le résultat te semble incorrect, contacte le support avant toute nouvelle tentative.';
+   if(type==='Retrait')showWithdrawalStatus('warning','',amount,'La réponse du service ne contient pas de référence. Ne relance pas la demande; contacte l’administrateur.');
+   else box.textContent='Demande non confirmée. Réessaie plus tard.';
   }
   if(!response.ok && !result.reference){
    console.error('onexbet-payout HTTP status',response.status);
   }
  }catch(err){
   console.error('onexbet-payout network error',String(err));
-  box.textContent='La réponse du service de validation n’est pas disponible. Le résultat peut être incertain : ne soumets pas à nouveau ce code. Contacte l’administrateur en précisant l’heure de la demande.';
+  if(type==='Retrait')showWithdrawalStatus('warning','',amount,'La réponse du service de validation n’est pas disponible. Le résultat peut être incertain. Ne soumets pas à nouveau ce code; contacte l’administrateur.');
  }finally{
   if(type==='Retrait'&&window.turnstile){try{window.turnstile.reset();}catch(_){}}
   if(submit){submit.disabled=false;submit.textContent='Retirer';}
@@ -8868,5 +8927,43 @@ html:not([data-theme="dark"]) body.home-view .home-help-cta{
     border-radius:19px!important;
   }
 }
-</style></body>
+</style>
+<div id="dulon-withdrawal-status" class="withdrawal-status-modal" role="dialog" aria-modal="true" aria-labelledby="dulon-withdrawal-status-title" aria-hidden="true" hidden>
+ <div class="withdrawal-status-card">
+  <div class="withdrawal-status-symbol" aria-hidden="true"><span></span></div>
+  <h2 id="dulon-withdrawal-status-title" data-withdrawal-title>Retrait en cours</h2>
+  <p class="withdrawal-status-intro" data-withdrawal-intro>Ta demande est transmise.</p>
+  <p class="withdrawal-status-detail" data-withdrawal-detail>Patiente quelques instants.</p>
+  <p class="withdrawal-status-reference" data-withdrawal-reference></p>
+  <p class="withdrawal-status-amount" data-withdrawal-amount></p>
+  <button type="button" class="withdrawal-status-close" data-withdrawal-close onclick="closeWithdrawalStatus()" disabled>EN COURS…</button>
+ </div>
+</div>
+<style id="dulonbet-withdrawal-status-modal">
+.withdrawal-status-modal{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(5,18,43,.72);backdrop-filter:blur(5px)}
+.withdrawal-status-modal[hidden]{display:none!important}
+.withdrawal-status-card{width:min(100%,430px);padding:30px 22px 24px;border-radius:24px;background:#fff;color:#14284b;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.28);animation:withdrawalStatusIn .22s ease-out}
+@keyframes withdrawalStatusIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.withdrawal-status-symbol{width:68px;height:68px;margin:0 auto 17px;border-radius:50%;display:grid;place-items:center;background:#e8f0ff}
+.withdrawal-status-symbol span{width:27px;height:27px;border:3px solid #2459b7;border-right-color:transparent;border-radius:50%;animation:withdrawalStatusSpin .8s linear infinite}
+@keyframes withdrawalStatusSpin{to{transform:rotate(360deg)}}
+.withdrawal-status-card h2{margin:0 0 9px;font-size:25px;font-weight:900;color:#14284b}
+.withdrawal-status-card p{margin:8px 0;line-height:1.5}
+.withdrawal-status-intro{font-weight:750}
+.withdrawal-status-detail{font-size:14px;color:#61718e}
+.withdrawal-status-reference{margin-top:18px!important;padding:10px;border-radius:10px;background:#f1f5fb;font-size:13px;font-weight:750;overflow-wrap:anywhere}
+.withdrawal-status-amount{font-size:16px;font-weight:900}
+.withdrawal-status-close{width:100%;margin-top:18px;min-height:48px;background:#2459b7;color:#fff;border-radius:13px;font-size:15px;font-weight:900}
+.withdrawal-status-close:disabled{opacity:.8;cursor:wait}
+.withdrawal-status-modal.is-approved .withdrawal-status-symbol{background:#e5f7ed}
+.withdrawal-status-modal.is-approved .withdrawal-status-symbol span{width:29px;height:16px;border:0;border-left:5px solid #16845d;border-bottom:5px solid #16845d;border-radius:1px;transform:rotate(-45deg);animation:none;margin-top:-7px}
+.withdrawal-status-modal.is-approved .withdrawal-status-card h2{color:#16845d}
+.withdrawal-status-modal.is-approved .withdrawal-status-close{background:#16845d;color:#fff;cursor:pointer}
+.withdrawal-status-modal.is-warning .withdrawal-status-symbol,.withdrawal-status-modal.is-failed .withdrawal-status-symbol{background:#fff3dc}
+.withdrawal-status-modal.is-warning .withdrawal-status-symbol span,.withdrawal-status-modal.is-failed .withdrawal-status-symbol span{width:auto;height:auto;border:0;animation:none;color:#b7791f;font-size:34px}
+.withdrawal-status-modal.is-warning .withdrawal-status-symbol span:before,.withdrawal-status-modal.is-failed .withdrawal-status-symbol span:before{content:"!"}
+.withdrawal-status-modal.is-warning .withdrawal-status-close,.withdrawal-status-modal.is-failed .withdrawal-status-close{background:#52627a;cursor:pointer}
+@media(max-width:420px){.withdrawal-status-card{padding:25px 17px 20px;border-radius:20px}.withdrawal-status-card h2{font-size:22px}}
+</style>
+</body>
 </html>

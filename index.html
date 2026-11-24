@@ -8895,5 +8895,39 @@ html:not([data-theme="dark"]) body.home-view .home-help-cta{
   }
 }
 </style>
+<style id="dulon-home-operator-square-equal-v3">
+/* Accueil : trois tuiles opérateurs strictement carrées et de dimensions identiques */
+#home-view .section .brand-networks.logo-only-networks{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:clamp(8px,2vw,14px)!important;
+}
+#home-view .section .brand-networks.logo-only-networks .logo-only-card{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:1 / 1!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:2px solid #dce7f7!important;
+  border-radius:17px!important;
+  box-sizing:border-box!important;
+  background:transparent!important;
+  box-shadow:0 4px 12px rgba(28,79,155,.08)!important;
+}
+#home-view .section .brand-networks.logo-only-networks .logo-only-card .brand-logo-only{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border-radius:inherit!important;
+}
+</style>
 </body>
 </html>

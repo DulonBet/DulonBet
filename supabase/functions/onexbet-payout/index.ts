@@ -1,4 +1,5 @@
-import { createClient } from "npm:@supabase/supabase-js@2";\nimport { decryptWithdrawalCode } from "../_shared/withdrawal-code.ts";
+import { createClient } from "npm:@supabase/supabase-js@2";
+import { decryptWithdrawalCode } from "../_shared/withdrawal-code.ts";
 import { createHash } from "node:crypto";
 
 const envFirst = (...names: string[]) => {

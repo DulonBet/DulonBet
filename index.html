@@ -9135,5 +9135,31 @@ html:not([data-theme="dark"]) body.home-view .home-help-cta{
   #deposit.panel,#withdraw.panel{border-radius:20px!important}
   #deposit form,#withdraw form{padding:13px!important}
 }
+
+/* Renforce le fond sombre des champs de saisie, y compris le remplissage automatique du navigateur */
+#deposit.panel form .formgrid .field input:not([type="radio"]):not([type="checkbox"]),
+#deposit.panel form .formgrid .field select,
+#withdraw.panel form .formgrid .field input:not([type="radio"]):not([type="checkbox"]),
+#withdraw.panel form .formgrid .field select{
+  background:#0a2054!important;
+  background-image:linear-gradient(135deg,#123875 0%,#081b49 100%)!important;
+  color:#f7fbff!important;
+  border:1px solid #398bd8!important;
+  -webkit-text-fill-color:#f7fbff!important;
+  color-scheme:dark;
+}
+#deposit.panel form .formgrid .field input:-webkit-autofill,
+#deposit.panel form .formgrid .field input:-webkit-autofill:hover,
+#deposit.panel form .formgrid .field input:-webkit-autofill:focus,
+#withdraw.panel form .formgrid .field input:-webkit-autofill,
+#withdraw.panel form .formgrid .field input:-webkit-autofill:hover,
+#withdraw.panel form .formgrid .field input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#f7fbff!important;
+  -webkit-box-shadow:0 0 0 1000px #102b60 inset!important;
+  box-shadow:0 0 0 1000px #102b60 inset!important;
+  caret-color:#fff!important;
+}
+#deposit.panel form .formgrid .field input::placeholder,
+#withdraw.panel form .formgrid .field input::placeholder{color:#b7d2f5!important;-webkit-text-fill-color:#b7d2f5!important;opacity:1!important}
 </style>
 

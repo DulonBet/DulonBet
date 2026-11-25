@@ -9536,5 +9536,41 @@ body.operation-view #withdraw form .field textarea::placeholder {
 }
 </style>
 
+
+<style id="dulonbet-placeholder-dim-entered-text-bright">
+/* Seuls les textes indicatifs par défaut sont discrets; saisie client blanche et brillante */
+body.operation-view #deposit form .field input:not([type="radio"]):not([type="checkbox"]),
+body.operation-view #deposit form .field textarea,
+body.operation-view #withdraw form .field input:not([type="radio"]):not([type="checkbox"]),
+body.operation-view #withdraw form .field textarea,
+body.operation-view #deposit form .field input:focus,
+body.operation-view #deposit form .field textarea:focus,
+body.operation-view #withdraw form .field input:focus,
+body.operation-view #withdraw form .field textarea:focus {
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-weight:500!important;
+  text-shadow:0 0 5px rgba(255,255,255,.28)!important;
+  caret-color:#ffffff!important;
+}
+body.operation-view #deposit form .field input::placeholder,
+body.operation-view #deposit form .field textarea::placeholder,
+body.operation-view #withdraw form .field input::placeholder,
+body.operation-view #withdraw form .field textarea::placeholder {
+  color:rgba(255,255,255,.43)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.43)!important;
+  opacity:1!important;
+  font-weight:300!important;
+  text-shadow:none!important;
+}
+body.operation-view #deposit form .field select,
+body.operation-view #withdraw form .field select {
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-weight:500!important;
+  text-shadow:0 0 5px rgba(255,255,255,.28)!important;
+}
+</style>
+
 </body>
 </html>

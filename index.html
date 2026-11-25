@@ -5157,6 +5157,87 @@ body.operation-view #dulon-install-banner{display:none!important}
 }
 </style>
 
+
+<style id="dulonbet-input-polish">
+/* Finition élégante des champs à remplir dans les formulaires Dépôt et Retrait */
+#deposit form .field input:not([type="radio"]):not([type="checkbox"]),
+#deposit form .field select,
+#deposit form .field textarea,
+#withdraw form .field input:not([type="radio"]):not([type="checkbox"]),
+#withdraw form .field select,
+#withdraw form .field textarea{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:54px!important;
+  padding:14px 16px!important;
+  color:#f7fbff!important;
+  background:linear-gradient(145deg,#102e69 0%,#0b2254 55%,#091b47 100%)!important;
+  border:1.5px solid #3d79bd!important;
+  border-radius:15px!important;
+  box-shadow:inset 0 2px 5px rgba(0,7,28,.28),inset 0 1px 0 rgba(255,255,255,.055),0 3px 9px rgba(0,8,34,.12)!important;
+  font-size:16px!important;
+  line-height:1.4!important;
+  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease!important;
+}
+#deposit form .field input:not([type="radio"]):not([type="checkbox"]):hover,
+#deposit form .field select:hover,
+#deposit form .field textarea:hover,
+#withdraw form .field input:not([type="radio"]):not([type="checkbox"]):hover,
+#withdraw form .field select:hover,
+#withdraw form .field textarea:hover{
+  border-color:#58b7f0!important;
+  box-shadow:inset 0 2px 5px rgba(0,7,28,.24),0 0 0 2px rgba(42,157,240,.08)!important;
+}
+#deposit form .field input:not([type="radio"]):not([type="checkbox"]):focus,
+#deposit form .field select:focus,
+#deposit form .field textarea:focus,
+#withdraw form .field input:not([type="radio"]):not([type="checkbox"]):focus,
+#withdraw form .field select:focus,
+#withdraw form .field textarea:focus{
+  outline:none!important;
+  border-color:#43e2ff!important;
+  background:linear-gradient(145deg,#123675 0%,#0b285e 100%)!important;
+  box-shadow:inset 0 2px 5px rgba(0,7,28,.18),0 0 0 3px rgba(42,202,255,.16),0 0 18px rgba(0,176,255,.17)!important;
+}
+#deposit form .field input::placeholder,
+#deposit form .field textarea::placeholder,
+#withdraw form .field input::placeholder,
+#withdraw form .field textarea::placeholder{
+  color:#a9c8ed!important;
+  opacity:1!important;
+}
+#deposit form .field select,
+#withdraw form .field select{
+  cursor:pointer!important;
+}
+#deposit form .field select option,
+#withdraw form .field select option{
+  color:#f7fbff!important;
+  background:#0b2254!important;
+}
+#deposit form .field label,
+#withdraw form .field label{
+  display:block;
+  margin-bottom:8px!important;
+  letter-spacing:.01em;
+}
+#deposit form .field,
+#withdraw form .field{gap:8px!important}
+@media(max-width:520px){
+  #deposit form .field input:not([type="radio"]):not([type="checkbox"]),
+  #deposit form .field select,
+  #deposit form .field textarea,
+  #withdraw form .field input:not([type="radio"]):not([type="checkbox"]),
+  #withdraw form .field select,
+  #withdraw form .field textarea{
+    min-height:52px!important;
+    padding:13px 14px!important;
+    border-radius:14px!important;
+    font-size:16px!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <header class="dulon-header-hd">

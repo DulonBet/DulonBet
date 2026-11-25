@@ -3,6 +3,15 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"/>
+<script id="dulonbet-panel-route-early">
+(function(){
+  const panel = window.location.hash.slice(1).toLowerCase();
+  if (['deposit','withdraw','login','admin'].includes(panel)) {
+    document.documentElement.classList.add('dulon-route-pending');
+  }
+})();
+</script>
+
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="#0c2857" name="theme-color"/>
 <title>DulonBet - Dépôt &amp; Retrait 1XBET en Afrique francophone</title>
@@ -794,6 +803,9 @@ body.operation-view #withdraw .withdraw-location-item span{
   }
 }
 
+
+html.dulon-route-pending #home-view{display:none!important}
+html.dulon-route-pending .panel{visibility:hidden!important}
 </style>
 <style id="dulonbet-operation-brand">
 .operations-brand{display:none;align-items:center;gap:18px;padding:26px 28px;margin:0 auto 18px;max-width:1100px;background:#fff;border:1px solid #dce6f5;border-radius:0 0 18px 18px;box-shadow:0 8px 28px rgba(16,35,68,.06)}
@@ -9627,6 +9639,7 @@ body.operation-view #withdraw form .field select {
       writePanelUrl(getActivePanel(), true);
     } finally {
       restoringFromHistory = false;
+      document.documentElement.classList.remove('dulon-route-pending');
     }
   }
 

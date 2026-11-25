@@ -9051,3 +9051,89 @@ html:not([data-theme="dark"]) body.home-view .home-help-cta{
 
 </body>
 </html>
+
+
+<style id="dulonbet-deposit-withdraw-premium-theme">
+/* Thème bleu nuit lumineux réservé aux formulaires Dépôt et Retrait */
+#deposit.panel,#withdraw.panel{
+  color:#f4f8ff!important;
+  background:linear-gradient(155deg,#06143d 0%,#071b55 48%,#020d2d 100%)!important;
+  border:1px solid rgba(54,190,255,.78)!important;
+  border-radius:25px!important;
+  box-shadow:0 0 0 1px rgba(20,125,255,.18),0 14px 38px rgba(0,12,48,.42),inset 0 1px 0 rgba(255,255,255,.12)!important;
+  padding:clamp(16px,3vw,26px)!important;
+}
+#deposit.panel>h2,#withdraw.panel>h2,
+#deposit .operations-page-head h2,#withdraw .operations-page-head h2{
+  color:#fff!important;text-shadow:0 2px 14px rgba(0,153,255,.35)!important;
+}
+#deposit .operations-back,#withdraw .operations-back{color:#8edfff!important}
+#deposit .operation-switch,#withdraw .operation-switch{
+  display:flex;gap:9px;padding:6px;margin:14px 0 18px;
+  border:1px solid rgba(74,171,255,.42);border-radius:18px;
+  background:rgba(1,10,39,.72);box-shadow:inset 0 1px 8px rgba(0,0,0,.28)
+}
+#deposit .operation-switch-btn,#withdraw .operation-switch-btn{
+  flex:1;min-height:48px;border:1px solid rgba(99,166,255,.25)!important;
+  border-radius:13px!important;background:rgba(15,43,103,.82)!important;
+  color:#dcecff!important;font-weight:700;
+}
+#deposit .operation-switch-btn.active,#withdraw .operation-switch-btn.active{
+  color:#fff!important;background:linear-gradient(115deg,#087bff,#04c8f4)!important;
+  border-color:#7beaff!important;box-shadow:0 0 18px rgba(0,174,255,.42)!important
+}
+#deposit form,#withdraw form{
+  padding:clamp(13px,2.5vw,21px)!important;border-radius:21px!important;
+  background:linear-gradient(145deg,rgba(12,42,105,.94),rgba(3,17,57,.98))!important;
+  border:1px solid rgba(72,164,255,.5)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 25px rgba(0,0,0,.22)!important
+}
+#deposit .field label,#withdraw .field label{
+  color:#f4f8ff!important;font-weight:700!important
+}
+#deposit .field input:not([type=radio]),#deposit .field select,
+#withdraw .field input:not([type=radio]),#withdraw .field select{
+  width:100%;min-height:50px;border:1px solid #477fc7!important;
+  border-radius:14px!important;background:linear-gradient(120deg,#102e70,#0a2054)!important;
+  color:#fff!important;box-shadow:inset 0 2px 7px rgba(0,0,0,.22),0 0 0 1px rgba(48,149,255,.08)!important;
+  padding:12px 14px!important
+}
+#deposit .field input::placeholder,#withdraw .field input::placeholder{color:#a9c6ee!important;opacity:1}
+#deposit .field input:focus,#deposit .field select:focus,
+#withdraw .field input:focus,#withdraw .field select:focus{
+  outline:none!important;border-color:#39d9ff!important;
+  box-shadow:0 0 0 3px rgba(26,190,255,.2),0 0 17px rgba(0,162,255,.2)!important
+}
+#deposit .field .small,#withdraw .field .small,
+#deposit .field small,#withdraw .field small{color:#c0d7f6!important}
+#deposit .operator-picks,#withdraw .operator-picks{gap:10px}
+#deposit .operator-pick,#withdraw .operator-pick{
+  border:1px solid rgba(105,171,255,.55)!important;border-radius:15px!important;
+  background:linear-gradient(145deg,#102f70,#071a49)!important;color:#fff!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.2)!important
+}
+#deposit .operator-pick:has(input:checked),#withdraw .operator-pick:has(input:checked){
+  border:2px solid #39dfff!important;box-shadow:0 0 0 2px rgba(0,177,255,.16),0 0 19px rgba(0,177,255,.34)!important
+}
+#deposit .btn-blue,#withdraw .btn-blue{
+  min-height:54px;border:1px solid #67eaff!important;border-radius:16px!important;
+  background:linear-gradient(110deg,#087bff 0%,#05bdf2 52%,#075fff 100%)!important;
+  color:#fff!important;font-weight:800!important;
+  box-shadow:0 7px 20px rgba(0,132,255,.34),inset 0 1px 0 rgba(255,255,255,.28)!important
+}
+#withdraw .withdraw-location-card,#withdraw details.procedure{
+  color:#eaf4ff!important;background:linear-gradient(145deg,#102e70,#071a49)!important;
+  border:1px solid rgba(75,172,255,.48)!important;border-radius:17px!important
+}
+#withdraw .withdraw-location-card h3,#withdraw .withdraw-location-card p,
+#withdraw .withdraw-location-item span,#withdraw .withdraw-location-item strong,
+#withdraw details.procedure summary,#withdraw details.procedure li{color:#eaf4ff!important}
+#deposit .operation-footer,#withdraw .operation-footer{
+  border-color:rgba(68,185,255,.45)!important;color:#dcecff!important
+}
+@media(max-width:520px){
+  #deposit.panel,#withdraw.panel{border-radius:20px!important}
+  #deposit form,#withdraw form{padding:13px!important}
+}
+</style>
+

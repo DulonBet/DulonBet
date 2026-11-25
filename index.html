@@ -5557,7 +5557,7 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
   if(modal.dataset.paymentTimeout){window.clearTimeout(Number(modal.dataset.paymentTimeout));delete modal.dataset.paymentTimeout;}
   modal.classList.add('is-failed');
   title.textContent='Paiement non confirmé';
-  intro.textContent='Le paiement n’a pas été confirmé par FeexPay.';
+  intro.textContent='Le paiement n’a pas été confirmé par DulonBet.';
   detail.textContent='Aucun crédit 1XBET n’est annoncé. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
  }else if(attempt>=20){
   if(modal.dataset.paymentTimeout){window.clearTimeout(Number(modal.dataset.paymentTimeout));delete modal.dataset.paymentTimeout;}

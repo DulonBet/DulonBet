@@ -9506,5 +9506,35 @@ body.operation-view #withdraw form .field textarea:focus {
 }
 </style>
 
+
+<style id="dulonbet-extra-soft-field-text">
+/* Texte des champs Dépôt/Retrait encore plus fin et moins contrasté */
+body.operation-view #deposit form .field input:not([type="radio"]):not([type="checkbox"]),
+body.operation-view #deposit form .field select,
+body.operation-view #deposit form .field textarea,
+body.operation-view #withdraw form .field input:not([type="radio"]):not([type="checkbox"]),
+body.operation-view #withdraw form .field select,
+body.operation-view #withdraw form .field textarea,
+body.operation-view #deposit form .field input:focus,
+body.operation-view #deposit form .field select:focus,
+body.operation-view #deposit form .field textarea:focus,
+body.operation-view #withdraw form .field input:focus,
+body.operation-view #withdraw form .field select:focus,
+body.operation-view #withdraw form .field textarea:focus {
+  color:rgba(255,255,255,.66)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.66)!important;
+  font-weight:300!important;
+}
+body.operation-view #deposit form .field input::placeholder,
+body.operation-view #deposit form .field textarea::placeholder,
+body.operation-view #withdraw form .field input::placeholder,
+body.operation-view #withdraw form .field textarea::placeholder {
+  color:rgba(255,255,255,.48)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.48)!important;
+  opacity:1!important;
+  font-weight:300!important;
+}
+</style>
+
 </body>
 </html>

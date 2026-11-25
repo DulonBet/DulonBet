@@ -9576,5 +9576,68 @@ body.operation-view #withdraw form .field select {
 }
 </style>
 
+
+<script id="dulonbet-panel-url-routing">
+(function(){
+  // Conserve le panneau affiché dans l'URL sans modifier les traitements métier.
+  const validPanels = new Set(['deposit','withdraw','login','admin']);
+  const originalShowPanel = window.showPanel;
+  const originalGoHome = window.goHome;
+  if (typeof originalShowPanel !== 'function' || typeof originalGoHome !== 'function') return;
+
+  let restoringFromHistory = false;
+
+  function getActivePanel(){
+    return ['deposit','withdraw','login','admin'].find(function(id){
+      const panel = document.getElementById(id);
+      return panel && panel.classList.contains('active');
+    }) || null;
+  }
+
+  function writePanelUrl(panelId, replace){
+    const url = new URL(window.location.href);
+    url.hash = panelId ? panelId : '';
+    const nextUrl = url.pathname + url.search + url.hash;
+    const currentUrl = window.location.pathname + window.location.search + window.location.hash;
+    if (nextUrl === currentUrl) return;
+    const state = { dulonbetPanel: panelId };
+    if (replace) window.history.replaceState(state, '', nextUrl);
+    else window.history.pushState(state, '', nextUrl);
+  }
+
+  window.showPanel = function(id){
+    originalShowPanel(id);
+    writePanelUrl(getActivePanel(), restoringFromHistory);
+  };
+
+  window.goHome = function(){
+    originalGoHome();
+    writePanelUrl(null, restoringFromHistory);
+  };
+
+  function restorePanelFromUrl(){
+    const requested = window.location.hash.slice(1).toLowerCase();
+    restoringFromHistory = true;
+    try {
+      if (validPanels.has(requested)) originalShowPanel(requested);
+      else originalGoHome();
+
+      // Un accès direct à l'administration reste soumis à la vérification
+      // de session déjà présente dans DulonBet.
+      writePanelUrl(getActivePanel(), true);
+    } finally {
+      restoringFromHistory = false;
+    }
+  }
+
+  window.addEventListener('popstate', restorePanelFromUrl);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', restorePanelFromUrl, { once: true });
+  } else {
+    restorePanelFromUrl();
+  }
+})();
+</script>
+
 </body>
 </html>

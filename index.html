@@ -5496,7 +5496,7 @@ function originalShowDepositVerification(box,reference,token,status,message,atte
  }
  if(normalized==='rejected'||normalized==='failed'){
   const failed=document.createElement('p');
-  failed.textContent=message||'Le paiement n’a pas été confirmé. Aucun dépôt n’a été crédité. Vérifie le numéro et le portefeuille sélectionné avant de réessayer.';
+  failed.textContent='Le paiement n’a pas été confirmé. Aucun dépôt n’a été crédité. Vous pouvez effectuer une nouvelle demande.';
   box.appendChild(failed);
   return;
  }
@@ -5534,7 +5534,6 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
  const normalized=String(status||'processing').trim().toLowerCase().replace(/[\\s-]+/g,'_');
  const confirmed=['approved','successful','success','paid','completed'].includes(normalized);
  const failed=['rejected','failed','failure','cancelled','canceled','expired','declined','refused','unsuccessful','not_paid','payment_failed'].includes(normalized);
- const incompatible=/NUM[ÉE]RO INCOMPATIBLE/i.test(String(message||''));
  if(attempt===0){
   if(modal.dataset.paymentTimeout)window.clearTimeout(Number(modal.dataset.paymentTimeout));
   modal.dataset.paymentTimeout=String(window.setTimeout(function(){
@@ -5557,9 +5556,9 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
  }else if(failed){
   if(modal.dataset.paymentTimeout){window.clearTimeout(Number(modal.dataset.paymentTimeout));delete modal.dataset.paymentTimeout;}
   modal.classList.add('is-failed');
-  title.textContent=incompatible?'NUMÉRO INCOMPATIBLE':'Paiement non confirmé';
-  intro.textContent=incompatible?'Le portefeuille Mobile Money sélectionné ne semble pas compatible avec ce numéro.':'Le paiement n’a pas été confirmé par FeexPay.';
-  detail.textContent=message||'Aucun crédit 1XBET n’est annoncé. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
+  title.textContent='Paiement non confirmé';
+  intro.textContent='Le paiement n’a pas été confirmé par FeexPay.';
+  detail.textContent='Aucun crédit 1XBET n’est annoncé. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
  }else if(attempt>=20){
   if(modal.dataset.paymentTimeout){window.clearTimeout(Number(modal.dataset.paymentTimeout));delete modal.dataset.paymentTimeout;}
   modal.classList.add('is-failed');

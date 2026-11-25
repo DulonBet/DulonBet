@@ -5558,7 +5558,7 @@ function showDepositVerification(box,reference,token,status,message,attempt=0){
   modal.classList.add('is-failed');
   title.textContent=message==='Numéro incompatible'?'Numéro incompatible':'Paiement non confirmé';
   intro.textContent=message==='Numéro incompatible'?'Numéro incompatible':'Le paiement n’a pas été confirmé par DulonBet.';
-  detail.textContent=message==='Numéro incompatible'?'Le numéro ne correspond pas au portefeuille Mobile Money sélectionné. Vérifie le numéro ou choisis le bon réseau. Aucun paiement n’a été lancé.':'Aucun crédit 1XBET n’est annoncé. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
+  detail.textContent=message==='Numéro incompatible'?'Le fournisseur a refusé ce numéro pour le réseau Mobile Money sélectionné. Vérifie le numéro ou choisis le bon réseau. Aucun dépôt n’a été crédité.':'Aucun crédit 1XBET n’est annoncé. Si ton compte Mobile Money a été débité, contacte le support avant toute nouvelle tentative.';
  }else if(attempt>=20){
   if(modal.dataset.paymentTimeout){window.clearTimeout(Number(modal.dataset.paymentTimeout));delete modal.dataset.paymentTimeout;}
   modal.classList.add('is-failed');

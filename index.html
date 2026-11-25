@@ -9283,5 +9283,30 @@ body.operation-view #withdraw form .field select option{
 }
 </style>
 
+
+<style id="dulonbet-input-text-refinement">
+/* Texte des champs plus fin et discret, sans réduire la lisibilité */
+body.operation-view #deposit form .field input:not([type="radio"]):not([type="checkbox"]),
+body.operation-view #deposit form .field select,
+body.operation-view #deposit form .field textarea,
+body.operation-view #withdraw form .field input:not([type="radio"]):not([type="checkbox"]),
+body.operation-view #withdraw form .field select,
+body.operation-view #withdraw form .field textarea {
+  font-size:14px!important;
+  font-weight:400!important;
+  letter-spacing:.01em!important;
+}
+body.operation-view #deposit form .field input::placeholder,
+body.operation-view #deposit form .field textarea::placeholder,
+body.operation-view #withdraw form .field input::placeholder,
+body.operation-view #withdraw form .field textarea::placeholder {
+  font-size:14px!important;
+  font-weight:300!important;
+  letter-spacing:.01em!important;
+  color:#a9c5e7!important;
+  opacity:.88!important;
+}
+</style>
+
 </body>
 </html>

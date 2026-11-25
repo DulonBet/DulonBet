@@ -3,6 +3,15 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"/>
+<script id="dulonbet-panel-route-early">
+(function(){
+  const panel = window.location.hash.slice(1).toLowerCase();
+  if (['deposit','withdraw','login','admin'].includes(panel)) {
+    document.documentElement.classList.add('dulon-route-pending');
+  }
+})();
+</script>
+
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="#0c2857" name="theme-color"/>
 <title>DulonBet - Dépôt &amp; Retrait 1XBET en Afrique francophone</title>
@@ -794,6 +803,10 @@ body.operation-view #withdraw .withdraw-location-item span{
   }
 }
 
+
+html.dulon-route-pending body{display:none!important}
+html.dulon-route-pending #home-view{display:none!important}
+html.dulon-route-pending .panel{visibility:hidden!important}
 </style>
 <style id="dulonbet-operation-brand">
 .operations-brand{display:none;align-items:center;gap:18px;padding:26px 28px;margin:0 auto 18px;max-width:1100px;background:#fff;border:1px solid #dce6f5;border-radius:0 0 18px 18px;box-shadow:0 8px 28px rgba(16,35,68,.06)}
@@ -9574,7 +9587,85 @@ body.operation-view #withdraw form .field select {
   font-weight:500!important;
   text-shadow:0 0 5px rgba(255,255,255,.28)!important;
 }
+
+/* Lisibilité de la procédure de retrait uniquement */
+body.operation-view #withdraw details.procedure,
+body.operation-view #withdraw details.procedure[open]{
+  background:#eaf2ff!important;
+  color:#17345f!important;
+  border:1px solid #b8cbea!important;
+}
+body.operation-view #withdraw details.procedure *{
+  color:#17345f!important;
+  -webkit-text-fill-color:#17345f!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
 </style>
+
+
+<script id="dulonbet-panel-url-routing">
+(function(){
+  // Conserve le panneau affiché dans l'URL sans modifier les traitements métier.
+  const validPanels = new Set(['deposit','withdraw','login','admin']);
+  const originalShowPanel = window.showPanel;
+  const originalGoHome = window.goHome;
+  if (typeof originalShowPanel !== 'function' || typeof originalGoHome !== 'function') return;
+
+  let restoringFromHistory = false;
+
+  function getActivePanel(){
+    return ['deposit','withdraw','login','admin'].find(function(id){
+      const panel = document.getElementById(id);
+      return panel && panel.classList.contains('active');
+    }) || null;
+  }
+
+  function writePanelUrl(panelId, replace){
+    const url = new URL(window.location.href);
+    url.hash = panelId ? panelId : '';
+    const nextUrl = url.pathname + url.search + url.hash;
+    const currentUrl = window.location.pathname + window.location.search + window.location.hash;
+    if (nextUrl === currentUrl) return;
+    const state = { dulonbetPanel: panelId };
+    if (replace) window.history.replaceState(state, '', nextUrl);
+    else window.history.pushState(state, '', nextUrl);
+  }
+
+  window.showPanel = function(id){
+    originalShowPanel(id);
+    writePanelUrl(getActivePanel(), restoringFromHistory);
+  };
+
+  window.goHome = function(){
+    originalGoHome();
+    writePanelUrl(null, restoringFromHistory);
+  };
+
+  function restorePanelFromUrl(){
+    const requested = window.location.hash.slice(1).toLowerCase();
+    restoringFromHistory = true;
+    try {
+      if (validPanels.has(requested)) originalShowPanel(requested);
+      else originalGoHome();
+
+      // Un accès direct à l'administration reste soumis à la vérification
+      // de session déjà présente dans DulonBet.
+      writePanelUrl(getActivePanel(), true);
+    } finally {
+      restoringFromHistory = false;
+      document.documentElement.classList.remove('dulon-route-pending');
+    }
+  }
+
+  window.addEventListener('popstate', restorePanelFromUrl);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', restorePanelFromUrl, { once: true });
+  } else {
+    restorePanelFromUrl();
+  }
+})();
+</script>
 
 </body>
 </html>

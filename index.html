@@ -6456,7 +6456,7 @@ function drawUsers(){const m=new Map();rows.forEach(r=>{const k=(r.xbet_id||'')+
   if(error||!data||data.paid!==true){feedback((data&&data.error)||(error&&error.message)||'Confirmation impossible.');return;}
   const url=new URL(window.location.href);url.searchParams.delete('confirm_withdrawal');history.replaceState(null,'',url.pathname+url.search+url.hash);
   linkedConfirmationHandled=true;
-  feedback(data.notification_sent?'✅ Retrait confirmé comme payé. Telegram et e-mail notifiés.':'✅ Retrait marqué payé. Vérifie la notification administrateur.');
+  feedback(data.notification_sent?'✅ Retrait confirmé comme payé. E-mail accepté; notification Telegram tentée.':'✅ Retrait marqué payé. Vérifie les notifications administrateur.');
   await load();
  }
  function handleLinkedWithdrawalConfirmation(){

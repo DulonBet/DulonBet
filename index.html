@@ -9409,5 +9409,39 @@ body.operation-view #withdraw form .field textarea:focus{
 
 
 
+
+<style id="dulonbet-france-blue-readable-field-text">
+/* Garantir la lisibilité du texte sur le fond Bleu de France */
+body.operation-view #deposit form .field input:not([type="radio"]):not([type="checkbox"]),
+body.operation-view #deposit form .field select,
+body.operation-view #deposit form .field textarea,
+body.operation-view #withdraw form .field input:not([type="radio"]):not([type="checkbox"]),
+body.operation-view #withdraw form .field select,
+body.operation-view #withdraw form .field textarea,
+body.operation-view #deposit form .field input:not([type="radio"]):not([type="checkbox"]):focus,
+body.operation-view #deposit form .field select:focus,
+body.operation-view #deposit form .field textarea:focus,
+body.operation-view #withdraw form .field input:not([type="radio"]):not([type="checkbox"]):focus,
+body.operation-view #withdraw form .field select:focus,
+body.operation-view #withdraw form .field textarea:focus {
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  caret-color:#ffffff!important;
+}
+body.operation-view #deposit form .field input::placeholder,
+body.operation-view #deposit form .field textarea::placeholder,
+body.operation-view #withdraw form .field input::placeholder,
+body.operation-view #withdraw form .field textarea::placeholder {
+  color:#eaf4ff!important;
+  -webkit-text-fill-color:#eaf4ff!important;
+  opacity:1!important;
+}
+body.operation-view #deposit form .field select option,
+body.operation-view #withdraw form .field select option {
+  color:#ffffff!important;
+  background:#174a91!important;
+}
+</style>
+
 </body>
 </html>

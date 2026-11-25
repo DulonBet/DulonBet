@@ -5266,6 +5266,30 @@ body.operation-view #withdraw .withdraw-location-card h3{
 }
 </style>
 
+
+<style id="dulonbet-withdraw-phone-autofill-visibility">
+/* Page Retrait : conserver le fond bleu et la lisibilité du numéro saisi, y compris avec l'autoremplissage du navigateur */
+body.operation-view #withdraw #withdraw-phone,
+body.operation-view #withdraw #withdraw-phone:hover,
+body.operation-view #withdraw #withdraw-phone:focus,
+body.operation-view #withdraw #withdraw-phone:active{
+  background-color:#318CE7!important;
+  background-image:none!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  caret-color:#ffffff!important;
+}
+body.operation-view #withdraw #withdraw-phone:-webkit-autofill,
+body.operation-view #withdraw #withdraw-phone:-webkit-autofill:hover,
+body.operation-view #withdraw #withdraw-phone:-webkit-autofill:focus,
+body.operation-view #withdraw #withdraw-phone:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 1000px #318CE7 inset!important;
+  box-shadow:0 0 0 1000px #318CE7 inset!important;
+  -webkit-text-fill-color:#ffffff!important;
+  caret-color:#ffffff!important;
+}
+</style>
+
 </head>
 <body>
 <header class="dulon-header-hd">

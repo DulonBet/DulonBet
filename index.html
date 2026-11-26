@@ -5329,6 +5329,30 @@ body.operation-view #deposit #deposit-phone:-webkit-autofill:active{
 }
 </style>
 
+
+<style id="dulonbet-withdraw-name-input-visibility">
+/* Page Retrait : le champ du bénéficiaire reprend le même fond bleu et le même contraste que les autres champs, y compris avec l'autoremplissage */
+body.operation-view #withdraw #withdraw-full-name,
+body.operation-view #withdraw #withdraw-full-name:hover,
+body.operation-view #withdraw #withdraw-full-name:focus,
+body.operation-view #withdraw #withdraw-full-name:active{
+  background-color:#318CE7!important;
+  background-image:none!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  caret-color:#ffffff!important;
+}
+body.operation-view #withdraw #withdraw-full-name:-webkit-autofill,
+body.operation-view #withdraw #withdraw-full-name:-webkit-autofill:hover,
+body.operation-view #withdraw #withdraw-full-name:-webkit-autofill:focus,
+body.operation-view #withdraw #withdraw-full-name:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 1000px #318CE7 inset!important;
+  box-shadow:0 0 0 1000px #318CE7 inset!important;
+  -webkit-text-fill-color:#ffffff!important;
+  caret-color:#ffffff!important;
+}
+</style>
+
 </head>
 <body>
 <header class="dulon-header-hd">

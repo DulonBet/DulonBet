@@ -9638,7 +9638,11 @@ body.operation-view #withdraw details.procedure *{
 }
 
 /* Couleur rouge vif uniquement du libellé de la procédure de retrait */
-#withdraw details.procedure summary{color:#ff0000!important}
+body.operation-view #withdraw details.procedure summary,
+html[data-theme="dark"] body.operation-view #withdraw details.procedure summary{
+  color:#ff0000!important;
+  -webkit-text-fill-color:#ff0000!important;
+}
 </style>
 
 

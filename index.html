@@ -5305,6 +5305,30 @@ body.operation-view #withdraw .withdraw-helper-small{
 }
 </style>
 
+
+<style id="dulonbet-deposit-phone-input-visibility">
+/* Page Dépôt : garder le numéro saisi lisible, y compris après saisie et avec l'autoremplissage */
+body.operation-view #deposit #deposit-phone,
+body.operation-view #deposit #deposit-phone:hover,
+body.operation-view #deposit #deposit-phone:focus,
+body.operation-view #deposit #deposit-phone:active{
+  background-color:#318CE7!important;
+  background-image:none!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  caret-color:#ffffff!important;
+}
+body.operation-view #deposit #deposit-phone:-webkit-autofill,
+body.operation-view #deposit #deposit-phone:-webkit-autofill:hover,
+body.operation-view #deposit #deposit-phone:-webkit-autofill:focus,
+body.operation-view #deposit #deposit-phone:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 1000px #318CE7 inset!important;
+  box-shadow:0 0 0 1000px #318CE7 inset!important;
+  -webkit-text-fill-color:#ffffff!important;
+  caret-color:#ffffff!important;
+}
+</style>
+
 </head>
 <body>
 <header class="dulon-header-hd">

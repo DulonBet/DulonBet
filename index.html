@@ -5257,9 +5257,7 @@ body.operation-view #withdraw .withdraw-location-card h3{font-size:15px!importan
 </style>
 
 <style id="dulonbet-withdraw-two-red-notices">
-/* Rouge vif réservé aux deux messages demandés sur la page Retrait */
-body.operation-view #withdraw .withdraw-marquee,
-body.operation-view #withdraw .withdraw-marquee span,
+/* Rouge vif conservé uniquement pour le titre des informations de retrait */
 body.operation-view #withdraw .withdraw-location-card h3{
   color:#ff0000!important;
   -webkit-text-fill-color:#ff0000!important;
@@ -9635,6 +9633,13 @@ body.operation-view #withdraw details.procedure *{
   -webkit-text-fill-color:#17345f!important;
   opacity:1!important;
   text-shadow:none!important;
+}
+
+/* Couleur rouge vif uniquement du libellé de la procédure de retrait */
+body.operation-view #withdraw details.procedure summary,
+html[data-theme="dark"] body.operation-view #withdraw details.procedure summary{
+  color:#ff0000!important;
+  -webkit-text-fill-color:#ff0000!important;
 }
 </style>
 

@@ -5632,6 +5632,60 @@ html[data-theme="dark"] #admin .visitor-row{border-color:#40516d!important}html[
   #admin #adminOperationsView .admin-operations-table-wrap table{min-width:820px}
 }
 </style>
+<style id="dulonbet-mobile-operation-cards">
+/* Sur téléphone : fiches lisibles, pleine largeur, sans défilement horizontal */
+@media(max-width:680px){
+  #admin #adminOperationsView .admin-operations-table-wrap{
+    width:100%!important;max-width:100%!important;max-height:62vh!important;
+    overflow-y:auto!important;overflow-x:hidden!important;
+    border:0!important;border-radius:0!important;background:transparent!important;
+    box-shadow:none!important;padding:0!important;
+    scrollbar-width:thin;scrollbar-color:#3978bd transparent;
+  }
+  #admin #adminOperationsView .admin-operations-table-wrap table{
+    display:block!important;width:100%!important;min-width:0!important;
+    margin:0!important;border:0!important;border-collapse:separate!important;
+    border-spacing:0 9px!important;table-layout:fixed!important;
+  }
+  #admin #adminOperationsView .admin-operations-table-wrap thead{display:none!important}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody{
+    display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:9px!important;width:100%!important;
+  }
+  #admin #adminOperationsView .admin-operations-table-wrap tbody tr{
+    display:block!important;width:100%!important;min-width:0!important;
+    background:#fff!important;border:1px solid #dce6f2!important;
+    border-radius:12px!important;overflow:hidden!important;
+    box-shadow:0 2px 8px rgba(25,55,92,.045)!important;
+  }
+  #admin #adminOperationsView .admin-operations-table-wrap tbody tr:nth-child(even){background:#f7faff!important}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td{
+    display:grid!important;grid-template-columns:minmax(88px,30%) minmax(0,1fr)!important;
+    align-items:start!important;gap:8px!important;width:100%!important;
+    min-width:0!important;padding:9px 10px!important;
+    border:0!important;border-bottom:1px solid #edf2f8!important;
+    background:transparent!important;white-space:normal!important;
+    overflow-wrap:anywhere!important;word-break:break-word!important;
+    font-size:12px!important;line-height:1.4!important;
+  }
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td:last-child{border-bottom:0!important}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td:before{
+    display:block!important;color:#60748e!important;font-size:10px!important;
+    line-height:1.35!important;font-weight:800!important;text-transform:uppercase!important;
+    letter-spacing:.25px!important;
+  }
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td:nth-child(1):before{content:"Référence / Date"}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td:nth-child(2):before{content:"Opération"}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td:nth-child(3):before{content:"Client / ID 1XBET"}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td:nth-child(4):before{content:"Montant"}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td:nth-child(5):before{content:"Réseau / Pays"}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td:nth-child(6):before{content:"Détails"}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td:nth-child(7):before{content:"Statut / Actions"}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td .small{font-size:11px!important}
+  #admin #adminOperationsView .admin-operations-table-wrap tbody td button{max-width:100%!important;white-space:normal!important}
+  #admin #adminOperationsView .admin-operations-table-wrap::-webkit-scrollbar{width:6px}
+  #admin #adminOperationsView .admin-operations-table-wrap::-webkit-scrollbar-thumb{background:#3978bd;border-radius:8px}
+}
+</style>
 </head>
 <body>
 <header class="dulon-header-hd">

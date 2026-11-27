@@ -9859,7 +9859,7 @@ html[data-theme="dark"] body.operation-view #withdraw details.procedure summary{
   try{
    const client=window.dulonSupabaseClient;if(!client)throw new Error('Connexion administrateur indisponible.');
    const {data,error}=await client.rpc('dulonbet_visitor_analytics_summary');if(error)throw error;
-   if(!data||data.ok!==true)throw new Error(data&&data.error?data.error:'Réponse de statistiques invalide.');
+   if(!data||typeof data!=='object'||!Number.isFinite(Number(data.visitors_today))||!Array.isArray(data.daily))throw new Error(data&&data.error?data.error:'Réponse de statistiques invalide.');
    setText('visitorToday',data.visitors_today??0);setText('visitor7d',data.visitors_7d??0);setText('visitor30d',data.visitors_30d??0);setText('visitorViews30d',data.page_views_30d??0);
    renderDaily(data.daily||[]);renderRows('visitorCountries',data.countries||[],'country','visitors',countryName);renderRows('visitorDevices',data.devices||[],'device','visitors');renderRows('visitorPages',data.pages||[],'page','views');
    if(updated){const date=data.updated_at?new Date(data.updated_at):new Date();updated.textContent='Dernière mise à jour : '+date.toLocaleString('fr-FR',{timeZone:'Africa/Porto-Novo'});}

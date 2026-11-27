@@ -5394,6 +5394,52 @@ html[data-theme="dark"] #admin .visitor-row{border-color:#40516d!important}html[
 #adminOperationsView .admin-page-buttons button:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:680px){#adminOperationsView .admin-tools{grid-template-columns:1fr 1fr}#adminOperationsView .admin-tools input{grid-column:1/-1}#adminOperationsView .admin-tools button{grid-column:1/-1}#adminOperationsView .admin-pagination{align-items:stretch;flex-direction:column}#adminOperationsView .admin-page-top{width:100%;justify-content:space-between}#adminOperationsView .admin-page-buttons{width:100%;justify-content:space-between;gap:5px}#adminOperationsView .admin-page-buttons button{padding:9px 10px;min-height:40px}}
 </style>
+<style id="dulonbet-dashboard-color-zones">
+/* Habillage professionnel des zones principales du tableau de bord */
+.admin-main > .admin-heading{
+  background:linear-gradient(135deg,#102d60 0%,#174c91 100%);
+  color:#fff;border:1px solid #244f89;border-radius:16px;
+  padding:16px 14px;margin:0 0 14px;box-shadow:0 5px 16px rgba(16,45,96,.14);
+  gap:12px;
+}
+.admin-main > .admin-heading h2{color:#fff;margin:0 0 5px;font-size:clamp(18px,4vw,23px);font-weight:800}
+.admin-main > .admin-heading #adminSignedInAs{color:#dceaff!important;margin:0;font-size:12px}
+.admin-main > .admin-heading #adminSignOut{background:#fff;color:#173d70;border:1px solid #d7e5f7;border-radius:10px;font-weight:750;min-height:40px;padding:8px 12px}
+.admin-main > .admin-heading .admin-menu-toggle{background:#fff;border-color:#d7e5f7}
+.admin-main > .notice{
+  background:#fff4df!important;border:1px solid #f0cf91!important;
+  border-left:5px solid #e39a22!important;color:#704b16!important;
+  border-radius:13px;padding:13px 14px;margin:0 0 14px;
+  font-size:13px;line-height:1.55;box-shadow:0 3px 10px rgba(123,82,18,.06)
+}
+.admin-main > .notice b{color:#87520b}
+.admin-main > #adminStats{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 16px
+}
+.admin-main > #adminStats > .network{
+  min-width:0;border-radius:14px;padding:14px 13px;
+  border:1px solid #dce6f2;box-shadow:0 3px 11px rgba(25,55,92,.055);
+  font-size:13px;font-weight:750;line-height:1.4;color:#334b69;
+  background:#edf4ff
+}
+.admin-main > #adminStats > .network:nth-child(1){background:#eaf2ff;border-color:#cbdcf5;border-left:4px solid #3478d4;color:#24518d}
+.admin-main > #adminStats > .network:nth-child(2){background:#fff4df;border-color:#f1dfba;border-left:4px solid #e5a12d;color:#895b12}
+.admin-main > #adminStats > .network:nth-child(3){background:#e8f6ff;border-color:#c8e8f8;border-left:4px solid #1697cb;color:#12688d}
+.admin-main > #adminStats > .network:nth-child(4){background:#e8f7ef;border-color:#ccebd9;border-left:4px solid #21a366;color:#147347}
+.admin-main > #adminStats > .network strong{display:block;margin-top:9px;font-size:clamp(20px,5vw,26px);font-weight:850;line-height:1.2;overflow-wrap:anywhere;color:#17365e}
+.admin-main > #adminStats > .network:nth-child(2) strong{color:#895b12}
+.admin-main > #adminStats > .network:nth-child(3) strong{color:#12688d}
+.admin-main > #adminStats > .network:nth-child(4) strong{color:#147347}
+@media(max-width:680px){
+ .admin-main > .admin-heading{padding:13px 11px;border-radius:13px;align-items:center}
+ .admin-main > .admin-heading h2{font-size:18px}
+ .admin-main > .admin-heading #adminSignOut{font-size:12px;padding:7px 9px;min-height:38px}
+ .admin-main > .notice{font-size:12px;padding:12px;line-height:1.5}
+ .admin-main > #adminStats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .admin-main > #adminStats > .network{padding:12px 10px;border-radius:12px;font-size:12px}
+ .admin-main > #adminStats > .network strong{font-size:21px;margin-top:7px}
+}
+</style>
 </head>
 <body>
 <header class="dulon-header-hd">

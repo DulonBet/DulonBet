@@ -5353,6 +5353,27 @@ body.operation-view #withdraw #withdraw-full-name:-webkit-autofill:active{
 }
 </style>
 
+
+<style id="dulonbet-visitor-analytics-styles">
+#admin .visitor-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0}
+#admin .visitor-heading h3{margin:0;color:#17365f}#admin .visitor-heading p{margin:5px 0 0}
+#admin .visitor-kpis .network{min-width:0}
+#admin .visitor-panel{background:#fff;border:1px solid #dce5f2;border-radius:13px;padding:15px;margin:12px 0;color:#20385d}
+#admin .visitor-panel h4{margin:0 0 12px;color:#17365f;font-size:15px}
+#admin .visitor-chart{display:flex;align-items:flex-end;gap:5px;min-height:180px;overflow-x:auto;padding:8px 2px 0}
+#admin .visitor-day{flex:1 0 24px;min-width:24px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:160px}
+#admin .visitor-day-bar-wrap{height:125px;width:100%;display:flex;align-items:flex-end;justify-content:center;background:#f2f6fd;border-radius:6px 6px 2px 2px;overflow:hidden}
+#admin .visitor-day-bar{width:100%;min-height:2px;background:linear-gradient(180deg,#27c7f3,#1769e8);border-radius:6px 6px 0 0}
+#admin .visitor-day small{font-size:10px;color:#60738f;white-space:nowrap}#admin .visitor-day b{font-size:10px;color:#17365f}
+#admin .visitor-breakdowns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#admin .visitor-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #edf1f7;font-size:13px}
+#admin .visitor-row:last-child{border-bottom:0}#admin .visitor-row strong{color:#17365f;white-space:nowrap}
+#admin .visitor-updated{margin:8px 0;color:#64748b}#admin .visitor-privacy{margin:14px 0;color:#64748b;line-height:1.5}
+@media(max-width:650px){#admin .visitor-breakdowns{grid-template-columns:1fr}#admin .visitor-panel{padding:12px}#admin .visitor-day{flex-basis:22px;min-width:22px}}
+html[data-theme="dark"] #admin .visitor-panel{background:#172338!important;border-color:#40516d!important;color:#edf3ff!important}
+html[data-theme="dark"] #admin .visitor-panel h4,html[data-theme="dark"] #admin .visitor-row strong,html[data-theme="dark"] #admin .visitor-day b{color:#f2f6ff!important}
+html[data-theme="dark"] #admin .visitor-row{border-color:#40516d!important}html[data-theme="dark"] #admin .visitor-day-bar-wrap{background:#263852!important}
+</style>
 </head>
 <body>
 <header class="dulon-header-hd">
@@ -5670,7 +5691,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <aside class="admin-sidebar" id="adminSidebar" aria-label="Navigation administrateur">
   <div class="admin-side-brand"><span class="admin-side-mark">D</span><span class="admin-side-word">DULON<span>BET</span></span></div>
   <div class="admin-side-caption">ESPACE DE GESTION</div>
-  <div class="admin-tabs"><button class="btn-blue" data-admin-tab="operations" type="button">Toutes les opérations</button><button class="btn-light" data-admin-tab="pending" type="button">En attente</button><button class="btn-light" data-admin-tab="approved" type="button">Validées</button><button class="btn-light" data-admin-tab="failed" type="button">Échouées / refusées</button><button class="btn-light" data-admin-tab="stats" type="button">Statistiques</button><button class="btn-light" data-admin-tab="users" type="button">Utilisateurs</button></div>
+  <div class="admin-tabs"><button class="btn-blue" data-admin-tab="operations" type="button">Toutes les opérations</button><button class="btn-light" data-admin-tab="pending" type="button">En attente</button><button class="btn-light" data-admin-tab="approved" type="button">Validées</button><button class="btn-light" data-admin-tab="failed" type="button">Échouées / refusées</button><button class="btn-light" data-admin-tab="stats" type="button">Statistiques</button><button class="btn-light" data-admin-tab="visitors" type="button">Visiteurs</button><button class="btn-light" data-admin-tab="users" type="button">Utilisateurs</button></div>
   <div class="admin-side-footer"><span class="admin-live-dot"></span> Espace sécurisé</div>
 </aside>
 <button class="admin-sidebar-backdrop" id="adminSidebarBackdrop" type="button" aria-label="Fermer le menu"></button>
@@ -5683,6 +5704,23 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div class="small" id="adminFeedback" role="status"></div><div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>Référence / Date</th><th>Opération</th><th>Client / ID 1XBET</th><th>Montant</th><th>Réseau / Pays</th><th>Détails</th><th>Statut / Actions</th></tr></thead><tbody id="adminTxRows"><tr><td colspan="7">Chargement…</td></tr></tbody></table></div></div>
 <div hidden="" id="adminUsersView"><h3>Utilisateurs ayant effectué une demande</h3><p class="small">Liste générée à partir des numéros et ID 1XBET présents dans les demandes. Aucun compte client indépendant n'est encore créé.</p><div style="overflow-x:auto"><table><thead><tr><th>ID 1XBET</th><th>Téléphone</th><th>Pays</th><th>Demandes</th><th>Total dépôts</th><th>Total retraits</th></tr></thead><tbody id="adminUserRows"><tr><td colspan="6">Chargement…</td></tr></tbody></table></div></div>
 <div hidden id="adminStatsView"><h3>Statistiques détaillées</h3><div class="admin-stats"><div class="network">Dépôts validés<strong id="statApprovedDeposits">0 F</strong></div><div class="network">Retraits validés<strong id="statApprovedWithdrawals">0 F</strong></div><div class="network">Demandes refusées<strong id="statRejected">0</strong></div></div><p class="small">Les totaux de volume sont calculés uniquement sur les opérations validées.</p></div>
+<div hidden id="adminVisitorsView">
+ <div class="visitor-heading"><div><h3>Audience de DulonBet</h3><p class="small">Visiteurs estimés et consultations des pages publiques.</p></div><button class="btn-light" id="adminVisitorsRefresh" type="button">Actualiser</button></div>
+ <div class="admin-stats visitor-kpis">
+  <div class="network">Visiteurs aujourd'hui<strong id="visitorToday">—</strong></div>
+  <div class="network">Visiteurs sur 7 jours<strong id="visitor7d">—</strong></div>
+  <div class="network">Visiteurs sur 30 jours<strong id="visitor30d">—</strong></div>
+  <div class="network">Pages vues sur 30 jours<strong id="visitorViews30d">—</strong></div>
+ </div>
+ <p class="small visitor-updated" id="visitorUpdatedAt" aria-live="polite">Les statistiques apparaîtront après les premières visites enregistrées.</p>
+ <section class="visitor-panel"><h4>Visiteurs par jour — 30 derniers jours</h4><div class="visitor-chart" id="visitorDailyChart"><p class="small">Chargement des statistiques…</p></div></section>
+ <div class="visitor-breakdowns">
+  <section class="visitor-panel"><h4>Pays des visiteurs</h4><div id="visitorCountries"><p class="small">Aucune donnée disponible.</p></div></section>
+  <section class="visitor-panel"><h4>Appareils utilisés</h4><div id="visitorDevices"><p class="small">Aucune donnée disponible.</p></div></section>
+ </div>
+ <section class="visitor-panel"><h4>Pages les plus consultées</h4><div id="visitorPages"><p class="small">Aucune donnée disponible.</p></div></section>
+ <p class="small visitor-privacy">Mesure d'audience interne : identifiant anonyme stocké sur l'appareil, sans enregistrer les adresses IP ni les informations des demandes de paiement.</p>
+</div>
 </div>
 </div>
 
@@ -5745,6 +5783,7 @@ function showPanel(id){
   const active=(id==='deposit' && btn.textContent.trim()==='Dépôt')||(id==='withdraw' && btn.textContent.trim()==='Retrait');
   btn.classList.toggle('active',active);
  });
+ if(window.dulonbetTrackPageView)window.dulonbetTrackPageView(id);
  window.scrollTo({top:0,behavior:'smooth'});
 }
 function newDulonBetKey(){
@@ -6764,7 +6803,7 @@ function drawUsers(){const m=new Map();rows.forEach(r=>{const k=(r.xbet_id||'')+
  }
  window.loadDulonAdminDashboard=load;
  if(!window.dulonbetExpiryDashboardRefresh){window.dulonbetExpiryDashboardRefresh=setInterval(()=>{if(document.visibilityState==='visible'&&window.dulonAdminAuthorized)load();},15000);}
- const views={operations:'adminOperationsView',pending:'adminOperationsView',approved:'adminOperationsView',failed:'adminOperationsView',users:'adminUsersView',stats:'adminStatsView'};
+ const views={operations:'adminOperationsView',pending:'adminOperationsView',approved:'adminOperationsView',failed:'adminOperationsView',users:'adminUsersView',stats:'adminStatsView',visitors:'adminVisitorsView'};
  document.addEventListener('click',e=>{
   const b=e.target.closest('[data-admin-tab]');
   if(b){
@@ -6778,7 +6817,7 @@ function drawUsers(){const m=new Map();rows.forEach(r=>{const k=(r.xbet_id||'')+
    closeStatusModal();
    activeTab=selected;
    Object.entries(views).forEach(([k,id])=>$(id).hidden=(k!==activeTab && !(id==='adminOperationsView'&&activeTab==='operations')));
-   if(activeTab==='operations'){$('adminStatusFilter').value='all';draw();}
+   if(activeTab==='operations'){$('adminStatusFilter').value='all';draw();}if(activeTab==='visitors'&&window.loadDulonBetVisitorAnalytics)window.loadDulonBetVisitorAnalytics();
   }
   const paid=e.target.closest('[data-confirm-paid]');
   if(paid){confirmWithdrawalPaid(paid.dataset.confirmPaid);return;}
@@ -9772,5 +9811,64 @@ html[data-theme="dark"] body.operation-view #withdraw details.procedure summary{
 })();
 </script>
 
+
+<script id="dulonbet-visitor-analytics">
+(function(){
+ const endpoint='https://abagofwqjostilsilafk.supabase.co/functions/v1/dulonbet-visitor-analytics';
+ const publicKey='sb_publishable_DMHadyt-Bq_bvqM2Wbj9Nw_0tBHcINd';
+ let visitorId='',lastTrackedPage='';
+ function getVisitorId(){
+  if(visitorId)return visitorId;
+  try{
+   visitorId=localStorage.getItem('dulonbet_visitor_id')||'';
+   if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(visitorId)){
+    visitorId=window.crypto&&crypto.randomUUID?crypto.randomUUID():'';
+    if(!visitorId)return '';
+    localStorage.setItem('dulonbet_visitor_id',visitorId);
+   }
+  }catch(e){return '';}
+  return visitorId;
+ }
+ window.dulonbetTrackPageView=function(target){
+  if(window.dulonAdminAuthorized)return;
+  let page='/';
+  if(target==='deposit')page='/depot';else if(target==='withdraw')page='/retrait';
+  else if(target==='admin'||target==='login')return;
+  else if(typeof target==='string'&&target.startsWith('/')&&target.length<=180)page=target.split(/[?#]/)[0]||'/';
+  if(lastTrackedPage===page)return;lastTrackedPage=page;
+  const id=getVisitorId();if(!id)return;
+  fetch(endpoint,{method:'POST',mode:'cors',keepalive:true,headers:{'Content-Type':'application/json','apikey':publicKey},body:JSON.stringify({action:'track',visitor_id:id,page_path:page})}).catch(function(){});
+ };
+ function countryName(code){const names={BJ:'Bénin',TG:'Togo',CI:"Côte d’Ivoire",BF:'Burkina Faso',NE:'Niger',SN:'Sénégal',ML:'Mali',GN:'Guinée',CM:'Cameroun',GA:'Gabon',CD:'RD Congo',CG:'Congo',FR:'France',NG:'Nigeria',GH:'Ghana'};return names[code]||code;}
+ function setText(id,value){const el=document.getElementById(id);if(el)el.textContent=String(value);}
+ function renderRows(id,items,labelKey,valueKey,formatLabel){
+  const root=document.getElementById(id);if(!root)return;root.replaceChildren();
+  if(!Array.isArray(items)||!items.length){const p=document.createElement('p');p.className='small';p.textContent='Aucune donnée disponible pour le moment.';root.appendChild(p);return;}
+  items.forEach(item=>{const row=document.createElement('div');row.className='visitor-row';const label=document.createElement('span');label.textContent=formatLabel?formatLabel(item[labelKey]):String(item[labelKey]||'Inconnu');const value=document.createElement('strong');value.textContent=String(item[valueKey]||0);row.append(label,value);root.appendChild(row);});
+ }
+ function renderDaily(items){
+  const root=document.getElementById('visitorDailyChart');if(!root)return;root.replaceChildren();
+  if(!Array.isArray(items)||!items.length){const p=document.createElement('p');p.className='small';p.textContent='Les données quotidiennes apparaîtront après les premières visites.';root.appendChild(p);return;}
+  const max=Math.max(1,...items.map(x=>Number(x.visitors)||0));
+  items.forEach(item=>{const count=Number(item.visitors)||0,day=document.createElement('div');day.className='visitor-day';day.title=item.date+': '+count+' visiteur(s)';const number=document.createElement('b');number.textContent=String(count);const wrap=document.createElement('div');wrap.className='visitor-day-bar-wrap';const bar=document.createElement('div');bar.className='visitor-day-bar';bar.style.height=Math.max(2,(count/max)*100)+'%';wrap.appendChild(bar);const date=document.createElement('small');date.textContent=String(item.date||'').slice(8,10)+'/'+String(item.date||'').slice(5,7);day.append(number,wrap,date);root.appendChild(day);});
+ }
+ window.loadDulonBetVisitorAnalytics=async function(){
+  if(!window.dulonAdminAuthorized)return;
+  const button=document.getElementById('adminVisitorsRefresh'),updated=document.getElementById('visitorUpdatedAt');
+  if(button){button.disabled=true;button.textContent='Chargement…';}if(updated)updated.textContent='Récupération des statistiques…';
+  try{
+   const client=window.dulonSupabaseClient;if(!client)throw new Error('Connexion administrateur indisponible.');
+   const {data,error}=await client.functions.invoke('dulonbet-visitor-analytics',{body:{action:'summary'}});
+   if(error)throw error;if(!data||data.ok!==true)throw new Error(data&&data.error?data.error:'Réponse de statistiques invalide.');
+   setText('visitorToday',data.visitors_today??0);setText('visitor7d',data.visitors_7d??0);setText('visitor30d',data.visitors_30d??0);setText('visitorViews30d',data.page_views_30d??0);
+   renderDaily(data.daily||[]);renderRows('visitorCountries',data.countries||[],'country','visitors',countryName);renderRows('visitorDevices',data.devices||[],'device','visitors');renderRows('visitorPages',data.pages||[],'page','views');
+   if(updated){const date=data.updated_at?new Date(data.updated_at):new Date();updated.textContent='Dernière mise à jour : '+date.toLocaleString('fr-FR',{timeZone:'Africa/Porto-Novo'});}
+  }catch(error){if(updated)updated.textContent='Impossible de charger les statistiques : '+(error.message||'erreur inconnue');}
+  finally{if(button){button.disabled=false;button.textContent='Actualiser';}}
+ };
+ const refresh=document.getElementById('adminVisitorsRefresh');if(refresh)refresh.addEventListener('click',()=>window.loadDulonBetVisitorAnalytics());
+ window.setTimeout(()=>window.dulonbetTrackPageView('/'),1500);
+})();
+</script>
 </body>
 </html>

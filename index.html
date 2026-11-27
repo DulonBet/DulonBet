@@ -9859,7 +9859,7 @@ html[data-theme="dark"] body.operation-view #withdraw details.procedure summary{
   try{
    const client=window.dulonSupabaseClient;if(!client)throw new Error('Connexion administrateur indisponible.');
    const {data:{session}}=await client.auth.getSession();if(!session||!session.access_token)throw new Error('Session administrateur expirée. Reconnecte-toi.');const response=await fetch(endpoint,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json','apikey':publicKey,'Authorization':'Bearer '+session.access_token},body:JSON.stringify({action:'summary'})});let data={};try{data=await response.json();}catch(e){}if(!response.ok)throw new Error(data.error||'Lecture des statistiques refusée.');
-   if(error)throw error;if(!data||data.ok!==true)throw new Error(data&&data.error?data.error:'Réponse de statistiques invalide.');
+   if(!data||data.ok!==true)throw new Error(data&&data.error?data.error:'Réponse de statistiques invalide.');
    setText('visitorToday',data.visitors_today??0);setText('visitor7d',data.visitors_7d??0);setText('visitor30d',data.visitors_30d??0);setText('visitorViews30d',data.page_views_30d??0);
    renderDaily(data.daily||[]);renderRows('visitorCountries',data.countries||[],'country','visitors',countryName);renderRows('visitorDevices',data.devices||[],'device','visitors');renderRows('visitorPages',data.pages||[],'page','views');
    if(updated){const date=data.updated_at?new Date(data.updated_at):new Date();updated.textContent='Dernière mise à jour : '+date.toLocaleString('fr-FR',{timeZone:'Africa/Porto-Novo'});}

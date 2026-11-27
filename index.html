@@ -3029,7 +3029,7 @@ body.operation-view #withdraw .withdraw-location-item span{
 #admin .admin-tabs button{width:100%;display:flex;align-items:center;gap:12px;text-align:left;white-space:nowrap;padding:11px 12px;border:1px solid transparent;border-radius:10px;background:transparent;color:#aebed3;font-size:13px;font-weight:600;box-shadow:none;transition:.18s}
 #admin .admin-tabs button:hover{background:#172944;color:#fff}#admin .admin-tabs button.btn-blue{background:linear-gradient(110deg,#246fe0,#1859c4);border-color:#3988ff;color:#fff;box-shadow:0 6px 18px #1764db35}
 #admin .admin-tabs button:before{width:20px;flex:0 0 20px;text-align:center;font-size:16px}
-#admin .admin-tabs button:nth-child(1):before{content:'▦'}#admin .admin-tabs button:nth-child(2):before{content:'◷'}#admin .admin-tabs button:nth-child(3):before{content:'✓'}#admin .admin-tabs button:nth-child(4):before{content:'⊘'}#admin .admin-tabs button:nth-child(5):before{content:'▥'}#admin .admin-tabs button:nth-child(6):before{content:'♙'}#admin .admin-tabs button:nth-child(7):before{content:'％'}#admin .admin-tabs button:nth-child(8):before{content:'♧'}
+#admin .admin-tabs button:nth-child(1):before{content:'▦'}#admin .admin-tabs button:nth-child(2):before{content:'◷'}#admin .admin-tabs button:nth-child(3):before{content:'✓'}#admin .admin-tabs button:nth-child(4):before{content:'⊘'}#admin .admin-tabs button:nth-child(5):before{content:'▥'}#admin .admin-tabs button:nth-child(6):before{content:'▤'}#admin .admin-tabs button:nth-child(7):before{content:'♙'}#admin .admin-tabs button:nth-child(8):before{content:'♧'}
 #admin .admin-side-footer{margin-top:auto;border-top:1px solid var(--db-line);padding:18px 9px 2px;color:#8398b5;font-size:11px}.admin-live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#21c98b;margin-right:7px;box-shadow:0 0 0 4px #21c98b20}
 #admin .admin-main{min-width:0;flex:1;padding:24px;background:var(--db-bg)}
 #admin .admin-heading{display:flex;align-items:center;gap:14px;justify-content:space-between;margin:0 0 20px;padding:0 0 18px;border-bottom:1px solid var(--db-line)}
@@ -7763,7 +7763,7 @@ html[data-theme="dark"] #adminStatusModal tr:hover td{
 
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
     window.addEventListener('load', function(){
-      navigator.serviceWorker.register('/sw.js').catch(function(error){
+      navigator.serviceWorker.register('/sw.js?v=8', { updateViaCache: 'none' }).catch(function(error){
         console.warn('Installation PWA : service worker non enregistré', error);
       });
     });

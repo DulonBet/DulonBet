@@ -5825,6 +5825,40 @@ html[data-theme="dark"] #admin .visitor-row{border-color:#40516d!important}html[
   }
 }
 </style>
+
+<style id="dulonbet-admin-filters-readable-labels">
+/* Garder les libellés des filtres lisibles sans ouvrir les listes */
+@media(min-width:761px){
+  #admin #adminOperationsView .admin-tools select{
+    display:block!important;
+    min-width:0!important;
+    width:100%!important;
+    height:42px!important;
+    padding:9px 34px 9px 11px!important;
+    color:#10264a!important;
+    background-color:#fff!important;
+    font-size:13px!important;
+    font-weight:600!important;
+    line-height:normal!important;
+    text-align:left!important;
+    text-overflow:clip!important;
+    white-space:nowrap!important;
+    opacity:1!important;
+    -webkit-text-fill-color:#10264a!important;
+  }
+  #admin #adminOperationsView .admin-tools select option{
+    color:#10264a!important;
+    background:#fff!important;
+  }
+}
+@media(min-width:761px) and (max-width:1100px){
+  #admin #adminOperationsView .admin-tools{
+    grid-template-columns:minmax(180px,1.5fr) repeat(3,minmax(150px,1fr)) minmax(108px,.8fr)!important;
+    gap:8px!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <header class="dulon-header-hd">

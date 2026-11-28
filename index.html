@@ -5795,6 +5795,36 @@ html[data-theme="dark"] #admin .visitor-row{border-color:#40516d!important}html[
   }
 }
 </style>
+<style id="dulonbet-admin-filters-balanced-width">
+/* Filtres bureau : répartir toute la largeur disponible sans laisser de vide */
+@media(min-width:761px){
+  #admin #adminOperationsView .admin-tools{
+    display:grid!important;
+    grid-template-columns:minmax(240px,2.1fr) minmax(145px,1.2fr) minmax(145px,1.2fr) minmax(145px,1.2fr) minmax(112px,.9fr)!important;
+    width:100%!important;max-width:none!important;
+    gap:10px!important;align-items:stretch!important;
+  }
+  #admin #adminOperationsView .admin-tools>*{
+    width:100%!important;min-width:0!important;max-width:none!important;
+    box-sizing:border-box!important;
+  }
+  #admin #adminOperationsView .admin-tools input,
+  #admin #adminOperationsView .admin-tools select{
+    font-size:13px!important;padding-left:10px!important;padding-right:24px!important;
+    text-overflow:clip!important;
+  }
+  #admin #adminOperationsView #adminRefresh{
+    min-width:112px!important;width:100%!important;
+    justify-content:center!important;white-space:nowrap!important;
+  }
+}
+@media(min-width:681px) and (max-width:1100px){
+  #admin #adminOperationsView .admin-tools{
+    grid-template-columns:minmax(190px,1.8fr) repeat(3,minmax(120px,1.1fr)) minmax(105px,.9fr)!important;
+    gap:7px!important;
+  }
+}
+</style>
 </head>
 <body>
 <header class="dulon-header-hd">

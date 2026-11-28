@@ -6207,7 +6207,7 @@ body.operation-view #dulon-install-banner{display:none!important}
 <div hidden="" id="adminUsersView"><h3>Utilisateurs ayant effectué une demande</h3><p class="small">Liste générée à partir des numéros et ID 1XBET présents dans les demandes. Aucun compte client indépendant n'est encore créé.</p><div style="overflow-x:auto"><table><thead><tr><th>ID 1XBET</th><th>Téléphone</th><th>Pays</th><th>Demandes</th><th>Total dépôts</th><th>Total retraits</th></tr></thead><tbody id="adminUserRows"><tr><td colspan="6">Chargement…</td></tr></tbody></table></div></div>
 <div hidden id="adminStatsView"><h3>Statistiques détaillées</h3><div class="admin-stats"><div class="network">Dépôts validés<strong id="statApprovedDeposits">0 F</strong></div><div class="network">Retraits validés<strong id="statApprovedWithdrawals">0 F</strong></div><div class="network">Demandes refusées<strong id="statRejected">0</strong></div></div><p class="small">Les totaux de volume sont calculés uniquement sur les opérations validées.</p></div>
 <div hidden id="adminVisitorsView">
- <div class="visitor-heading"><div><h3>Audience de DulonBet</h3><p class="small">Visiteurs estimés et consultations des pages publiques.</p></div><button class="btn-light" id="adminVisitorsRefresh" type="button">Actualiser</button></div>
+ <div class="visitor-heading"><div><h3>Audience de DulonBet</h3><p class="small">Visiteurs estimés et consultations des pages publiques.</p></div><div class="visitor-heading-actions"><button class="btn-light" id="adminVisitorsRefresh" type="button">Actualiser</button><button class="visitor-close" id="adminVisitorsClose" type="button" aria-label="Fermer l’audience" title="Fermer">×</button></div></div>
  <div class="admin-stats visitor-kpis">
   <div class="network">Visiteurs aujourd'hui<strong id="visitorToday">—</strong></div>
   <div class="network">Visiteurs sur 7 jours<strong id="visitor7d">—</strong></div>
@@ -10497,3 +10497,15 @@ html[data-theme="dark"] body.operation-view #withdraw details.procedure summary{
 #adminOperationsView tbody tr.operation-deposit-row td:last-child .small{color:#087443!important}
 #adminOperationsView tbody tr.operation-withdraw-row td:last-child .small{color:#1454a1!important}
 </style>
+
+<style id="dulonbet-visitors-fullscreen-page">
+/* L'audience s'ouvre comme une page plein écran, refermable avec la croix */
+#admin #adminVisitorsView:not([hidden]){position:fixed!important;inset:0!important;z-index:10050!important;display:block!important;overflow-y:auto!important;overflow-x:hidden!important;width:100vw!important;height:100dvh!important;max-height:100dvh!important;box-sizing:border-box!important;margin:0!important;padding:clamp(16px,3vw,32px)!important;background:#f5f8fc!important;color:#172338!important;border-radius:0!important}
+#admin #adminVisitorsView .visitor-heading{position:sticky!important;top:calc(-1 * clamp(16px,3vw,32px))!important;z-index:2!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;padding:12px 0!important;background:#f5f8fc!important;border-bottom:1px solid #dce5f0!important}
+#admin #adminVisitorsView .visitor-heading-actions{display:flex!important;align-items:center!important;gap:10px!important}
+#admin #adminVisitorsView .visitor-close{width:42px!important;height:42px!important;flex:0 0 42px!important;border:0!important;border-radius:50%!important;background:#e5eaf2!important;color:#172338!important;font-size:30px!important;line-height:1!important;font-weight:500!important;cursor:pointer!important}
+@media(max-width:600px){#admin #adminVisitorsView:not([hidden]){padding:14px!important}#admin #adminVisitorsView .visitor-heading{top:-14px!important;align-items:flex-start!important}#admin #adminVisitorsView .visitor-heading-actions{gap:6px!important}#admin #adminVisitorsView .visitor-close{width:38px!important;height:38px!important;flex-basis:38px!important}}
+</style>
+<script id="dulonbet-visitors-close-page">
+document.addEventListener('click',function(e){if(!e.target.closest('#adminVisitorsClose'))return;const v=document.getElementById('adminVisitorsView');if(v)v.hidden=true;const ops=document.getElementById('adminOperationsView');if(ops)ops.hidden=false;['adminStatsView','adminUsersView'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=true;});document.querySelectorAll('[data-admin-tab]').forEach(b=>{b.className=b.dataset.adminTab==='operations'?'btn-blue':'btn-light';});});
+</script>

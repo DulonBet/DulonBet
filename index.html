@@ -5730,6 +5730,18 @@ html[data-theme="dark"] #admin .visitor-row{border-color:#40516d!important}html[
   #admin #adminOperationsView .admin-operations-table-wrap td:before{display:none!important;content:none!important}
 }
 </style>
+<style id="dulonbet-mobile-horizontal-scrollbar">
+@media(max-width:680px){
+  #admin #adminOperationsView .dulonbet-hscroll-control{
+    display:flex;align-items:center;width:100%;height:24px;margin:3px 0 12px;
+    padding:0 3px;box-sizing:border-box;background:#e8f0fa;border-radius:20px;
+  }
+  #admin #adminOperationsView .dulonbet-hscroll-control input{
+    display:block;width:100%;height:20px;margin:0;cursor:ew-resize;
+    accent-color:#1d5fae;touch-action:pan-y;
+  }
+}
+</style>
 </head>
 <body>
 <header class="dulon-header-hd">
@@ -10224,6 +10236,37 @@ html[data-theme="dark"] body.operation-view #withdraw details.procedure summary{
  };
  const refresh=document.getElementById('adminVisitorsRefresh');if(refresh)refresh.addEventListener('click',()=>window.loadDulonBetVisitorAnalytics());
  window.setTimeout(()=>window.dulonbetTrackPageView('/'),1500);
+})();
+</script>
+<script id="dulonbet-mobile-horizontal-scrollbar-script">
+(function(){
+  function attachOperationsScrollbar(){
+    document.querySelectorAll('#admin #adminOperationsView .admin-operations-table-wrap').forEach(function(wrap){
+      if(wrap.dataset.dulonbetHscrollReady==='1')return;
+      wrap.dataset.dulonbetHscrollReady='1';
+      var bar=document.createElement('div');
+      bar.className='dulonbet-hscroll-control';
+      bar.setAttribute('aria-label','Défilement horizontal du tableau des opérations');
+      var range=document.createElement('input');
+      range.type='range';range.min='0';range.max='0';range.step='1';
+      range.value='0';range.setAttribute('aria-label','Faire défiler les colonnes de gauche à droite');
+      bar.appendChild(range);
+      wrap.insertAdjacentElement('afterend',bar);
+      function sync(){
+        var max=Math.max(0,wrap.scrollWidth-wrap.clientWidth);
+        range.max=String(max);
+        range.value=String(Math.min(max,Math.max(0,wrap.scrollLeft)));
+        bar.style.display=max>2?'flex':'none';
+      }
+      range.addEventListener('input',function(){wrap.scrollLeft=Number(range.value)||0;});
+      wrap.addEventListener('scroll',sync,{passive:true});
+      if(window.ResizeObserver){new ResizeObserver(sync).observe(wrap);}
+      sync();
+    });
+  }
+  attachOperationsScrollbar();
+  new MutationObserver(attachOperationsScrollbar).observe(document.documentElement,{childList:true,subtree:true});
+  window.addEventListener('resize',attachOperationsScrollbar,{passive:true});
 })();
 </script>
 </body>

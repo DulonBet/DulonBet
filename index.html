@@ -10405,3 +10405,50 @@ html[data-theme="dark"] body.operation-view #withdraw details.procedure summary{
 </script>
 </body>
 </html>
+
+
+<style id="dulonbet-admin-filters-mobile-fix">
+/* Mobile : afficher les trois filtres en entier dans une grille compacte */
+@media(max-width:760px){
+  #admin #adminOperationsView .admin-tools{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+  #admin #adminOperationsView .admin-tools>*{
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+  #admin #adminOperationsView #adminSearch{
+    grid-column:1/-1!important;
+  }
+  #admin #adminOperationsView .admin-tools select{
+    display:block!important;
+    min-width:0!important;
+    width:100%!important;
+    height:42px!important;
+    padding:8px 23px 8px 8px!important;
+    font-size:11px!important;
+    font-weight:700!important;
+    white-space:nowrap!important;
+    text-overflow:clip!important;
+    color:#10264a!important;
+    background:#fff!important;
+  }
+  #admin #adminOperationsView #adminRefresh{
+    grid-column:auto!important;
+    grid-row:auto!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:42px!important;
+    white-space:nowrap!important;
+    font-size:12px!important;
+  }
+}
+</style>

@@ -10452,3 +10452,21 @@ html[data-theme="dark"] body.operation-view #withdraw details.procedure summary{
   }
 }
 </style>
+
+
+<style id="dulonbet-mobile-operations-page-scroll">
+/* Sur la liste, réserver le geste vertical au défilement de toute la page.
+   Le déplacement horizontal du tableau reste disponible via sa barre dédiée. */
+@media(max-width:680px){
+  #admin #adminOperationsView .admin-operations-table-wrap{
+    touch-action:pan-y pinch-zoom!important;
+    overscroll-behavior-y:auto!important;
+    overflow-y:hidden!important;
+    max-height:none!important;
+    height:auto!important;
+  }
+  #admin #adminOperationsView .admin-operations-table-wrap table{
+    touch-action:pan-y pinch-zoom!important;
+  }
+}
+</style>
